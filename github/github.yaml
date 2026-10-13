@@ -1,0 +1,45 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: GitHub CLI (ready-only)
+description: GitHub CLI (gh) as a read-only overlay
+
+kind: mixin
+provides: ["gh@2.102.0"]
+dockerfile: github.dockerfile
+capabilities:
+  - type: com.docker.sandbox/network-policy@2
+    description: Network policy for read-only access to GitHub
+    config:
+      runtime:
+        allow:
+          - github.com
+          - hosts:
+              - api.github.com
+            methods:
+              - GET
+              - HEAD
+        deny:
+          - hosts:
+              - "*"
+            methods:
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
+  - type: com.docker.sandbox/credential@1
+    description: Credentials policy for GitHub
+    optional: true
+    config:
+      service: github
+      phase: [runtime]
+      apiKey:
+        name: GH_TOKEN
+        proxyManaged: true
+        inject:
+          - domain: api.github.com
+            header: Authorization
+            format: "Bearer %s"
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: github.context.md
