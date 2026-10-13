@@ -1,4 +1,10 @@
+_Note: All commands given from the repository root._
+
 ## Build
+
+```shell
+docker buildx build -f github/github.yaml -t github:dev github
+```
 
 ## Usage
 
@@ -8,12 +14,21 @@ Copy your local GitHub API authorization token into the sandbox.
 sbx secret set github --command 'gh auth token'
 ```
 
-Start the sandbox with the mixin active
+Run using the local checkout...
 
 ```shell
 sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
   --name "github-kit-test"
   --kit ./github
+```
+
+...or from the public repository by first allowing the source
+
+```shell
+sbx settings set kit.allowedSources '["docker.io/","github.com/Jared-Prime/"]'
+sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
+  --name github-from-git-test \
+  --kit 'git+https://github.com/Jared-Prime/kit.git&dir=github'
 ```
 
 Sanity check the setup
