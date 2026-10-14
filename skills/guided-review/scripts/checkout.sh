@@ -10,7 +10,12 @@ echo "Context: PR_NUMBER = '${PR_NUMBER}'" >&2
 
 checkout_dir="${HOME}/review/${PR_NUMBER}"
 
-mkdir -p "$checkout_dir"
+if [[ -e "$checkout_dir" || -L "$checkout_dir" ]]; then
+  printf 'Checkout already exists: %s\n' "$checkout_dir" >&2
+  exit 1
+fi
+
+mkdir -p "${HOME}/review"
 
 function clone {
   git clone --single-branch -b main "$SSH_URL" "$checkout_dir"
