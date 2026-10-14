@@ -1,0 +1,21 @@
+model = "gpt-6-sol"
+web_search = "indexed"
+personality = "pragmatic"
+default_permissions = "readonly-net"
+approval_policy = "on-request"
+model_reasoning_effort = "medium"
+forced_login_method = "api"
+
+model_provider = "sandboxd"
+
+[model_providers.sandboxd]
+name = "Sandbox Proxy"
+base_url = "https://chatgpt.com/backend-api/codex"
+experimental_bearer_token = "oai-oat01-proxy-managed"
+requires_openai_auth = false
+
+[permissions.readonly-net]
+extends = ":read-only"
+
+[permissions.readonly-net.network]
+enabled = true

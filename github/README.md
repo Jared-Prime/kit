@@ -18,7 +18,7 @@ Run using the local checkout...
 
 ```shell
 sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
-  --name "github-kit-test"
+  --name "github-kit-test" \
   --kit ./github
 ```
 
