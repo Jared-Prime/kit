@@ -83,6 +83,25 @@ class GuidedReviewScriptsTest(unittest.TestCase):
             check=False,
         )
 
+    def test_context_uses_https_clone_url(self):
+        gh = self.bin / "gh"
+        gh.write_text(
+            '#!/usr/bin/env bash\n'
+            'case "$*" in\n'
+            '  "api user --jq .login") printf "alice\\n" ;;\n'
+            '  "api repos/example/repo --jq .clone_url") '
+            'printf "https://github.com/example/repo.git\\n" ;;\n'
+            '  "api user/teams --paginate") '
+            'printf \'[{"slug":"reviewers","organization":{"login":"example"}}]\\n\' ;;\n'
+            '  *) exit 1 ;;\n'
+            'esac\n'
+        )
+
+        result = self.run_script("context.sh")
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("CLONE_URL = 'https://github.com/example/repo.git'", result.stdout)
+
     def test_request_emits_one_pr_with_combined_users(self):
         self.env["MOCK_PRS"] = json.dumps([pr(7)])
 
@@ -143,7 +162,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
             {
                 "HOME": str(self.work),
                 "PR_NUMBER": "7",
-                "SSH_URL": "git@example.test:example/repo.git",
+                "CLONE_URL": "https://github.com/example/repo.git",
                 "MOCK_GIT_LOG": str(log),
             }
         )
@@ -153,7 +172,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         calls = log.read_text().splitlines()
         self.assertIn(
-            f"clone --single-branch -b main git@example.test:example/repo.git {self.work}/review/7",
+            f"clone --single-branch -b main https://github.com/example/repo.git {self.work}/review/7",
             calls,
         )
         self.assertIn(
@@ -173,7 +192,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
             {
                 "HOME": str(self.work),
                 "PR_NUMBER": "7",
-                "SSH_URL": "git@example.test:example/repo.git",
+                "CLONE_URL": "https://github.com/example/repo.git",
                 "MOCK_GIT_LOG": str(log),
             }
         )

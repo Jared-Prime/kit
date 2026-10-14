@@ -5,7 +5,7 @@ set -euo pipefail
 echo "Context: GH_REPO = '${GH_REPO}'" >&2
 echo "Context: GH_USER = '${GH_USER}'" >&2
 echo "Context: GH_TEAM = '${GH_TEAM}' (comma delimited)" >&2
-echo "Context: SSH_URL = '${SSH_URL}'" >&2
+echo "Context: CLONE_URL = '${CLONE_URL}'" >&2
 echo "Context: PR_NUMBER = '${PR_NUMBER}'" >&2
 
 checkout_dir="${HOME}/review/${PR_NUMBER}"
@@ -18,7 +18,7 @@ fi
 mkdir -p "${HOME}/review"
 
 function clone {
-  git clone --single-branch -b main "$SSH_URL" "$checkout_dir"
+  git clone --single-branch -b main "$CLONE_URL" "$checkout_dir"
 }
 
 function branch {

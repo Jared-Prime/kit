@@ -8,7 +8,7 @@ docker buildx build -f github/github.yaml -t github:dev github
 
 ## Usage
 
-Copy your local GitHub API authorization token into the sandbox.
+Store your local GitHub token for API reads and HTTPS Git fetches.
 
 ```shell
 sbx secret set github --command 'gh auth token'

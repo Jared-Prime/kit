@@ -11,7 +11,8 @@ gh api -X GET repos/OWNER/REPO/pulls/NUMBER/files --paginate
 ```
 
 Do not create, edit, comment on, or merge GitHub resources.
-This kit's network policy denies POST, PATCH, PUT, and DELETE requests.
+This kit allows POST to GitHub only for Git's `git-upload-pack` fetch endpoint.
+Other GitHub writes, including `git push`, are blocked by the network policy.
 
 Some seemingly read-only `gh` commands use GraphQL POST requests and may be
 blocked.
@@ -20,6 +21,7 @@ Adding fields to `gh api` can also change its default method to POST.
 Specify `-X GET` when passing query parameters.
 
 GitHub authentication is optional and supplied through the sandbox's proxy-managed credential.
+The same credential supports API reads and HTTPS Git fetches.
 Never print or save `GH_TOKEN`.
 If access fails, report the error rather than changing the network policy.
 

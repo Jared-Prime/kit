@@ -9,7 +9,7 @@ function user {
 }
 
 function source {
-  gh api "repos/$GH_REPO" --jq .ssh_url
+  gh api "repos/$GH_REPO" --jq .clone_url
 }
 
 function team {
@@ -27,4 +27,4 @@ function team {
 echo "GH_REPO = '${GH_REPO}'"
 echo "GH_USER = '$(user)'"
 echo "GH_TEAM = '$(team)' (comma delimited)"
-echo "SSH_URL = '$(source)'"
+echo "CLONE_URL = '$(source)'"
