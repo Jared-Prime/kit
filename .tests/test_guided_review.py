@@ -18,6 +18,7 @@ SCRIPTS = ROOT / "skills" / "guided-review" / "scripts"
 
 def pr(
     number,
+    base="main",
     team="reviewers",
     conclusion="success",
     draft=False,
@@ -31,6 +32,7 @@ def pr(
         "html_url": f"https://example.test/pr/{number}",
         "title": f"Change {number}",
         "head": {"ref": f"feature-{number}", "sha": f"sha-{number}"},
+        "base": {"ref": base},
         "updated_at": "2026-10-14T00:00:00Z",
         "mergeable": True,
         "requested_teams": [{"slug": team}],
@@ -150,6 +152,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         )
 
     def test_checkout_fetches_pr_ref_with_full_history(self):
+        self.env["MOCK_PRS"] = json.dumps([pr(7, base="release/2026")])
         git = self.bin / "git"
         git.write_text(
             '#!/usr/bin/env bash\n'
@@ -172,7 +175,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         calls = log.read_text().splitlines()
         self.assertIn(
-            f"clone --single-branch -b main https://github.com/example/repo.git {self.work}/review/7",
+            f"clone --single-branch -b release/2026 https://github.com/example/repo.git {self.work}/review/7",
             calls,
         )
         self.assertIn(
@@ -180,7 +183,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
             calls,
         )
         self.assertIn("switch -c review/7 origin/pr/7", calls)
-        self.assertIn("merge-base main HEAD", calls)
+        self.assertIn("merge-base release/2026 HEAD", calls)
 
     def test_checkout_aborts_before_git_when_directory_exists(self):
         (self.work / "review" / "7").mkdir(parents=True)

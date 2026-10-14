@@ -19,7 +19,8 @@ Run using the local checkout...
 ```shell
 sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
   --name "github-kit-test" \
-  --kit ./github
+  --kit ./github \
+  --kit-arg gh_repo=Jared-Prime/kit
 ```
 
 ...or from the public repository by first allowing the source
@@ -28,7 +29,8 @@ sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
 sbx settings set kit.allowedSources '["docker.io/","github.com/Jared-Prime/"]'
 sbx run docker.io/docker/sbx-kit-shell:1.0.0 \
   --name github-from-git-test \
-  --kit 'git+https://github.com/Jared-Prime/kit.git&dir=github'
+  --kit 'git+https://github.com/Jared-Prime/kit.git&dir=github' \
+  --kit-arg gh_repo=Jared-Prime/kit
 ```
 
 Sanity check the setup

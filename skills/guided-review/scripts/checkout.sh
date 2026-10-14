@@ -15,16 +15,22 @@ if [[ -e "$checkout_dir" || -L "$checkout_dir" ]]; then
   exit 1
 fi
 
+base_branch=$(gh api --method GET "repos/$GH_REPO/pulls/$PR_NUMBER" | jq -r '.base.ref // empty')
+if [[ -z "$base_branch" ]]; then
+  printf 'Could not determine base branch for PR %s\n' "$PR_NUMBER" >&2
+  exit 1
+fi
+
 mkdir -p "${HOME}/review"
 
 function clone {
-  git clone --single-branch -b main "$CLONE_URL" "$checkout_dir"
+  git clone --single-branch -b "$base_branch" "$CLONE_URL" "$checkout_dir"
 }
 
 function branch {
   git fetch origin "refs/pull/$1/head:refs/remotes/origin/pr/$1"
   git switch -c "review/$1" "origin/pr/$1"
-  git merge-base main HEAD >/dev/null
+  git merge-base "$base_branch" HEAD >/dev/null
 }
 
 clone

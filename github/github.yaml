@@ -8,6 +8,12 @@ author: Jared Davis
 kind: mixin
 provides: ["gh@2.102.0"]
 dockerfile: github.dockerfile
+args:
+  gh_repo:
+    default: "Jared-Prime/kit"
+    description: GitHub repository to review, as OWNER/REPO
+    pattern: '^[A-Za-z0-9-]+/[A-Za-z0-9._-]+$'
+    env: GH_REPO
 capabilities:
   - type: com.docker.sandbox/network-policy@2
     description: Network policy for read-only access to GitHub

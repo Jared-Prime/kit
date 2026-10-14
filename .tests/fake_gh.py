@@ -25,7 +25,7 @@ if parts == ["repos", "example", "repo", "pulls"]:
 elif parts[:4] == ["repos", "example", "repo", "pulls"] and len(parts) >= 5:
     pull = next(pr for pr in prs if str(pr["number"]) == parts[4])
     if len(parts) == 5:
-        result = {"mergeable": pull["mergeable"]}
+        result = {"mergeable": pull["mergeable"], "base": pull["base"]}
     elif parts[5] == "requested_reviewers":
         result = {"users": pull["requested_reviewers"], "teams": pull["requested_teams"]}
     elif parts[5] == "reviews":
