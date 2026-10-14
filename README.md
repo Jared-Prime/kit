@@ -12,3 +12,11 @@ sbx run 'git+https://github.com/Jared-Prime/kit.git#ref=main&dir=sol' \
 
 See [github/README.md](github/README.md) for more details on the `gh` mixin.
 See [sol/README.md](sol/README.md) for more details on the `codex` workflow.
+
+## Skills
+
+Add a skill from this repository to your sandbox
+
+```shell
+sbx agents add Jared-Prime/kit --skill guided-review
+```

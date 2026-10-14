@@ -1,0 +1,7 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Skills
+description: Skills from this kit packaged as a complete mixin
+author: Jared Davis
+dockerfile: skills.dockerfile
