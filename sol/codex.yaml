@@ -40,3 +40,7 @@ capabilities:
             mkdir -p /home/agent/.codex
             printf '%s\n' '{"OPENAI_API_KEY":"proxy-managed"}' \
               > /home/agent/.codex/auth.json
+
+  - type: com.docker.sandbox/agent-skills@1
+    config:
+      path: /home/agent/.agents/skills
