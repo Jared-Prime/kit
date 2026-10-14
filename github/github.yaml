@@ -3,6 +3,7 @@
 schemaVersion: "3"
 displayName: GitHub CLI (ready-only)
 description: GitHub CLI (gh) as a read-only overlay
+author: Jared Davis
 
 kind: mixin
 provides: ["gh@2.102.0"]
@@ -21,7 +22,7 @@ capabilities:
               - HEAD
         deny:
           - hosts:
-              - "*"
+              - "github.com"
             methods:
               - POST
               - PATCH
