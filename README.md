@@ -5,7 +5,7 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 ```shell
 sbx settings set kit.allowedSources '["docker.io/","github.com/Jared-Prime/"]'
 
-sbx run docker.io/docker/sbx-kit-sol:0.162.1 \
+sbx run 'git+https://github.com/Jared-Prime/kit.git#ref=main&dir=sol' \
   --name sol-with-gh \
   --kit 'git+https://github.com/Jared-Prime/kit.git#ref=main&dir=github'
 ```
