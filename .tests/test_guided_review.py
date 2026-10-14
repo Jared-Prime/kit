@@ -16,27 +16,20 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "skills" / "guided-review" / "scripts"
 
 
-def pr(number, team="reviewers", conclusion="SUCCESS"):
+def pr(number, team="reviewers", conclusion="success", draft=False, status_state=None):
     return {
         "number": number,
-        "url": f"https://example.test/pr/{number}",
+        "draft": draft,
+        "html_url": f"https://example.test/pr/{number}",
         "title": f"Change {number}",
-        "headRefName": f"feature-{number}",
-        "updatedAt": "2026-10-14T00:00:00Z",
-        "mergeable": "MERGEABLE",
-        "reviewDecision": "REVIEW_REQUIRED",
-        "reviewRequests": [
-            {"__typename": "Team", "slug": team},
-            {"__typename": "User", "login": "alice"},
-        ],
-        "reviews": [{"author": {"login": "bob"}}],
-        "statusCheckRollup": [
-            {
-                "__typename": "CheckRun",
-                "status": "COMPLETED",
-                "conclusion": conclusion,
-            }
-        ],
+        "head": {"ref": f"feature-{number}", "sha": f"sha-{number}"},
+        "updated_at": "2026-10-14T00:00:00Z",
+        "mergeable": True,
+        "requested_teams": [{"slug": team}],
+        "requested_reviewers": [{"login": "alice"}],
+        "reviews": [{"user": {"login": "bob"}}],
+        "check_runs": [{"status": "completed", "conclusion": conclusion}],
+        "statuses": [] if status_state is None else [{"state": status_state}],
     }
 
 
@@ -59,7 +52,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.bin = self.work / "bin"
         self.bin.mkdir()
         gh = self.bin / "gh"
-        gh.write_text('#!/usr/bin/env bash\nprintf "%s\\n" "$MOCK_PRS"\n')
+        gh.write_text((ROOT / ".tests" / "fake_gh.py").read_text())
         gh.chmod(0o755)
 
         self.env = os.environ.copy()
@@ -96,7 +89,13 @@ class GuidedReviewScriptsTest(unittest.TestCase):
 
     def test_available_lists_only_matching_pr_with_successful_checks(self):
         self.env["MOCK_PRS"] = json.dumps(
-            [pr(7), pr(8, team="another-team"), pr(9, conclusion="CANCELLED")]
+            [
+                pr(7),
+                pr(8, team="another-team"),
+                pr(9, conclusion="cancelled"),
+                pr(10, draft=True),
+                pr(11, status_state="failure"),
+            ]
         )
 
         result = self.run_script("available.sh")
@@ -107,7 +106,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
             ["- [ ] [PR7](https://example.test/pr/7): Change 7 - `feature-7`"],
         )
 
-    def test_checkout_fetches_selected_head_into_a_local_branch(self):
+    def test_checkout_fetches_pr_ref_with_full_history(self):
         git = self.bin / "git"
         git.write_text(
             '#!/usr/bin/env bash\n'
@@ -119,7 +118,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.env.update(
             {
                 "HOME": str(self.work),
-                "GH_HEAD": "feature/topic",
+                "PR_NUMBER": "7",
                 "SSH_URL": "git@example.test:example/repo.git",
                 "MOCK_GIT_LOG": str(log),
             }
@@ -130,10 +129,15 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         calls = log.read_text().splitlines()
         self.assertIn(
-            "fetch --depth 1 origin feature/topic:refs/remotes/origin/feature/topic",
+            f"clone --single-branch -b main git@example.test:example/repo.git {self.work}/review/7",
             calls,
         )
-        self.assertIn("switch -c feature/topic origin/feature/topic", calls)
+        self.assertIn(
+            "fetch origin refs/pull/7/head:refs/remotes/origin/pr/7",
+            calls,
+        )
+        self.assertIn("switch -c review/7 origin/pr/7", calls)
+        self.assertIn("merge-base main HEAD", calls)
 
 
 if __name__ == "__main__":

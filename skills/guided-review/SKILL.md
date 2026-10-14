@@ -20,7 +20,7 @@ Do not treat completion of one phase as permission to start the next.
 
 1. run `scripts/context.sh` and refer to the output for the other commands
 2. run `scripts/available.sh` then ask the user to select an available pull request
-3. run `scripts/checkout.sh` using the output from (1) and the selection from (2) as `GH_HEAD`
+3. run `scripts/checkout.sh` using the output from (1) and the selection from (2) as `PR_NUMBER`
 
 A copy of the `main` and the reviewable branch can be found in the specified location from (3).
 

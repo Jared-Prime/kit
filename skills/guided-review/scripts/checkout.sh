@@ -6,22 +6,23 @@ echo "Context: GH_REPO = '${GH_REPO}'" >&2
 echo "Context: GH_USER = '${GH_USER}'" >&2
 echo "Context: GH_TEAM = '${GH_TEAM}' (comma delimited)" >&2
 echo "Context: SSH_URL = '${SSH_URL}'" >&2
-echo "Context: GH_HEAD = '${GH_HEAD}'" >&2
+echo "Context: PR_NUMBER = '${PR_NUMBER}'" >&2
 
-checkout_dir="${HOME}/review/${GH_HEAD}"
+checkout_dir="${HOME}/review/${PR_NUMBER}"
 
 mkdir -p "$checkout_dir"
 
 function clone {
-  git clone --depth 1 --single-branch -b main "$SSH_URL" "$checkout_dir"
+  git clone --single-branch -b main "$SSH_URL" "$checkout_dir"
 }
 
-function switch {
-  git fetch --depth 1 origin "${GH_HEAD}:refs/remotes/origin/${GH_HEAD}"
-  git switch -c "$GH_HEAD" "origin/$GH_HEAD"
+function branch {
+  git fetch origin "refs/pull/$1/head:refs/remotes/origin/pr/$1"
+  git switch -c "review/$1" "origin/pr/$1"
+  git merge-base main HEAD >/dev/null
 }
 
 clone
-(cd "$checkout_dir"; switch)
+(cd "$checkout_dir"; branch "$PR_NUMBER")
 
-echo "${GH_HEAD} is now reviewable in ${checkout_dir}"
+echo "${PR_NUMBER} is now reviewable in ${checkout_dir}"

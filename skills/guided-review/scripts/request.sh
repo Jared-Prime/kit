@@ -7,46 +7,76 @@ echo "Context: GH_USER = '${GH_USER}'" >&2
 echo "Context: GH_TEAM = '${GH_TEAM}' (comma delimited)" >&2
 
 function list {
-  gh pr list \
-  --repo "$GH_REPO" \
-  --draft=false     \
-  --limit=50        \
-  --json url,title,reviews,reviewDecision,reviewRequests,mergeable,statusCheckRollup,headRefName,updatedAt,number
+  gh api --method GET \
+    "repos/$GH_REPO/pulls?state=open&sort=updated&direction=desc&per_page=50" |
+    jq -c '[.[] | select(.draft == false)] | sort_by(.updated_at)[]'
+}
+
+function requested {
+  gh api --method GET "repos/$GH_REPO/pulls/$1/requested_reviewers?per_page=100"
+}
+
+function reviews {
+  gh api --method GET "repos/$GH_REPO/pulls/$1/reviews?per_page=100"
+}
+
+function details {
+  gh api --method GET "repos/$GH_REPO/pulls/$1"
+}
+
+function checks {
+  gh api --method GET "repos/$GH_REPO/commits/$1/check-runs?per_page=100"
+}
+
+function status {
+  gh api --method GET "repos/$GH_REPO/commits/$1/status"
+}
+
+function sha {
+  jq -r '.head.sha' <<<"$1"
+}
+
+function number {
+  jq -r '.number' <<<"$1"
 }
 
 function shape {
-  jq -r '
-    def success:
-      if .__typename == "StatusContext" then .state == "SUCCESS"
-      elif .__typename == "CheckRun" then .status == "COMPLETED" and (.conclusion == "SUCCESS")
-      else false end;
+  while IFS= read -r pull; do
+    number=$(number "$pull")
+    sha=$(sha "$pull")
 
-    def teams:
-      [ .reviewRequests[]? | select(.__typename == "Team") | .slug ]
-      | unique;
+    requested="$(requested "$number")"
+    reviews="$(reviews "$number")"
+    details="$(details "$number")"
+    checks=$(checks "$sha")
+    status=$(status "$sha")
 
-    def users:
-      ([ .reviewRequests[]? | select(.__typename == "User") | .login ]
-       + [ .reviews[]? | .author.login? | select(. != null)])
-      | unique;
-
-    sort_by(.updatedAt)
-    | .[]
-    | (.mergeable == "MERGEABLE") as $mergeable
-    | [.statusCheckRollup[]?] as $checks
-    | (($checks | length) > 0 and all($checks[]; success)) as $success
-    | (.reviewDecision == "APPROVED") as $approved
-    | {
-      pr: .number,
-      url,
-      branch: .headRefName,
-      title,
-      teams: (teams),
-      users: (users),
-      mergeable: $mergeable,
-      success: $success
-    }
-  '
+    jq -cn \
+      --argjson pull "$pull" \
+      --argjson requested "$requested" \
+      --argjson reviews "$reviews" \
+      --argjson details "$details" \
+      --argjson checks "$checks" \
+      --argjson status "$status" '
+        ($checks.check_runs // []) as $runs
+        | ($status.statuses // []) as $statuses
+        | {
+            pr: $pull.number,
+            url: $pull.html_url,
+            branch: $pull.head.ref,
+            title: $pull.title,
+            teams: ([$requested.teams[]?.slug] | unique),
+            users: ([$requested.users[]?.login, $reviews[]?.user.login] | map(select(. != null)) | unique),
+            mergeable: ($details.mergeable == true),
+            success: (
+              ($runs | length) + ($statuses | length) > 0
+              and ($checks.total_count == ($runs | length))
+              and all($runs[]; .status == "completed" and .conclusion == "success")
+              and (($statuses | length) == 0 or $status.state == "success")
+            )
+          }
+      '
+  done
 }
 
 list | shape

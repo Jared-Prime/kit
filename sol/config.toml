@@ -22,4 +22,4 @@ enabled = true
 
 [[skills.config]]
 path = "/home/agent/.agents/skills/guided-review/SKILL.md"
-enabled = false
+enabled = true
