@@ -66,6 +66,7 @@ function shape {
             branch: $pull.head.ref,
             title: $pull.title,
             teams: ([$requested.teams[]?.slug] | unique),
+            requested_users: ([$requested.users[]?.login] | unique),
             users: ([$requested.users[]?.login, $reviews[]?.user.login] | map(select(. != null)) | unique),
             mergeable: ($details.mergeable == true),
             success: (

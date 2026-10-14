@@ -16,7 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPTS = ROOT / "skills" / "guided-review" / "scripts"
 
 
-def pr(number, team="reviewers", conclusion="success", draft=False, status_state=None):
+def pr(
+    number,
+    team="reviewers",
+    conclusion="success",
+    draft=False,
+    status_state=None,
+    requested_user="alice",
+    reviewer="bob",
+):
     return {
         "number": number,
         "draft": draft,
@@ -26,8 +34,8 @@ def pr(number, team="reviewers", conclusion="success", draft=False, status_state
         "updated_at": "2026-10-14T00:00:00Z",
         "mergeable": True,
         "requested_teams": [{"slug": team}],
-        "requested_reviewers": [{"login": "alice"}],
-        "reviews": [{"user": {"login": "bob"}}],
+        "requested_reviewers": [] if requested_user is None else [{"login": requested_user}],
+        "reviews": [] if reviewer is None else [{"user": {"login": reviewer}}],
         "check_runs": [{"status": "completed", "conclusion": conclusion}],
         "statuses": [] if status_state is None else [{"state": status_state}],
     }
@@ -91,7 +99,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.env["MOCK_PRS"] = json.dumps(
             [
                 pr(7),
-                pr(8, team="another-team"),
+                pr(8, team="another-team", requested_user="carol"),
                 pr(9, conclusion="cancelled"),
                 pr(10, draft=True),
                 pr(11, status_state="failure"),
@@ -104,6 +112,22 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertEqual(
             result.stdout.splitlines(),
             ["- [ ] [PR7](https://example.test/pr/7): Change 7 - `feature-7`"],
+        )
+
+    def test_available_includes_direct_request_but_not_past_reviewer(self):
+        self.env["MOCK_PRS"] = json.dumps(
+            [
+                pr(12, team="another-team"),
+                pr(13, team="another-team", requested_user=None, reviewer="alice"),
+            ]
+        )
+
+        result = self.run_script("available.sh")
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(
+            result.stdout.splitlines(),
+            ["- [ ] [PR12](https://example.test/pr/12): Change 12 - `feature-12`"],
         )
 
     def test_checkout_fetches_pr_ref_with_full_history(self):

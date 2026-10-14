@@ -18,8 +18,8 @@ function available {
 
     def available:
       ( $team | split(",")) as $t
-      | [.teams[] | select(IN($t[]))]
-      | length > 0;
+      | (([.teams[] | select(IN($t[]))] | length > 0)
+         or (.requested_users | index($user) != null));
 
     .[]
     | select(available)
