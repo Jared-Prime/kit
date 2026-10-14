@@ -228,6 +228,27 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertIn("already exists", result.stderr)
         self.assertFalse(log.exists(), "checkout should stop before calling git")
 
+    def test_checkout_aborts_before_git_when_directory_exists(self):
+        (self.work / "review" / "7").mkdir(parents=True)
+        git = self.bin / "git"
+        git.write_text('#!/usr/bin/env bash\nprintf "called\\n" > "$MOCK_GIT_LOG"\n')
+        git.chmod(0o755)
+        log = self.work / "git.log"
+        self.env.update(
+            {
+                "HOME": str(self.work),
+                "PR_NUMBER": "7",
+                "SSH_URL": "git@example.test:example/repo.git",
+                "MOCK_GIT_LOG": str(log),
+            }
+        )
+
+        result = self.run_script("checkout.sh")
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("already exists", result.stderr)
+        self.assertFalse(log.exists(), "checkout should stop before calling git")
+
 
 if __name__ == "__main__":
     unittest.main()
