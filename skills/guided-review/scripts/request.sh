@@ -72,7 +72,7 @@ function shape {
             success: (
               ($runs | length) + ($statuses | length) > 0
               and ($checks.total_count == ($runs | length))
-              and all($runs[]; .status == "completed" and .conclusion == "success")
+              and all($runs[]; .status == "completed" and (.conclusion | IN("success", "neutral", "skipped")))
               and (($statuses | length) == 0 or $status.state == "success")
             )
           }

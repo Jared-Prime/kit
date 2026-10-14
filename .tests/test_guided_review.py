@@ -86,12 +86,13 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         )
 
     def test_context_uses_https_clone_url(self):
+        self.env["GH_REPO"] = "EXAMPLE/repo"
         gh = self.bin / "gh"
         gh.write_text(
             '#!/usr/bin/env bash\n'
             'case "$*" in\n'
             '  "api user --jq .login") printf "alice\\n" ;;\n'
-            '  "api repos/example/repo --jq .clone_url") '
+            '  "api repos/EXAMPLE/repo --jq .clone_url") '
             'printf "https://github.com/example/repo.git\\n" ;;\n'
             '  "api user/teams --paginate") '
             'printf \'[{"slug":"reviewers","organization":{"login":"example"}}]\\n\' ;;\n'
@@ -103,6 +104,7 @@ class GuidedReviewScriptsTest(unittest.TestCase):
 
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("CLONE_URL = 'https://github.com/example/repo.git'", result.stdout)
+        self.assertIn("GH_TEAM = 'reviewers'", result.stdout)
 
     def test_request_emits_one_pr_with_combined_users(self):
         self.env["MOCK_PRS"] = json.dumps([pr(7)])
@@ -149,6 +151,26 @@ class GuidedReviewScriptsTest(unittest.TestCase):
         self.assertEqual(
             result.stdout.splitlines(),
             ["- [ ] [PR12](https://example.test/pr/12): Change 12 - `feature-12`"],
+        )
+
+    def test_available_includes_neutral_and_skipped_checks(self):
+        self.env["MOCK_PRS"] = json.dumps(
+            [
+                pr(14, conclusion="neutral"),
+                pr(15, conclusion="skipped"),
+                pr(16, conclusion="failure"),
+            ]
+        )
+
+        result = self.run_script("available.sh")
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(
+            result.stdout.splitlines(),
+            [
+                "- [ ] [PR14](https://example.test/pr/14): Change 14 - `feature-14`",
+                "- [ ] [PR15](https://example.test/pr/15): Change 15 - `feature-15`",
+            ],
         )
 
     def test_checkout_fetches_pr_ref_with_full_history(self):

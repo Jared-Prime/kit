@@ -18,7 +18,7 @@ function team {
     jq -sr --arg org "$org" '
       [
         .[][]
-        | select(.organization.login == $org)
+        | select((.organization.login | ascii_downcase) == ($org | ascii_downcase))
         | .slug
       ] | join(",")
     '
