@@ -21,10 +21,15 @@ Do not treat completion of one phase as permission to start the next.
 Set `GH_REPO=OWNER/REPO` in the environment before running these scripts.
 
 1. run `scripts/context.sh` and refer to the output for the other commands
-2. run `scripts/available.sh` then ask the user to select an available pull request
-3. run `scripts/checkout.sh` using the output from (1) and the selection from (2) as `PR_NUMBER`
+2. if the user has supplied a pull request number
+   - then continue to 3
+   - else run `scripts/available.sh` then ask the user to select an available pull request
+3. run `scripts/inspect.sh $PR_NUMBER` to read the output for description, SHAs, commits, reviews, comments, changelist, and checks
+4. run `scripts/checkout.sh` using the output from (1) and the `PR_NUMBER` supplied by the user or selected in (2).
 
-A copy of the PR's base branch and the reviewable branch can be found in the specified location from (3).
+A copy of the PR's base branch and the reviewable branch can be found in the specified location from (4).
+
+Report any direct usage of `gh` outside the scripts as a potential SKILL issue needing a fix; scripts should handle all this setup.
 
 ## Phase 1: Expectations
 
