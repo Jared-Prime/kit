@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM nixos/nix:2.28.8 AS build
+FROM nixos/nix:2.35.3 AS build
 
 WORKDIR /src
 
