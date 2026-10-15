@@ -2,11 +2,14 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 
 ## Quickstart
 
+After a release containing these changes is published, replace `<release-tag>`
+with that release's tag. The existing `v1.1.0` images only support `amd64`.
+
 ```shell
 sbx settings set kit.allowedSources '["docker.io/","github.com/jared-prime/","ghcr.io/jared-prime/"]'
-sbx run 'ghcr.io/jared-prime/kit-sol:v1.0.0' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.0.0' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.0.0' \
+sbx run 'ghcr.io/jared-prime/kit-sol:<release-tag>' \
+  --kit 'ghcr.io/jared-prime/kit-github:<release-tag>' \
+  --kit 'ghcr.io/jared-prime/kit-skills:<release-tag>' \
   --kit-arg gh_repo=jared-prime/kit
 ```
 
