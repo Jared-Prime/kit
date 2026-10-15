@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Jared-Prime/kit/compare/v1.1.0...v1.1.1) (2026-10-15)
+
+
+### Bug Fixes
+
+* **oci:** better oci setup ([#21](https://github.com/Jared-Prime/kit/issues/21)) ([b4b97b6](https://github.com/Jared-Prime/kit/commit/b4b97b6bdf1f57a59efd61ad4311be9e4e731efa))
+
 ## [1.1.0](https://github.com/Jared-Prime/kit/compare/v1.0.0...v1.1.0) (2026-10-15)
 
 
