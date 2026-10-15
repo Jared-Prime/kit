@@ -6,3 +6,7 @@ description: Skills from this kit packaged as a complete mixin
 author: Jared Davis
 kind: mixin
 dockerfile: skills.dockerfile
+capabilities:
+  - type: com.docker.sandbox/agent-skill@1
+    config:
+      path: /usr/share/kit/skills/guided-review
