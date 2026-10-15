@@ -37,8 +37,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - kit: sol
-            file: codex.yaml
+          - kit: openai
+            file: openai.yaml
           - kit: anthropic
             file: anthropic.yaml
           - kit: github

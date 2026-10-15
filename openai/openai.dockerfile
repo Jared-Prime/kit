@@ -3,7 +3,7 @@ FROM scratch AS configs
 
 WORKDIR /etc/codex
 
-COPY config.toml /etc/codex/config.toml
+COPY openai.toml /etc/codex/config.toml
 
 FROM docker/sandbox-templates:codex@sha256:a68b972a59148c6359ade441387159033f6d196d48aef9dda06d2d4bb26eb41e
 

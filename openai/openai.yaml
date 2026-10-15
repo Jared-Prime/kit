@@ -1,0 +1,26 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Codex (OpenAI)
+description: OpenAI Codex CLI as a sandbox workload preconfigured for GPT-6 Sol
+author: Jared Davis
+
+sourceUrl: https://github.com/openai/codex
+
+kind: workload
+provides: ["codex@0.162.1"]
+dockerfile: openai.dockerfile
+capabilities:
+  - type: com.docker.sandbox/sbx@1
+
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - api.openai.com
+          - auth.openai.com
+          - chatgpt.com
+
+  - type: com.docker.sandbox/agent-skills@1
+    config:
+      path: /home/agent/.agents/skills

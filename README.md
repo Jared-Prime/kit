@@ -7,7 +7,7 @@ with that release's tag. The existing `v1.1.0` images only support `amd64`.
 
 ```shell
 sbx settings set kit.allowedSources '["docker.io/","github.com/jared-prime/","ghcr.io/jared-prime/"]'
-sbx run 'ghcr.io/jared-prime/kit-sol:<release-tag>' \
+sbx run 'ghcr.io/jared-prime/kit-openai:<release-tag>' \
   --kit 'ghcr.io/jared-prime/kit-github:<release-tag>' \
   --kit 'ghcr.io/jared-prime/kit-skills:<release-tag>' \
   --kit-arg gh_repo=jared-prime/kit
@@ -22,7 +22,7 @@ sbx run 'ghcr.io/jared-prime/kit-anthropic:<release-tag>' \
   --kit-arg gh_repo=jared-prime/kit
 ```
 
-See [sol/README.md](sol/README.md) for more details on the `codex` workflow.
+See [openai/README.md](openai/README.md) for more details on the `codex` workflow.
 See [anthropic/README.md](anthropic/README.md) for more details on the `claude` workflow.
 See [github/README.md](github/README.md) for more details on the `gh` mixin.
 
@@ -31,7 +31,7 @@ See [github/README.md](github/README.md) for more details on the `gh` mixin.
 Build and run the kit locally
 
 ```shell
-sbx run ./sol --name sol-local-development \
+sbx run ./openai --name openai-local-development \
   --kit ./github \
   --kit ./skills \
   --kit-arg gh_repo=jared-prime/kit
