@@ -4,4 +4,5 @@ schemaVersion: "3"
 displayName: Skills
 description: Skills from this kit packaged as a complete mixin
 author: Jared Davis
+kind: mixin
 dockerfile: skills.dockerfile
