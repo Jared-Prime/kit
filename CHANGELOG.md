@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/Jared-Prime/kit/compare/v1.1.2...v1.2.0) (2026-10-15)
+
+
+### Features
+
+* **openai:** switch openai to use device auth login ([#33](https://github.com/Jared-Prime/kit/issues/33)) ([250981e](https://github.com/Jared-Prime/kit/commit/250981eea2cd01a70daf5e8a66a0557100c2d5e9))
+* **sonnet:** prepare sonnet workflow kit ([#31](https://github.com/Jared-Prime/kit/issues/31)) ([bd76729](https://github.com/Jared-Prime/kit/commit/bd767291cc0c143c6d4be2df5840e6d54bdacdbc))
+
 ## [1.1.2](https://github.com/Jared-Prime/kit/compare/v1.1.1...v1.1.2) (2026-10-15)
 
 
