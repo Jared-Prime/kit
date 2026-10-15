@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Jared-Prime/kit/compare/v1.1.1...v1.1.2) (2026-10-15)
+
+
+### Bug Fixes
+
+* **github:** replace nix ([#23](https://github.com/Jared-Prime/kit/issues/23)) ([4669f01](https://github.com/Jared-Prime/kit/commit/4669f01ed5426d484af453a12f545d69d249b7df))
+
 ## [1.1.1](https://github.com/Jared-Prime/kit/compare/v1.1.0...v1.1.1) (2026-10-15)
 
 
