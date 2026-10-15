@@ -39,6 +39,8 @@ jobs:
         include:
           - kit: sol
             file: codex.yaml
+          - kit: anthropic
+            file: anthropic.yaml
           - kit: github
             file: github.yaml
           - kit: skills

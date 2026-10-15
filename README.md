@@ -13,7 +13,17 @@ sbx run 'ghcr.io/jared-prime/kit-sol:<release-tag>' \
   --kit-arg gh_repo=jared-prime/kit
 ```
 
+...or with Claude Code
+
+```shell
+sbx run 'ghcr.io/jared-prime/kit-anthropic:<release-tag>' \
+  --kit 'ghcr.io/jared-prime/kit-github:<release-tag>' \
+  --kit 'ghcr.io/jared-prime/kit-skills:<release-tag>' \
+  --kit-arg gh_repo=jared-prime/kit
+```
+
 See [sol/README.md](sol/README.md) for more details on the `codex` workflow.
+See [anthropic/README.md](anthropic/README.md) for more details on the `claude` workflow.
 See [github/README.md](github/README.md) for more details on the `gh` mixin.
 
 ## Development

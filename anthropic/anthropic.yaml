@@ -1,0 +1,60 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Claude Code (Anthropic)
+description: Anthropic Claude Code CLI as a sandbox workload
+author: Jared Davis
+
+sourceUrl: https://github.com/anthropics/claude-code
+
+kind: workload
+provides: ["claude-code@2.1.300"]
+dockerfile: anthropic.dockerfile
+args:
+  model:
+    default: "claude-sonnet-5"
+    description: Claude model ID or alias, e.g. claude-fable-5-1, sonnet, opus[1m]
+    pattern: '^[a-z0-9.-]+(\[1m\])?$'
+    env: ANTHROPIC_MODEL
+  effort:
+    default: "medium"
+    description: Claude reasoning effort level
+    pattern: '^(low|medium|high|xhigh|max)$'
+    env: CLAUDE_CODE_EFFORT_LEVEL
+capabilities:
+  - type: com.docker.sandbox/sbx@1
+
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - api.anthropic.com
+
+  - type: com.docker.sandbox/credential@1
+    config:
+      service: anthropic
+      phase: runtime
+      apiKey:
+        name: ANTHROPIC_API_KEY
+        proxyManaged: true
+        inject:
+          - domain: api.anthropic.com
+            header: x-api-key
+
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - user: agent
+          command: |
+            tmp="$(mktemp)"
+            jq --arg key "${ANTHROPIC_API_KEY:-}" \
+              '.hasCompletedOnboarding = true
+               | .customApiKeyResponses.approved =
+                   ([$key | gsub("^\\s+|\\s+$"; "") | .[-20:]] | map(select(. != "")))' \
+              /home/agent/.claude.json > "$tmp" \
+              && cat "$tmp" > /home/agent/.claude.json
+            rm -f "$tmp"
+
+  - type: com.docker.sandbox/agent-skills@1
+    config:
+      path: /home/agent/.claude/skills
