@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Jared-Prime/kit/compare/v1.0.0...v1.1.0) (2026-10-15)
+
+
+### Features
+
+* **ci:** build OCI images ([#17](https://github.com/Jared-Prime/kit/issues/17)) ([7ae2f50](https://github.com/Jared-Prime/kit/commit/7ae2f50c5231dba3ce656b5f48d134a7ff5c02b4))
+
 ## 1.0.0 (2026-10-14)
 
 
