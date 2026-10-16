@@ -2,38 +2,25 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 
 ## Quickstart
 
-After a release containing these changes is published, replace `<release-tag>`
-with that release's tag. The existing `v1.1.0` images only support `amd64`.
-
 ```shell
-sbx settings set kit.allowedSources '["docker.io/","github.com/jared-prime/","ghcr.io/jared-prime/"]'
-sbx run 'ghcr.io/jared-prime/kit-openai:<release-tag>' \
-  --kit 'ghcr.io/jared-prime/kit-github:<release-tag>' \
-  --kit 'ghcr.io/jared-prime/kit-skills:<release-tag>' \
+sbx 'ghcr.io/jared-prime/kit-anthropic:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0' \
   --kit-arg gh_repo=jared-prime/kit
 ```
 
-...or with Claude Code
-
-```shell
-sbx run 'ghcr.io/jared-prime/kit-anthropic:<release-tag>' \
-  --kit 'ghcr.io/jared-prime/kit-github:<release-tag>' \
-  --kit 'ghcr.io/jared-prime/kit-skills:<release-tag>' \
-  --kit-arg gh_repo=jared-prime/kit
-```
-
-See [openai/README.md](openai/README.md) for more details on the `codex` workflow.
-See [anthropic/README.md](anthropic/README.md) for more details on the `claude` workflow.
-See [github/README.md](github/README.md) for more details on the `gh` mixin.
+See the [recipes](doc/recipes.md) for more sandbox creation examples.
 
 ## Development
 
-Build and run the kit locally
+Use the local directory while developing and testing
 
 ```shell
-sbx run ./openai --name openai-local-development \
-  --kit ./github \
-  --kit ./skills \
+sbx './anthropic' \
+  --kit './github' \
+  --kit './typescript' \
+  --kit './skills' \
   --kit-arg gh_repo=jared-prime/kit
 ```
 
