@@ -16,6 +16,7 @@ RUN (type -p wget >/dev/null || (apt update && apt install wget -y)) \
     && rm -rf /var/lib/apt/lists/*
 
 FROM scratch
+
 COPY --from=build /usr/bin/gh /usr/local/bin/gh
 
 ENTRYPOINT ["/usr/local/bin/gh"]
