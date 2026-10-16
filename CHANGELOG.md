@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Jared-Prime/kit/compare/v1.2.0...v1.3.0) (2026-10-16)
+
+
+### Features
+
+* build typescript kit ([#34](https://github.com/Jared-Prime/kit/issues/34)) ([f38dd6d](https://github.com/Jared-Prime/kit/commit/f38dd6d026e2f8ec46d7899dcf8b23460b6b9359))
+
 ## [1.2.0](https://github.com/Jared-Prime/kit/compare/v1.1.2...v1.2.0) (2026-10-15)
 
 
