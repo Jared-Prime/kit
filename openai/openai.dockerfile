@@ -1,17 +1,15 @@
 # syntax=docker/dockerfile:1
-FROM scratch AS configs
+ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.0-pre
 
-WORKDIR /etc/codex
+FROM scratch AS config
 
 COPY openai.toml /etc/codex/config.toml
 
-FROM docker/sandbox-templates:codex@sha256:a68b972a59148c6359ade441387159033f6d196d48aef9dda06d2d4bb26eb41e
+FROM ${BASE}
 
-USER agent
+RUN pnpm add -g @openai/codex@0.162.1 --allow-build=@openai/codex && \
+    test "$(codex --version)" = "codex-cli 0.162.1"
 
-RUN npm install -g @openai/codex@0.162.1 \
- && test "$(codex --version)" = "codex-cli 0.162.1"
-
-COPY --from=configs /etc/codex/config.toml /etc/codex/config.toml
+COPY --from=config /etc/codex/config.toml /etc/codex/config.toml
 
 ENTRYPOINT [ "codex" ]

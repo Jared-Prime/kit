@@ -1,6 +1,6 @@
 # TypeScript toolchain
 
-Node.js, pnpm, and the TypeScript compiler are available as a mixin.
+Node.js, pnpm, and the TypeScript compiler are available in this Docker Sandbox kit.
 
 ```shell
 pnpm install --frozen-lockfile

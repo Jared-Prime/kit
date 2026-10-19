@@ -6,7 +6,7 @@ description: Anomaly `opencode` as a sandbox workload preconfigured for LM Studi
 author: Jared Davis
 
 kind: workload
-provides: ["opencode@2.0.29"]
+provides: ["opencode@2.0.32"]
 dockerfile: anomaly.dockerfile
 capabilities:
   - type: com.docker.sandbox/sbx@1

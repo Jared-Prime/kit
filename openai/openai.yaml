@@ -24,3 +24,7 @@ capabilities:
   - type: com.docker.sandbox/agent-skills@1
     config:
       path: /home/agent/.agents/skills
+
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: openai.context.md

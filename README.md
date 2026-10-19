@@ -54,3 +54,23 @@ Allow policies are additive; deny policies are blocking.
 An organization with a paid subscription manages [governance permissions](https://docs.docker.com/ai/sandboxes/governance/access-controls/organization/).
 When active, the managed policy replaces the local `sbx` policy entirely.
 A kit's `network-policy.allow` declarations and any local machine policies will no longer evaluate.
+
+# recipes
+
+## Full Kit with Claude (Sonnet-5)
+
+```shell
+sbx 'ghcr.io/jared-prime/kit-anthropic:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0'
+```
+
+## Full Kit with Codex (GPT-6 Sol)
+
+```shell
+sbx 'ghcr.io/jared-prime/kit-openai:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0'
+```
