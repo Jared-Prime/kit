@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/Jared-Prime/kit/compare/v1.3.0...v1.4.0) (2026-10-19)
+
+
+### Features
+
+* **anomaly:** create opencode harness workflow ([#36](https://github.com/Jared-Prime/kit/issues/36)) ([410932f](https://github.com/Jared-Prime/kit/commit/410932f563c1034c4acef7a27a3155cb9bff6e08))
+
+
+### Bug Fixes
+
+* conform to gid 1000 and chown corepack ([#42](https://github.com/Jared-Prime/kit/issues/42)) ([a939250](https://github.com/Jared-Prime/kit/commit/a939250189cbbae2a80abb1e76df6d891149a1de))
+
 ## [1.3.0](https://github.com/Jared-Prime/kit/compare/v1.2.0...v1.3.0) (2026-10-16)
 
 
