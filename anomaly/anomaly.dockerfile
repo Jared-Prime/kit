@@ -2,7 +2,7 @@ FROM scratch AS config
 
 COPY anomaly.jsonc /etc/opencode/opencode.jsonc
 
-FROM ghcr.io/anomalyco/opencode:2.0.29
+FROM ghcr.io/anomalyco/opencode:2.0.32
 
 RUN apk add --no-cache bash git \
     && addgroup -g 1001 agent \
