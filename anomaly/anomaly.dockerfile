@@ -1,15 +1,15 @@
+# syntax=docker/dockerfile:1
+ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.0-pre
+
 FROM scratch AS config
 
 COPY anomaly.jsonc /etc/opencode/opencode.jsonc
 
-FROM ghcr.io/anomalyco/opencode:2.0.32
+FROM ${BASE}
 
-RUN apk add --no-cache bash git \
-    && addgroup -g 1000 agent \
-    && adduser -D -u 1000 -G agent -h /home/agent -s /bin/bash agent
+RUN pnpm add -g @opencode/cli@2.0.32 --allow-build=@opencode/cli && \
+    test "$(opencode --version)" = "opencode v2.0.32"
 
-USER agent
-
-COPY --from=config /etc/opencode /etc/opencode
+COPY --from=config /etc/opencode/opencode.jsonc /etc/opencode/opencode.jsonc
 
 ENTRYPOINT ["opencode"]

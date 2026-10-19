@@ -6,11 +6,17 @@ approval_policy = "on-request"
 model_reasoning_effort = "medium"
 forced_login_method = "chatgpt"
 
+[features]
+daemon_auto_start = false
+
 [permissions.readonly-net]
 extends = ":read-only"
 
 [permissions.readonly-net.network]
 enabled = true
+
+[tui]
+alternate_screen = "never"
 
 [[skills.config]]
 path = "/home/agent/.agents/skills/guided-review/SKILL.md"

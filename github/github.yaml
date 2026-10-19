@@ -1,12 +1,12 @@
 # syntax=docker/sandbox-kit:3
 
 schemaVersion: "3"
-displayName: GitHub CLI (read-only)
-description: GitHub CLI (gh) as a read-only overlay
+displayName: GitHub CLI (gh)
+description: GitHub CLI (gh) as an authenticated, read-only mixin
 author: Jared Davis
 
 kind: mixin
-provides: ["gh@2.102.0"]
+provides: ["gh@2"]
 dockerfile: github.dockerfile
 args:
   gh_repo:
@@ -21,6 +21,7 @@ capabilities:
       runtime:
         allow:
           - hosts:
+              - api.github.com
               - github.com
             methods:
               - GET
@@ -31,11 +32,7 @@ capabilities:
               - POST
             paths:
               - "/**/git-upload-pack"
-          - hosts:
-              - api.github.com
-            methods:
-              - GET
-              - HEAD
+
         deny:
           - hosts:
               - github.com
@@ -43,6 +40,7 @@ capabilities:
               - POST
             paths:
               - "/**/git-receive-pack"
+
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for GitHub
     optional: true
@@ -59,6 +57,7 @@ capabilities:
           - domain: github.com
             scheme: basic
             username: x-access-token
+
   - type: com.docker.sandbox/agent-context@1
     config:
       contentFile: github.context.md

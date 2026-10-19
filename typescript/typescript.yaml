@@ -6,7 +6,7 @@ description: Node.js, pnpm, and the TypeScript compiler as a mixin, scoped to np
 author: Jared Davis
 
 kind: mixin
-provides: ["node@24", "pnpm@10.15.0", "typescript@5.9.2"]
+provides: ["node@24", "pnpm@10.15.0", "typescript@5.9.2", "git@2.54.0", "jq@1.8.2"]
 dockerfile: typescript.dockerfile
 
 capabilities:

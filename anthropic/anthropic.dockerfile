@@ -1,17 +1,16 @@
 # syntax=docker/dockerfile:1
-FROM scratch AS configs
+ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.0-pre
 
-WORKDIR /etc/claude-code
+FROM scratch AS config
 
 COPY managed-settings.json /etc/claude-code/managed-settings.json
 
-FROM docker/sandbox-templates:claude-code@sha256:868e3f5ef10579e06903d42e86448851ed59319ab8b9fba6dea2772c449bb2a6
+FROM ${BASE}
 
-USER agent
+RUN pnpm add -g @anthropic-ai/claude-code@2.1.300 --allow-build=@anthropic-ai/claude-code \
+ && test "$(claude --version)" = "2.1.300 (Claude Code)" \
+ && mkdir -p /home/agent/.claude
 
-RUN claude install 2.1.300 \
- && test "$(claude --version)" = "2.1.300 (Claude Code)"
-
-COPY --from=configs /etc/claude-code/managed-settings.json /etc/claude-code/managed-settings.json
+COPY --from=config /etc/claude-code/managed-settings.json /etc/claude-code/managed-settings.json
 
 ENTRYPOINT [ "claude" ]
