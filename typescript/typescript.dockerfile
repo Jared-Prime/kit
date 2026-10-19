@@ -17,13 +17,13 @@ RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
 
 FROM scratch
 
-ENV COREPACK_HOME="/opt/corepack"
-ENV PNPM_HOME="/opt/pnpm"
+ENV COREPACK_HOME="/home/agent/.cache/corepack"
+ENV PNPM_HOME="/home/agent/.cache/pnpm"
 ENV PATH="${PNPM_HOME}:/usr/local/bin:${PATH}"
 
-COPY --from=build /usr/local /usr/local
-COPY --from=build /opt/corepack /opt/corepack
-COPY --from=build /opt/pnpm /opt/pnpm
+COPY --from=build --chown=1000:1000 /usr/local /usr/local
+COPY --from=build --chown=1000:1000 /opt/corepack /home/agent/.cache/corepack
+COPY --from=build --chown=1000:1000 /opt/pnpm /home/agent/.cache/pnpm
 
-ENTRYPOINT ["/usr/local/bin/pnpm"]
+ENTRYPOINT ["pnpm"]
 CMD ["--version"]
