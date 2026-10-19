@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.0-pre
+ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.2
 
 FROM scratch AS config
 
