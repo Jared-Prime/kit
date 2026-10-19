@@ -1,9 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG BASE=ghcr.io/jared-prime/kit-typescript:v1.4.0-pre
-
-FROM ${BASE}
-
-USER root
+FROM node:24.22-alpine3.24@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f
 
 RUN apk add --no-cache github-cli
 
