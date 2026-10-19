@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/Jared-Prime/kit/compare/v1.4.0...v1.4.1) (2026-10-19)
+
+
+### Bug Fixes
+
+* **github:** skip over intermediate typescript layer ([#44](https://github.com/Jared-Prime/kit/issues/44)) ([8b0c17a](https://github.com/Jared-Prime/kit/commit/8b0c17a4ac87cd52a9999886fe7b6b1c8332a237))
+
 ## [1.4.0](https://github.com/Jared-Prime/kit/compare/v1.3.0...v1.4.0) (2026-10-19)
 
 
