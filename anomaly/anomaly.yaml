@@ -1,0 +1,31 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Anomaly
+description: Anomaly `opencode` as a sandbox workload preconfigured for LM Studio
+author: Jared Davis
+
+kind: workload
+provides: ["opencode@2.0.29"]
+dockerfile: anomaly.dockerfile
+capabilities:
+  - type: com.docker.sandbox/sbx@1
+
+  - type: com.docker.sandbox/network-policy@2
+    config:
+      runtime:
+        allow:
+          - opencode.ai
+          # LM Studio — policy matches against localhost:<port> even though
+          # the agent connects via host.docker.internal:<port>
+          - localhost:1234
+
+  - type: com.docker.sandbox/agent-sessions@1
+    config:
+      resume: ["-s", "{{.SessionID}}"]
+      continue: ["-c"]
+      list: "opencode session list --format json | jq -r '.[].id'"
+
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      filename: anomaly.context.md
