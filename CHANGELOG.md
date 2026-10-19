@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/Jared-Prime/kit/compare/v1.4.1...v1.4.2) (2026-10-19)
+
+
+### Bug Fixes
+
+* **typescript:** must be a workload to use effectively as a base ([#46](https://github.com/Jared-Prime/kit/issues/46)) ([c24064e](https://github.com/Jared-Prime/kit/commit/c24064ecc5070f3ef9060afffd0b7eca60340771))
+
 ## [1.4.1](https://github.com/Jared-Prime/kit/compare/v1.4.0...v1.4.1) (2026-10-19)
 
 
