@@ -41,6 +41,10 @@ capabilities:
       continue: ["-c"]
       list: "opencode session list --format json | jq -r '.[].id'"
 
+  - type: com.docker.sandbox/agent-skills@1
+    config:
+      path: /home/agent/.config/opencode/skills
+
   - type: com.docker.sandbox/agent-context@1
     config:
       contentFile: anomaly.context.md
