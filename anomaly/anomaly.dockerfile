@@ -38,5 +38,6 @@ RUN pnpm add -g @opencode/cli@2.0.32 --allow-build=@opencode/cli && \
     test "$(opencode --version)" = "opencode v2.0.32"
 
 COPY --from=config /etc/opencode/opencode.jsonc /etc/opencode/opencode.jsonc
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT ["opencode"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

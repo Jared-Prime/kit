@@ -40,5 +40,6 @@ RUN pnpm add -g @anthropic-ai/claude-code@2.1.300 --allow-build=@anthropic-ai/cl
  && mkdir -p /home/agent/.claude
 
 COPY --from=config /etc/claude-code/managed-settings.json /etc/claude-code/managed-settings.json
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT [ "claude" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]

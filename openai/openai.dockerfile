@@ -39,5 +39,6 @@ RUN pnpm add -g @openai/codex@0.162.1 --allow-build=@openai/codex && \
     test "$(codex --version)" = "codex-cli 0.162.1"
 
 COPY --from=config /etc/codex/config.toml /etc/codex/config.toml
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT [ "codex" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
