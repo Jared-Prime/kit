@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/Jared-Prime/kit/compare/v1.4.2...v1.5.0) (2026-10-20)
+
+
+### Features
+
+* prepare harness-specific sandbox sets ([#51](https://github.com/Jared-Prime/kit/issues/51)) ([5d2791f](https://github.com/Jared-Prime/kit/commit/5d2791f3f76f2bef63f8152c8f1874fbd28c0f66))
+* **python:** create a python mixin ([#49](https://github.com/Jared-Prime/kit/issues/49)) ([dfe8e41](https://github.com/Jared-Prime/kit/commit/dfe8e41a6fdf2b7f0166bfc6d93034d2ab8915c2))
+
 ## [1.4.2](https://github.com/Jared-Prime/kit/compare/v1.4.1...v1.4.2) (2026-10-19)
 
 
