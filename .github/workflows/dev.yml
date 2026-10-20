@@ -90,7 +90,7 @@ jobs:
             echo 'schemaVersion: "3"'
             echo 'kind: set'
             echo "displayName: ${NAME} environment"
-            echo "version: \"${LATEST_VERSION}-dev+${SHA:0:7}\""
+            echo "version: \"${LATEST_VERSION}-dev+${GITHUB_SHA:0:7}\""
             echo 'kits:'
             for kit in $KITS; do
               echo "  - ref: ghcr.io/${OWNER}/kit-${kit}:dev"
