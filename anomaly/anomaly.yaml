@@ -15,10 +15,25 @@ capabilities:
     config:
       runtime:
         allow:
-          - opencode.ai
-          # LM Studio — policy matches against localhost:<port> even though
-          # the agent connects via host.docker.internal:<port>
-          - localhost:1234
+          - hosts:
+              - opencode.ai
+              # LM Studio — policy matches against localhost:<port> even though
+              # the agent connects via host.docker.internal:<port>
+              - localhost:1234
+          - hosts:
+              - registry.npmjs.org
+            methods:
+              - GET
+              - HEAD
+
+        deny:
+          - hosts:
+              - registry.npmjs.org
+            methods:
+              - PATCH
+              - POST
+              - PUT
+              - DELETE
 
   - type: com.docker.sandbox/agent-sessions@1
     config:
