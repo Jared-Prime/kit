@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/Jared-Prime/kit/compare/v1.5.1...v1.5.2) (2026-10-20)
+
+
+### Bug Fixes
+
+* rebundle harness and publish OCI ([#56](https://github.com/Jared-Prime/kit/issues/56)) ([f7b9d94](https://github.com/Jared-Prime/kit/commit/f7b9d94fffb43f15d6609c7546b1039acaca7eca))
+
 ## [1.5.1](https://github.com/Jared-Prime/kit/compare/v1.5.0...v1.5.1) (2026-10-20)
 
 
