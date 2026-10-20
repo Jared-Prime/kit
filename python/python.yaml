@@ -6,7 +6,7 @@ description: Python and uv as a mixin for Alpine-based (musl) workloads, scoped 
 author: Jared Davis
 
 kind: mixin
-provides: ["python@3.14", "uv@0.13.3"]
+provides: ["python@3.14", "uv@0.13.4"]
 dockerfile: python.dockerfile
 
 capabilities:

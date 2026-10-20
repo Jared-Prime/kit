@@ -51,3 +51,7 @@ capabilities:
   - type: com.docker.sandbox/agent-skills@1
     config:
       path: /home/agent/.claude/skills
+
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: anthropic.context.md

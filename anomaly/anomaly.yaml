@@ -43,4 +43,4 @@ capabilities:
 
   - type: com.docker.sandbox/agent-context@1
     config:
-      filename: anomaly.context.md
+      contentFile: anomaly.context.md
