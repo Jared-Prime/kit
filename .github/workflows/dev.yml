@@ -68,21 +68,29 @@ jobs:
             kits: [anomaly, github, python, skills]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - name: Set image namespace
         id: namespace
         run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+      - name: Find latest release version
+        id: latest
+        run: |
+          tag="$(git tag --list 'v*' --sort=-v:refname | head -1)"
+          echo "version=${tag#v}" >> "$GITHUB_OUTPUT"
       - name: Generate kit set descriptor
         env:
           OWNER: ${{ steps.namespace.outputs.owner }}
           NAME: ${{ matrix.name }}
           KITS: ${{ join(matrix.kits, ' ') }}
+          LATEST_VERSION: ${{ steps.latest.outputs.version }}
         run: |
           {
             echo '# syntax=docker/sandbox-kit:3'
             echo 'schemaVersion: "3"'
             echo 'kind: set'
             echo "displayName: ${NAME} environment"
-            echo 'version: "dev"'
+            echo "version: \"${LATEST_VERSION}-dev+${SHA:0:7}\""
             echo 'kits:'
             for kit in $KITS; do
               echo "  - ref: ghcr.io/${OWNER}/kit-${kit}:dev"
