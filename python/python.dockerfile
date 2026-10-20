@@ -6,12 +6,14 @@ LABEL authors="Jared Davis"
 ARG PYTHON_VERSION=3.14
 
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
+ENV PATH="/opt/uv/bin:${PATH}"
 
 RUN apk add --no-cache bash && \
     addgroup -g 1001 sandbox && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
-    mkdir -p "${UV_PYTHON_INSTALL_DIR}" && \
-    chown 1001:1001 "${UV_PYTHON_INSTALL_DIR}"
+    mkdir -p "${UV_PYTHON_INSTALL_DIR}" /opt/uv/bin && \
+    cp "$(command -v uv)" "$(command -v uvx)" /opt/uv/bin/ && \
+    chown -R 1001:1001 /opt/uv
 
 WORKDIR /home/agent
 
