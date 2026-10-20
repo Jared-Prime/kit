@@ -17,9 +17,24 @@ capabilities:
     config:
       runtime:
         allow:
-          - api.openai.com
-          - auth.openai.com
-          - chatgpt.com
+          - hosts:
+              - api.openai.com
+              - auth.openai.com
+              - chatgpt.com
+          - hosts:
+              - registry.npmjs.org
+            methods:
+              - GET
+              - HEAD
+
+        deny:
+          - hosts:
+              - registry.npmjs.org
+            methods:
+              - PATCH
+              - POST
+              - PUT
+              - DELETE
 
   - type: com.docker.sandbox/agent-skills@1
     config:
