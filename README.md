@@ -5,15 +5,15 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
 
 ```shell
-sbx 'ghcr.io/jared-prime/harness-claude:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-claude:v1.5.3' --kit-arg gh_repo=jared-prime/kit
 ```
 
 ```shell
-sbx 'ghcr.io/jared-prime/harness-codex:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-codex:v1.5.3' --kit-arg gh_repo=jared-prime/kit
 ```
 
 ```shell
-sbx 'ghcr.io/jared-prime/harness-opencode:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-opencode:v1.5.3' --kit-arg gh_repo=jared-prime/kit
 ```
 
 See the [recipes](doc/recipes.md) for more sandbox creation examples, or [compose your own kit set](#compose-your-own-kit-set) below.
@@ -68,17 +68,17 @@ A kit's `network-policy.allow` declarations and any local machine policies will 
 Each harness image is just a published bundle of individual kits. Mix and match them yourself if you want a different combination — e.g. swap `kit-python` for a different mixin, or drop `kit-skills` entirely:
 
 ```shell
-sbx 'ghcr.io/jared-prime/kit-anthropic:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-python:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.2'
+sbx 'ghcr.io/jared-prime/kit-anthropic:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-python:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.3'
 ```
 
 ```shell
-sbx 'ghcr.io/jared-prime/kit-openai:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-python:v1.5.2' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.2'
+sbx 'ghcr.io/jared-prime/kit-openai:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-python:v1.5.3' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.3'
 ```
 
-Add `ghcr.io/jared-prime/kit-typescript:v1.5.2` as its own `--kit` if your composition needs a standalone Node/pnpm/TypeScript toolchain — `kit-anthropic` and `kit-openai` already bundle their own, so it isn't required for the recipes above.
+Add `ghcr.io/jared-prime/kit-typescript:v1.5.3` as its own `--kit` if your composition needs a standalone Node/pnpm/TypeScript toolchain — `kit-anthropic` and `kit-openai` already bundle their own, so it isn't required for the recipes above.
