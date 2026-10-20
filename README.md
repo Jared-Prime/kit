@@ -2,15 +2,21 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 
 ## Quickstart
 
+Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
+
 ```shell
-sbx 'ghcr.io/jared-prime/kit-anthropic:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0' \
-  --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/claude:v1.5.2' --kit-arg gh_repo=jared-prime/kit
 ```
 
-See the [recipes](doc/recipes.md) for more sandbox creation examples.
+```shell
+sbx 'ghcr.io/jared-prime/codex:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+```
+
+```shell
+sbx 'ghcr.io/jared-prime/opencode:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+```
+
+See the [recipes](doc/recipes.md) for more sandbox creation examples, or [compose your own kit set](#compose-your-own-kit-set) below.
 
 ## Development
 
@@ -19,7 +25,7 @@ Use the local directory while developing and testing
 ```shell
 sbx './anthropic' \
   --kit './github' \
-  --kit './typescript' \
+  --kit './python' \
   --kit './skills' \
   --kit-arg gh_repo=jared-prime/kit
 ```
@@ -57,20 +63,22 @@ A kit's `network-policy.allow` declarations and any local machine policies will 
 
 # recipes
 
-## Full Kit with Claude (Sonnet-5)
+## Compose your own kit set
+
+Each harness image is just a published bundle of individual kits. Mix and match them yourself if you want a different combination — e.g. swap `kit-python` for a different mixin, or drop `kit-skills` entirely:
 
 ```shell
-sbx 'ghcr.io/jared-prime/kit-anthropic:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0'
+sbx 'ghcr.io/jared-prime/kit-anthropic:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-python:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.2'
 ```
-
-## Full Kit with Codex (GPT-6 Sol)
 
 ```shell
-sbx 'ghcr.io/jared-prime/kit-openai:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-github:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-typescript:v1.3.0' \
-  --kit 'ghcr.io/jared-prime/kit-skills:v1.3.0'
+sbx 'ghcr.io/jared-prime/kit-openai:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-github:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-python:v1.5.2' \
+  --kit 'ghcr.io/jared-prime/kit-skills:v1.5.2'
 ```
+
+Add `ghcr.io/jared-prime/kit-typescript:v1.5.2` as its own `--kit` if your composition needs a standalone Node/pnpm/TypeScript toolchain — `kit-anthropic` and `kit-openai` already bundle their own, so it isn't required for the recipes above.
