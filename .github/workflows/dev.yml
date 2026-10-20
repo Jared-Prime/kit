@@ -51,6 +51,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:dev
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache,mode=max
 
   harness:
     needs: kit
@@ -91,7 +93,7 @@ jobs:
             echo 'schemaVersion: "3"'
             echo 'kind: set'
             echo "displayName: ${NAME} environment"
-            echo "version: \"${LATEST_VERSION}-dev+${GITHUB_SHA:0:7}\""
+            echo "version: \"${LATEST_VERSION}\""
             echo 'kits:'
             for kit in $KITS; do
               echo "  - ref: ghcr.io/${OWNER}/kit-${kit}:dev"
@@ -111,3 +113,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:dev
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache,mode=max
