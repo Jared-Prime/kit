@@ -51,6 +51,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:dev
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache,mode=max
 
   harness:
     needs: kit
@@ -111,3 +113,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:dev
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache,mode=max
