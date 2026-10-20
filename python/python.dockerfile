@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/astral-sh/uv:0.13.3-alpine AS build
+FROM ghcr.io/astral-sh/uv:0.13.4-alpine AS build
 
 ARG PYTHON_VERSION=3.14
 
