@@ -1,0 +1,51 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Python toolchain
+description: Python and uv as a mixin, scoped to PyPI registry access
+author: Jared Davis
+
+kind: workload
+provides: ["python@3.14", "uv@0.13.3", "git@2.54.0", "jq@1.8.2"]
+dockerfile: python.dockerfile
+
+capabilities:
+  - type: com.docker.sandbox/network-policy@2
+    description: Network policy for read access to the PyPI registry and uv's Python distributions
+    config:
+      runtime:
+        allow:
+          - hosts:
+              - pypi.org
+              - files.pythonhosted.org
+            methods:
+              - GET
+              - HEAD
+          - hosts:
+              - github.com
+            methods:
+              - GET
+              - HEAD
+            paths:
+              - /astral-sh/python-build-standalone/releases/download/**
+          - hosts:
+              - objects.githubusercontent.com
+            methods:
+              - GET
+              - HEAD
+
+        deny:
+          - hosts:
+              - pypi.org
+              - files.pythonhosted.org
+              - github.com
+              - objects.githubusercontent.com
+            methods:
+              - PATCH
+              - POST
+              - PUT
+              - DELETE
+
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: python.context.md
