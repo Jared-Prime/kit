@@ -1,19 +1,21 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/astral-sh/uv:0.13.4-alpine AS build
+FROM ghcr.io/astral-sh/uv:0.13.4-alpine@sha256:325c1a47db636422f3d1e6a935a0a9d0e6395031665e5baa033d1691ddc9c27e AS uv
+
+LABEL authors="Jared Davis"
 
 ARG PYTHON_VERSION=3.14
 
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
 
-RUN uv --version | grep -q "uv 0.13.3" && \
-    uv python install "${PYTHON_VERSION}" && \
+RUN apk add --no-cache bash && \
+    addgroup -g 1001 sandbox && \
+    adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
+    mkdir -p "${UV_PYTHON_INSTALL_DIR}" && \
+    chown 1001:1001 "${UV_PYTHON_INSTALL_DIR}"
+
+WORKDIR /home/agent
+
+USER 1001:1001
+
+RUN uv python install "${PYTHON_VERSION}" && \
     uv python list --only-installed | grep -q "cpython-${PYTHON_VERSION}"
-
-FROM scratch
-
-LABEL authors="Jared Davis"
-
-COPY --from=build /usr/local/bin/uv /usr/local/bin/uvx /bin/
-COPY --from=build --chown=1001:1001 /opt/uv/python /opt/uv/python
-
-ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
