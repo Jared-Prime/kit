@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/Jared-Prime/kit/compare/v1.5.2...v1.5.3) (2026-10-20)
+
+
+### Bug Fixes
+
+* OCI artifacts must not conflict with official release names ([#58](https://github.com/Jared-Prime/kit/issues/58)) ([2cc6a06](https://github.com/Jared-Prime/kit/commit/2cc6a06b904e89eb4cb7893acf08f6b321672b9d))
+
 ## [1.5.2](https://github.com/Jared-Prime/kit/compare/v1.5.1...v1.5.2) (2026-10-20)
 
 
