@@ -1,7 +1,7 @@
 model = "gpt-6-sol"
 web_search = "indexed"
 personality = "pragmatic"
-default_permissions = "readonly-net"
+default_permissions = "workdir-net"
 approval_policy = "on-request"
 model_reasoning_effort = "medium"
 forced_login_method = "chatgpt"
@@ -9,10 +9,13 @@ forced_login_method = "chatgpt"
 [features]
 daemon_auto_start = false
 
-[permissions.readonly-net]
+[permissions.workdir-net]
 extends = ":read-only"
 
-[permissions.readonly-net.network]
+[permissions.workdir-net.filesystem.":workspace_roots"]
+"." = "write"
+
+[permissions.workdir-net.network]
 enabled = true
 
 [tui]
