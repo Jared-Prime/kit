@@ -16,14 +16,17 @@ ARG RIPGREP_VERSION=15.1.0-r0
 ENV COREPACK_HOME=/opt/corepack
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}:${PATH}"
+ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN apk add bash "git~${GIT_VERSION}" "jq~${JQ_VERSION}" "ripgrep=${RIPGREP_VERSION}" && \
+RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" "ripgrep=${RIPGREP_VERSION}" && \
     git --version | grep -q "^git version ${GIT_VERSION}$" && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
-    mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" && \
+    mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" /usr/local/share/ca-certificates && \
     chown 1001:1001 "${COREPACK_HOME}" "${PNPM_HOME}" && \
+    chown -R 1001:1001 /usr/local/share/ca-certificates /etc/ssl/certs /etc/ca-certificates.conf && \
     corepack enable
 
 WORKDIR /home/agent
@@ -46,5 +49,6 @@ RUN rg="$(find "${PNPM_HOME}" -path '*/codex-path/rg' -type f -print -quit)" && 
     rm "${rg}"
 
 COPY --from=config /etc/codex/config.toml /etc/codex/config.toml
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT [ "codex" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]

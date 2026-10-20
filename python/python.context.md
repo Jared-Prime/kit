@@ -1,6 +1,6 @@
 ## Installed
 
-Python 3.14 and uv 0.13.3 are available as a mixin in this Docker sandbox
+Python 3.14 and uv 0.13.4 are available as a mixin in this Docker sandbox
 kit, overlaid onto whatever workload it's composed with. `git` and `jq` are
 not provided by this mixin; they come from the workload.
 
