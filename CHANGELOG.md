@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/Jared-Prime/kit/compare/v1.5.0...v1.5.1) (2026-10-20)
+
+
+### Bug Fixes
+
+* decouple workloads from typescript kit ([#54](https://github.com/Jared-Prime/kit/issues/54)) ([0dc6990](https://github.com/Jared-Prime/kit/commit/0dc69907bb1fa54cc45bf422fee7d3a263c6fd95))
+
 ## [1.5.0](https://github.com/Jared-Prime/kit/compare/v1.4.2...v1.5.0) (2026-10-20)
 
 
