@@ -2,11 +2,11 @@
 
 schemaVersion: "3"
 displayName: Python toolchain
-description: Python and uv as a mixin, scoped to PyPI registry access
+description: Python and uv as a mixin for Alpine-based (musl) workloads, scoped to PyPI registry access
 author: Jared Davis
 
-kind: workload
-provides: ["python@3.14", "uv@0.13.3", "git@2.54.0", "jq@1.8.2"]
+kind: mixin
+provides: ["python@3.14", "uv@0.13.3"]
 dockerfile: python.dockerfile
 
 capabilities:
