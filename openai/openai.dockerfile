@@ -11,6 +11,7 @@ ARG GIT_VERSION=2.54.0
 ARG JQ_VERSION=1.8.2
 ARG PNPM_VERSION=10.15.0
 ARG TYPESCRIPT_VERSION=5.9.2
+ARG RIPGREP_VERSION=15.1.0-r0
 
 ENV COREPACK_HOME=/opt/corepack
 ENV PNPM_HOME=/opt/pnpm
@@ -18,7 +19,7 @@ ENV PATH="${PNPM_HOME}:${PATH}"
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
+RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" "ripgrep=${RIPGREP_VERSION}" && \
     git --version | grep -q "^git version ${GIT_VERSION}$" && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
@@ -40,6 +41,12 @@ RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
 
 RUN pnpm add -g @openai/codex@0.162.1 --allow-build=@openai/codex && \
     test "$(codex --version)" = "codex-cli 0.162.1"
+
+# Codex bundles rg build requiring a glibc loader
+# Replace the Codex bundled rg build with the Alpine package
+RUN rg="$(find "${PNPM_HOME}" -path '*/codex-path/rg' -type f -print -quit)" && \
+    test -n "${rg}" && \
+    rm "${rg}"
 
 COPY --from=config /etc/codex/config.toml /etc/codex/config.toml
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
