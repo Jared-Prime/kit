@@ -5,15 +5,15 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
 
 ```shell
-sbx 'ghcr.io/jared-prime/claude:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-claude:v1.5.2' --kit-arg gh_repo=jared-prime/kit
 ```
 
 ```shell
-sbx 'ghcr.io/jared-prime/codex:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-codex:v1.5.2' --kit-arg gh_repo=jared-prime/kit
 ```
 
 ```shell
-sbx 'ghcr.io/jared-prime/opencode:v1.5.2' --kit-arg gh_repo=jared-prime/kit
+sbx 'ghcr.io/jared-prime/harness-opencode:v1.5.2' --kit-arg gh_repo=jared-prime/kit
 ```
 
 See the [recipes](doc/recipes.md) for more sandbox creation examples, or [compose your own kit set](#compose-your-own-kit-set) below.

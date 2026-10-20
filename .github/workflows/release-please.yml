@@ -130,4 +130,4 @@ jobs:
           file: ./${{ matrix.name }}.generated.yaml
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.name }}:${{ needs.release.outputs.tag_name }}
+          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:${{ needs.release.outputs.tag_name }}
