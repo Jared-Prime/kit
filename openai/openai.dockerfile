@@ -3,7 +3,7 @@ FROM scratch AS config
 
 COPY openai.toml /etc/codex/config.toml
 
-FROM node:24.22-alpine3.24@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f
+FROM node:24.22-alpine3.24@sha256:6a1c190e17215d844926b0677f4bf87273ff7d5e54db06d3b5b5863ab0b09a3d
 
 LABEL authors="Jared Davis"
 
