@@ -18,7 +18,8 @@ ENV PATH="${PNPM_HOME}:${PATH}"
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
+RUN apk update && \
+    apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
     git --version | grep -q "^git version ${GIT_VERSION}$" && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
@@ -26,6 +27,12 @@ RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
     mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" && \
     chown 1001:1001 "${COREPACK_HOME}" "${PNPM_HOME}" && \
     corepack enable
+
+# Disables the emSign ECC Root CA - G3 explicitly (Oct 2026, GHSA-hq85-5cpj-mr62)
+# Remove this step once the upstream package ships the fix on its own.
+RUN sed -i -e 's|^mozilla/emSign_ECC_Root_CA_-_G3\.crt|!&|' /etc/ca-certificates.conf && \
+    grep -q "^!mozilla/emSign_ECC_Root_CA_-_G3\.crt$" /etc/ca-certificates.conf && \
+    update-ca-certificates
 
 WORKDIR /home/agent
 
