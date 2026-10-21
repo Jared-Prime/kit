@@ -3,7 +3,7 @@ FROM scratch AS config
 
 COPY anomaly.jsonc /etc/opencode/opencode.jsonc
 
-FROM node:24.22-alpine3.24@sha256:6a1c190e17215d844926b0677f4bf87273ff7d5e54db06d3b5b5863ab0b09a3d
+FROM node:26.12-alpine3.24@sha256:9bd229b644e391df00fb989efa732335aefc6170a05d8c163c5c8ca9870da401
 
 LABEL authors="Jared Davis"
 
