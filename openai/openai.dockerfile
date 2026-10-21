@@ -29,12 +29,6 @@ RUN apk update && \
     chown 1001:1001 "${COREPACK_HOME}" "${PNPM_HOME}" && \
     corepack enable
 
-# Disables the emSign ECC Root CA - G3 explicitly (Oct 2026, GHSA-hq85-5cpj-mr62)
-# Remove this step once the upstream package ships the fix on its own.
-RUN sed -i -e 's|^mozilla/emSign_ECC_Root_CA_-_G3\.crt|!&|' /etc/ca-certificates.conf && \
-    grep -q "^!mozilla/emSign_ECC_Root_CA_-_G3\.crt$" /etc/ca-certificates.conf && \
-    update-ca-certificates
-
 WORKDIR /home/agent
 
 USER 1001:1001
