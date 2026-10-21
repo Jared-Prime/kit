@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM ghcr.io/j178/prek:0.5.7-alpine3.24@sha256:15402f864b885e927891cd320eb711cf125d424c8a45f6837a55618fdfbe93a3 AS prek
 
-FROM alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6
-
+FROM docker.aikido.io/28575c9157ce15768c408/alpine:3.24@sha256:bce62d40979e1a675e7cfee140cb4d58111573446bdb2f84fe8a76f21ccfaa86
 RUN apk add --no-cache github-cli git jq
 
 COPY --from=prek /usr/local/bin/prek /usr/local/bin/prek
