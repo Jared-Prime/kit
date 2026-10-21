@@ -12,11 +12,19 @@ daemon_auto_start = false
 [permissions.workdir-net]
 extends = ":read-only"
 
+[permissions.workdir-net.filesystem]
+"~/.cache" = "write"
+":slash_tmp" = "write"
+
 [permissions.workdir-net.filesystem.":workspace_roots"]
 "." = "write"
 
 [permissions.workdir-net.network]
 enabled = true
+
+[shell_environment_policy]
+inherit = "core"
+set = { PATH = "/opt/pnpm:/opt/uv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" }
 
 [tui]
 alternate_screen = "never"
