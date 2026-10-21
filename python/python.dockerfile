@@ -26,6 +26,6 @@ RUN uv python install "${PYTHON_VERSION}" && \
 
 # pip vendors its own certifi, ignoring REQUESTS_CA_BUNDLE/SSL_CERT_FILE (GHSA-hq85-5cpj-mr62, Oct 2026).
 RUN pybin="$(uv python find "${PYTHON_VERSION}")" && \
-    "${pybin}" -m pip install --no-cache-dir "pip==${PIP_VERSION}" "certifi==${CERTIFI_VERSION}" && \
+    uv pip install --python "${pybin}" --break-system-packages --no-cache "pip==${PIP_VERSION}" "certifi==${CERTIFI_VERSION}" && \
     "${pybin}" -m pip --version | grep -q "^pip ${PIP_VERSION} " && \
     "${pybin}" -m pip show certifi | grep -q "^Version: ${CERTIFI_VERSION}$"
