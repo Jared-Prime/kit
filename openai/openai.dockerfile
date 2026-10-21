@@ -24,9 +24,8 @@ RUN apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" "ripgre
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
-    mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" /usr/local/share/ca-certificates && \
+    mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" && \
     chown 1001:1001 "${COREPACK_HOME}" "${PNPM_HOME}" && \
-    chown -R 1001:1001 /usr/local/share/ca-certificates /etc/ssl/certs /etc/ca-certificates.conf && \
     corepack enable
 
 WORKDIR /home/agent
