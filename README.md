@@ -21,7 +21,7 @@ sbx run 'ghcr.io/jared-prime/harness-opencode:v1.5.3'
 Use the local directory while developing and testing
 
 ```shell
-sbx './anthropic' \
+sbx run './anthropic' \
   --kit './github' \
   --kit './python' \
   --kit './skills' \
