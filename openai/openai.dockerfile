@@ -9,13 +9,13 @@ LABEL authors="Jared Davis"
 
 ARG GIT_VERSION=2.54.0
 ARG JQ_VERSION=1.8.2
-ARG PNPM_VERSION=10.15.0
+ARG PNPM_VERSION=12.14.0
 ARG TYPESCRIPT_VERSION=5.9.2
 ARG RIPGREP_VERSION=15.1.0-r0
 
-ENV COREPACK_HOME=/opt/corepack
+ENV SHELL=/bin/bash
 ENV PNPM_HOME=/opt/pnpm
-ENV PATH="${PNPM_HOME}:${PATH}"
+ENV PATH="${PNPM_HOME}/bin:${PATH}"
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
@@ -25,15 +25,14 @@ RUN apk update && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
-    mkdir -p "${COREPACK_HOME}" "${PNPM_HOME}" && \
-    chown 1001:1001 "${COREPACK_HOME}" "${PNPM_HOME}" && \
-    corepack enable
+    mkdir -p "${PNPM_HOME}" && \
+    chown 1001:1001 "${PNPM_HOME}"
 
 WORKDIR /home/agent
 
 USER 1001:1001
 
-RUN corepack prepare "pnpm@${PNPM_VERSION}" --activate \
+RUN npx --yes "get-pnpm@latest" "${PNPM_VERSION}" \
  && pnpm --version | grep -q "^${PNPM_VERSION}$"
 
 RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
