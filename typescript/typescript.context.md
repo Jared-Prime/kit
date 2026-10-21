@@ -1,16 +1,49 @@
-# TypeScript toolchain
+# mixin: typescript
 
-Node.js, pnpm, and the TypeScript compiler are available in this Docker Sandbox kit.
+## sandbox
 
-```shell
-pnpm install --frozen-lockfile
-pnpm run build
-tsc --noEmit
+This mixin targets Alpine Linux based workloads running in a Docker Sandbox.
+
+### filesystem
+
+Expect Unix permissions for uid/gid 1001.
+
+### network
+
+The sandbox network policy allows the following:
+
+- registry.npmjs.org allows GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
+
+Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
+
+### binaries
+
+Before concluding a tool is unavailable because `which` or `find` comes up empty, check whether a mixin's context explains why.
+A missing bare binary can be intentional, not absent.
+These subsections give definitive information on available binaries and conventions.
+
+#### node.js
+
+Your sandbox base layer pins to Node.js 24.22.
+
+```bash
+node --version
 ```
 
-Network access is scoped to read-only `GET`/`HEAD` on `registry.npmjs.org`.
-Installing packages works; publishing, or anything else that writes to the
-registry, is blocked by the network policy.
+#### pnpm
 
-Use `pnpm`, not `npm` or `yarn`, so lockfile resolution stays consistent with
-how this kit installs `typescript` globally.
+Your sandbox base layer pins to pnpm 10.15.0.
+
+```bash
+pnpm --version
+```
+
+You **must** use pnpm for Node.js package management.
+
+#### TypeScript
+
+Your sandbox base layer pins to 5.9.2.
+
+```bash
+tsc --version
+```
