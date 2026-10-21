@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.6.0](https://github.com/Jared-Prime/kit/compare/v1.5.3...v1.6.0) (2026-10-21)
+
+
+### Features
+
+* **skills:** add commit-message skill ([#69](https://github.com/Jared-Prime/kit/issues/69)) ([c63d532](https://github.com/Jared-Prime/kit/commit/c63d5326812a4bb6680b70fa3cf26bcac180d50e))
+
+
+### Bug Fixes
+
+* **actions:** include commit sha ([#63](https://github.com/Jared-Prime/kit/issues/63)) ([80f6b7d](https://github.com/Jared-Prime/kit/commit/80f6b7d1d29069ad03fbab05a0eabc922a0e0d28))
+* **dev:** use strict semvar in the generated sandbox set yaml ([#64](https://github.com/Jared-Prime/kit/issues/64)) ([cce84fc](https://github.com/Jared-Prime/kit/commit/cce84fcc04d24966889f64e16370f658f2204494))
+* distrust the compromised emSign ECC Root CA - G3 and patch pip/certifi ([#73](https://github.com/Jared-Prime/kit/issues/73)) ([d22d26e](https://github.com/Jared-Prime/kit/commit/d22d26ec19a3e52ff849fa36de5d66bc9c152a22))
+* **openai:** make codex's sandboxed shell see the mixin toolchains ([#72](https://github.com/Jared-Prime/kit/issues/72)) ([89d1094](https://github.com/Jared-Prime/kit/commit/89d1094168caa1d0a60f007cb4a91bcf3ac82fec))
+* **openai:** use Alpine ripgrep and allow working directory edits ([#66](https://github.com/Jared-Prime/kit/issues/66)) ([3662afa](https://github.com/Jared-Prime/kit/commit/3662afae14cd1e0d185eab7c98381f61fc39f45a))
+* **proxy:** trust the egress proxy's MITM CA in agent kits ([#67](https://github.com/Jared-Prime/kit/issues/67)) ([3eaa0d9](https://github.com/Jared-Prime/kit/commit/3eaa0d92510a5e4f9d4aaadc2505b2c3a9ea635c))
+* **proxy:** trust the egress proxy's MITM CA without writing system cert stores ([#70](https://github.com/Jared-Prime/kit/issues/70)) ([3509c0c](https://github.com/Jared-Prime/kit/commit/3509c0c153303d93045ba73f2d81a8abb0fb26b5))
+* python uv installation ([#60](https://github.com/Jared-Prime/kit/issues/60)) ([29d3bdf](https://github.com/Jared-Prime/kit/commit/29d3bdf59ac1fec1f2a082fd6d0d908784a8b75c))
+* use valid semver for dev kits ([#62](https://github.com/Jared-Prime/kit/issues/62)) ([c4bb38f](https://github.com/Jared-Prime/kit/commit/c4bb38f8455f4990fff49bd72995fa6d0e76cc69))
+* wire agent context into each workload's entrypoint ([#65](https://github.com/Jared-Prime/kit/issues/65)) ([ec62272](https://github.com/Jared-Prime/kit/commit/ec622722d6faa11731a6aaf43efc9a62809a35be))
+
+
+### Reverts
+
+* do not patch the certificate directly ([#74](https://github.com/Jared-Prime/kit/issues/74)) ([e1ba90f](https://github.com/Jared-Prime/kit/commit/e1ba90fd2437ce66262359f22d818233b414af82))
+
 ## [1.5.3](https://github.com/Jared-Prime/kit/compare/v1.5.2...v1.5.3) (2026-10-20)
 
 
