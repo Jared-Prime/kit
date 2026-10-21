@@ -24,7 +24,7 @@ These subsections give definitive information on available binaries and conventi
 
 #### node.js
 
-Your sandbox base layer pins to Node.js 24.22.
+Your sandbox base layer pins to Node.js 26.12.
 
 ```bash
 node --version

@@ -6,7 +6,7 @@ description: TypeScript compiler and pnpm as a mixin, scoped to npm registry acc
 author: Jared Davis
 
 kind: mixin
-provides: ["node@24", "pnpm@10.15.0", "typescript@5.9.2"]
+provides: ["node@26.12", "pnpm@10.15.0", "typescript@5.9.2"]
 dockerfile: typescript.dockerfile
 
 capabilities:
