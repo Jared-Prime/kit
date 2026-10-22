@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.7.0](https://github.com/Jared-Prime/kit/compare/v1.6.0...v1.7.0) (2026-10-22)
+
+
+### Features
+
+* **skills:** provide introspection skill ([#81](https://github.com/Jared-Prime/kit/issues/81)) ([d67dceb](https://github.com/Jared-Prime/kit/commit/d67dceb8ed71626adb2d920468e414787a01a089))
+
+
+### Bug Fixes
+
+* **github:** use aikido base image ([#76](https://github.com/Jared-Prime/kit/issues/76)) ([aba24ee](https://github.com/Jared-Prime/kit/commit/aba24ee0cfde8feb4ac76bf53e838f95433f7bc4))
+* **security:** patch vulnerabilities ([#84](https://github.com/Jared-Prime/kit/issues/84)) ([88ef917](https://github.com/Jared-Prime/kit/commit/88ef9175657af214fd4a7cabd6e40b08cea60511))
+* upgrade pnpm to 12.14.0 ([#79](https://github.com/Jared-Prime/kit/issues/79)) ([bfe1afc](https://github.com/Jared-Prime/kit/commit/bfe1afc21607b89ce38566b4ba94f5e6d20a5bef))
+* upgrade to node 26.12 ([#77](https://github.com/Jared-Prime/kit/issues/77)) ([75b698b](https://github.com/Jared-Prime/kit/commit/75b698b9ac254a5e498ddff12895c3fbacd7eb94))
+
 ## [1.6.0](https://github.com/Jared-Prime/kit/compare/v1.5.3...v1.6.0) (2026-10-21)
 
 
