@@ -3,7 +3,7 @@ FROM scratch AS config
 
 COPY managed-settings.json /etc/claude-code/managed-settings.json
 
-FROM node:26.12-alpine3.24@sha256:ae8e1c19d56886270987e99b3cfcef13a919f0655b376ae322bc64ada76f88cd
+FROM node:26.12-alpine3.24@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797
 LABEL authors="Jared Davis"
 
 ARG GIT_VERSION=2.54.0
