@@ -8,7 +8,7 @@ author: Jared Davis
 sourceUrl: https://github.com/openai/codex
 
 kind: workload
-provides: ["codex@0.162.1"]
+provides: ["codex@0.163.0"]
 dockerfile: openai.dockerfile
 capabilities:
   - type: com.docker.sandbox/sbx@1

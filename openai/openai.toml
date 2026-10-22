@@ -24,7 +24,7 @@ enabled = true
 
 [shell_environment_policy]
 inherit = "core"
-set = { PATH = "/opt/pnpm:/opt/uv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" }
+set = { PATH = "/opt/pnpm/bin:/opt/pnpm:/opt/uv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" }
 
 [tui]
 alternate_screen = "never"
