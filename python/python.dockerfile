@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/astral-sh/uv:0.13.4-alpine@sha256:325c1a47db636422f3d1e6a935a0a9d0e6395031665e5baa033d1691ddc9c27e AS uv
+FROM ghcr.io/astral-sh/uv:0.13.5-alpine@sha256:6ba9c830aa848d21e1e9d8028ae01ed02b08980b25aeabef9a6683c5743c6d0f AS uv
 
 LABEL authors="Jared Davis"
 
