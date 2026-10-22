@@ -3,7 +3,7 @@ FROM scratch AS config
 
 COPY anomaly.jsonc /etc/opencode/opencode.jsonc
 
-FROM node:26.12-alpine3.24@sha256:ae8e1c19d56886270987e99b3cfcef13a919f0655b376ae322bc64ada76f88cd
+FROM node:26.12.1-alpine3.24@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797
 
 LABEL authors="Jared Davis"
 
@@ -19,7 +19,8 @@ ENV PATH="${PNPM_HOME}/bin:${PATH}"
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN apk add --no-cache bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
+RUN apk upgrade --no-cache && \
+    apk add --no-cache bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
     git --version | grep -q "^git version ${GIT_VERSION}$" && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
