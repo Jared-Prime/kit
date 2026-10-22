@@ -59,7 +59,7 @@ GitHub CLI API manual, GitHub CLI request example.
 
 #### prek
 
-Your sandbox mixin pins prek to 0.5.6
+Your sandbox mixin pins prek to 0.5.7
 
 ```shell
 prek --version
