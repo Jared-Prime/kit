@@ -10,6 +10,7 @@ LABEL authors="Jared Davis"
 ARG GIT_VERSION=2.54.0
 ARG JQ_VERSION=1.8.2
 ARG PNPM_VERSION=12.14.0
+ARG NPM_VERSION=12.2.1
 ARG TYPESCRIPT_VERSION=5.9.2
 ARG RIPGREP_VERSION=15.1.0-r0
 
@@ -27,6 +28,9 @@ RUN apk update && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
     mkdir -p "${PNPM_HOME}" && \
     chown 1001:1001 "${PNPM_HOME}"
+
+RUN npm install -g "npm@${NPM_VERSION}" \
+ && npm --version | grep -q "^${NPM_VERSION}$"
 
 WORKDIR /home/agent
 
