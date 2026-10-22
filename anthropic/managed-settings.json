@@ -3,7 +3,12 @@
   "permissions": {
     "defaultMode": "default",
     "disableBypassPermissionsMode": "disable",
-    "allow": ["WebSearch"]
+    "allow": ["WebSearch"],
+    "deny": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git -C:*)"
+    ]
   },
   "allowManagedPermissionRulesOnly": true,
   "env": {

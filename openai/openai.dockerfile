@@ -2,6 +2,7 @@
 FROM scratch AS config
 
 COPY openai.toml /etc/codex/config.toml
+COPY rules /etc/codex/rules
 
 FROM node:26.12-alpine3.24@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797
 
@@ -51,6 +52,7 @@ RUN rg="$(find "${PNPM_HOME}" -path '*/codex-path/rg' -type f -print -quit)" && 
     rm "${rg}"
 
 COPY --from=config /etc/codex/config.toml /etc/codex/config.toml
+COPY --from=config /etc/codex/rules /etc/codex/rules
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]

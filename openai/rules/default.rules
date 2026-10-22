@@ -1,0 +1,3 @@
+# /etc/codex/rules/default.rules
+prefix_rule(pattern=["git", "commit"], decision="forbidden")
+prefix_rule(pattern=["git", "push"],   decision="forbidden")
