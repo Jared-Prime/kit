@@ -4,8 +4,6 @@ FROM ghcr.io/astral-sh/uv:0.13.4-alpine@sha256:325c1a47db636422f3d1e6a935a0a9d0e
 LABEL authors="Jared Davis"
 
 ARG PYTHON_VERSION=3.14
-ARG PIP_VERSION=26.2.2
-ARG CERTIFI_VERSION=2026.10.19
 
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
 ENV PATH="/opt/uv/bin:${PATH}"
@@ -24,8 +22,7 @@ USER 1001:1001
 RUN uv python install "${PYTHON_VERSION}" && \
     uv python list --only-installed | grep -q "cpython-${PYTHON_VERSION}"
 
-# pip vendors its own certifi, ignoring REQUESTS_CA_BUNDLE/SSL_CERT_FILE (GHSA-hq85-5cpj-mr62, Oct 2026).
+# isolate uv as the default package manager
 RUN pybin="$(uv python find "${PYTHON_VERSION}")" && \
-    uv pip install --python "${pybin}" --break-system-packages --no-cache "pip==${PIP_VERSION}" "certifi==${CERTIFI_VERSION}" && \
-    "${pybin}" -m pip --version | grep -q "^pip ${PIP_VERSION} " && \
-    "${pybin}" -m pip show certifi | grep -q "^Version: ${CERTIFI_VERSION}$"
+    uv pip uninstall --python "${pybin}" --break-system-packages pip && \
+    ! "${pybin}" -m pip --version
