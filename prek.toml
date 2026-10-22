@@ -18,3 +18,14 @@ hooks = [
 repo = "https://github.com/rhysd/actionlint"
 rev = "v1.7.7"
 hooks = [{ id = "actionlint" }]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "oxfmt"
+name = "oxfmt (TypeScript)"
+language = "system"
+entry = "pnpm --dir typescript/utility run fmt"
+files = '^typescript/utility/'
+pass_filenames = false
