@@ -5,8 +5,11 @@
   "permissions": [
     { "action": "read", "resource": "*", "effect":  "allow"},
     { "action": "edit", "resource": "*", "effect": "ask" },
-    { "action":  "webfetch", "resource": "*", "effect": "ask"},
-    { "action":  "websearch", "resource": "*", "effect": "allow"}
+    { "action": "webfetch", "resource": "*", "effect": "ask"},
+    { "action": "websearch", "resource": "*", "effect": "allow"},
+    { "action": "bash", "resource": "git commit*", "effect": "deny" },
+    { "action": "bash", "resource": "git push*", "effect": "deny" },
+    { "action": "bash", "resource": "git * commit*", "effect": "deny"}
   ],
   "provider": {
     "lmstudio": {
