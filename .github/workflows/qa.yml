@@ -29,6 +29,7 @@ jobs:
           exit-code: "1"
 
   security:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release-please--')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
