@@ -6,7 +6,7 @@ description: GitHub CLI (gh) as an authenticated, read-only mixin
 author: Jared Davis
 
 kind: mixin
-provides: ["gh@2", "prek@0.5.6"]
+provides: ["gh@2", "prek@0.5.7"]
 dockerfile: github.dockerfile
 args:
   gh_repo:

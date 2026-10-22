@@ -32,7 +32,7 @@ node --version
 
 #### pnpm
 
-Your sandbox base layer pins to pnpm 10.15.0.
+Your sandbox base layer pins to pnpm 12.14.0.
 
 ```bash
 pnpm --version
