@@ -11,7 +11,7 @@ ENV SHELL=/bin/bash
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}/bin:${PATH}"
 
-RUN apk add bash && \
+RUN apk add --no-cache bash && \
     addgroup -g 1001 sandbox  && \
     adduser -D -u 1001 -G sandbox -h /home/agent -s /bin/bash agent && \
     mkdir -p "${PNPM_HOME}" && \

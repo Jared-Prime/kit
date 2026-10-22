@@ -19,8 +19,7 @@ ENV PATH="${PNPM_HOME}/bin:${PATH}"
 ENV NODE_EXTRA_CA_CERTS=/etc/ssl/certs/ca-certificates.crt
 ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
-RUN apk update && \
-    apk add bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
+RUN apk add --no-cache bash ca-certificates "git~${GIT_VERSION}" "jq~${JQ_VERSION}" && \
     git --version | grep -q "^git version ${GIT_VERSION}$" && \
     jq --version | grep -q "^jq-${JQ_VERSION}$" && \
     addgroup -g 1001 sandbox  && \
