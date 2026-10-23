@@ -1,3 +1,4 @@
 .idea
 *.tar
 **/node_modules/
+.codebase-memory

@@ -46,7 +46,7 @@ Those commands are unambiguous regardless of what else is on `$PATH`.
 
 #### uv
 
-Your sandbox mixin pins uv to 0.13.4
+Your sandbox mixin pins uv to 0.13.5
 
 ```shell
 uv --version
