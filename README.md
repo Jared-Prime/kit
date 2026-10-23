@@ -1,3 +1,7 @@
+[![QA](https://github.com/Jared-Prime/kit/actions/workflows/qa.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/qa.yml)
+[![dev](https://github.com/Jared-Prime/kit/actions/workflows/dev.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/dev.yml)
+[![release](https://github.com/Jared-Prime/kit/actions/workflows/release.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/release.yml)
+
 A collection of Docker Sandbox Kit (v3) workflows and mixins.
 
 ## Quickstart
