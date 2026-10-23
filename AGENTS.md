@@ -13,6 +13,7 @@ Conventions in this repository follow the maintainer's personal preferences.
 | anomaly    | workload | `opencode`         |
 | anthropic  | workload | `claude`           |
 | github     | mixin    | `gh`               |
+| gitnexus   | mixin    | `gitnexus`         |
 | openai     | workload | `codex`            |
 | python     | mixin    | `python`, `uv`     |
 | skills     | mixin    | agent skills       |
