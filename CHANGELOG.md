@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.8.0](https://github.com/Jared-Prime/kit/compare/v1.7.0...v1.8.0) (2026-10-23)
+
+
+### Features
+
+* add agent instructions and deny git commit/push in workloads ([#91](https://github.com/Jared-Prime/kit/issues/91)) ([b552532](https://github.com/Jared-Prime/kit/commit/b552532a257d20d379ef66560e1e264226533554))
+* **codebase:** create mixin for codebase knowledge graph ([#101](https://github.com/Jared-Prime/kit/issues/101)) ([a70a3d9](https://github.com/Jared-Prime/kit/commit/a70a3d996a787e50c9ebb9507f3150233fe5645a))
+* **openai:** collect codex logs ([#93](https://github.com/Jared-Prime/kit/issues/93)) ([18a6ac6](https://github.com/Jared-Prime/kit/commit/18a6ac6da4f3e919858f4c39b6f9c275b6152765))
+* **openai:** upgrade to codex 1.163.0 ([#92](https://github.com/Jared-Prime/kit/issues/92)) ([8c1f969](https://github.com/Jared-Prime/kit/commit/8c1f9690ea56781b6c23e7a5150ce5dd3ac8c566))
+
+
+### Bug Fixes
+
+* **introspection:** repair some inconsistencies ([#103](https://github.com/Jared-Prime/kit/issues/103)) ([73328fe](https://github.com/Jared-Prime/kit/commit/73328fe728d07f8f254dde3ecd170d2d51b31f49))
+* **skills:** copy introspection skill ([#85](https://github.com/Jared-Prime/kit/issues/85)) ([a4f8ba4](https://github.com/Jared-Prime/kit/commit/a4f8ba4a8af040c194ad540289ef41e7d07dd8f2))
+
 ## [1.7.0](https://github.com/Jared-Prime/kit/compare/v1.6.0...v1.7.0) (2026-10-22)
 
 
