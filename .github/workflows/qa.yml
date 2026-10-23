@@ -52,6 +52,7 @@ jobs:
         kit:
           - anomaly
           - anthropic
+          - codebase
           - github
           - openai
           - python
