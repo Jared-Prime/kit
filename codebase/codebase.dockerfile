@@ -1,10 +1,6 @@
 # syntax=docker/dockerfile:1
-FROM node:26.12-alpine3.24@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797 AS download
+FROM docker.aikido.io/28575c9157ce15768c408/alpine:3.24@sha256:bce62d40979e1a675e7cfee140cb4d58111573446bdb2f84fe8a76f21ccfaa86 AS codebase
 
-# The "-portable" release asset is fully static and built on Alpine/musl, so
-# it runs on the musl workloads with no glibc or native-module dependencies.
-# Bumping CBM_VERSION means updating both hashes from the release's
-# checksums.txt.
 ARG CBM_VERSION=0.12.1
 ARG TARGETARCH
 
@@ -19,15 +15,13 @@ RUN case "${TARGETARCH}" in \
     mkdir /tmp/cbm && \
     tar -xzf /tmp/cbm.tar.gz -C /tmp/cbm codebase-memory-mcp LICENSE THIRD_PARTY_NOTICES.md
 
-FROM node:26.12-alpine3.24@sha256:40cd011b55415bc894e45b02fdd5a5dfde056921b7d23a64c74f80497af48797
+FROM scratch
 
 LABEL authors="Jared Davis"
 
-ARG CBM_VERSION=0.12.1
-
-COPY --from=download --chmod=0755 /tmp/cbm/codebase-memory-mcp /usr/local/bin/codebase-memory-mcp
-COPY --from=download /tmp/cbm/LICENSE /tmp/cbm/THIRD_PARTY_NOTICES.md /usr/local/share/doc/codebase-memory-mcp/
+COPY --from=codebase --chmod=0755 /tmp/cbm/codebase-memory-mcp /usr/local/bin/codebase-memory-mcp
+COPY --from=codebase /tmp/cbm/LICENSE /tmp/cbm/THIRD_PARTY_NOTICES.md /usr/local/share/doc/codebase-memory-mcp/
 
 USER 1001:1001
 
-RUN codebase-memory-mcp --version | grep -qF "${CBM_VERSION}"
+ENTRYPOINT [ "codebase-memory-mcp" ]
