@@ -8,16 +8,16 @@ Conventions in this repository follow the maintainer's personal preferences.
 
 ## Project Directory
 
-| folder     | kit type | core functionality |
-| ---------- | -------- | ------------------ |
-| anomaly    | workload | `opencode`         |
-| anthropic  | workload | `claude`           |
-| github     | mixin    | `gh`               |
-| gitnexus   | mixin    | `gitnexus`         |
-| openai     | workload | `codex`            |
-| python     | mixin    | `python`, `uv`     |
-| skills     | mixin    | agent skills       |
-| typescript | mixin    | `node`, `pnpm`     |
+| folder     | kit type | core functionality    |
+| ---------- | -------- | --------------------- |
+| anomaly    | workload | `opencode`            |
+| anthropic  | workload | `claude`              |
+| codebase   | mixin    | `codebase-memory-mcp` |
+| github     | mixin    | `gh`                  |
+| openai     | workload | `codex`               |
+| python     | mixin    | `python`, `uv`        |
+| skills     | mixin    | agent skills          |
+| typescript | mixin    | `node`, `pnpm`        |
 
 ## Development
 
