@@ -9,15 +9,15 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
 
 ```shell
-sbx run 'ghcr.io/jared-prime/harness-claude:v1.5.3'
+sbx run 'ghcr.io/jared-prime/harness-claude:v1.8.0'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/harness-codex:v1.5.3'
+sbx run 'ghcr.io/jared-prime/harness-codex:v1.8.0'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/harness-opencode:v1.5.3'
+sbx run 'ghcr.io/jared-prime/harness-opencode:v1.8.0'
 ```
 
 ## Development
@@ -26,6 +26,7 @@ Use the local directory while developing and testing
 
 ```shell
 sbx run './anthropic' \
+  --kit './codebase' \
   --kit './github' \
   --kit './python' \
   --kit './skills' \
