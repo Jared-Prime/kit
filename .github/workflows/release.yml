@@ -43,6 +43,8 @@ jobs:
             file: anomaly.yaml
           - kit: anthropic
             file: anthropic.yaml
+          - kit: codebase
+            file: codebase.yaml
           - kit: github
             file: github.yaml
           - kit: openai
@@ -91,11 +93,11 @@ jobs:
       matrix:
         include:
           - name: claude
-            kits: [anthropic, github, python, skills]
+            kits: [anthropic, codebase, github, python, skills]
           - name: codex
-            kits: [openai, github, python, skills]
+            kits: [openai, codebase, github, python, skills]
           - name: opencode
-            kits: [anomaly, github, python, skills]
+            kits: [anomaly, codebase, github, python, skills]
     steps:
       - name: Set image namespace
         id: namespace
