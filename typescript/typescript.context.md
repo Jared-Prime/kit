@@ -42,7 +42,7 @@ You **must** use pnpm for Node.js package management.
 
 #### TypeScript
 
-Your sandbox base layer pins to 5.9.3.
+Your sandbox base layer pins to 7.0.2.
 
 ```bash
 tsc --version
