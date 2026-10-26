@@ -35,6 +35,19 @@ capabilities:
 
         deny:
           - hosts:
+              - api.github.com
+            methods:
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
+              - github.com
+            methods:
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
               - github.com
             methods:
               - POST
