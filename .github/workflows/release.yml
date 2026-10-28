@@ -40,15 +40,10 @@ jobs:
       matrix:
         include:
           - kit: anomaly
-            file: anomaly.yaml
           - kit: anthropic
-            file: anthropic.yaml
           - kit: openai
-            file: openai.yaml
           - kit: skills
-            file: skills.yaml
           - kit: tools
-            file: tools.yaml
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -67,12 +62,12 @@ jobs:
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ./${{ matrix.kit }}
-          file: ./${{ matrix.kit }}/${{ matrix.file }}
+          file: ./${{ matrix.kit }}/${{ matrix.kit }}.yaml
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:${{ needs.release.outputs.tag_name }}
-          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/kit-${{ matrix.kit }}:buildcache,mode=max
+          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.kit }}-kit:${{ needs.release.outputs.tag_name }}
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.kit }}-kit:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.kit }}-kit:buildcache,mode=max
 
   harness:
     needs:
@@ -129,6 +124,6 @@ jobs:
           file: ./${{ matrix.name }}.generated.yaml
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:${{ needs.release.outputs.tag_name }}
-          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/harness-${{ matrix.name }}:buildcache,mode=max
+          tags: ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.name }}-sandbox:${{ needs.release.outputs.tag_name }}
+          cache-from: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.name }}-sandbox:buildcache
+          cache-to: type=registry,ref=ghcr.io/${{ steps.namespace.outputs.owner }}/${{ matrix.name }}-sandbox:buildcache,mode=max
