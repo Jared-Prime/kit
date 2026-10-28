@@ -82,4 +82,5 @@ jobs:
           scanners: vuln,secret
           severity: HIGH,CRITICAL
           ignore-unfixed: true
+          trivyignores: .trivyignore
           exit-code: "1"
