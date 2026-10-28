@@ -6,6 +6,11 @@ approval_policy = "on-request"
 model_reasoning_effort = "medium"
 forced_login_method = "chatgpt"
 
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PAT_TOKEN"
+http_headers = { "X-MCP-Readonly" = "true" }
+
 [features]
 daemon_auto_start = false
 
@@ -24,7 +29,7 @@ enabled = true
 
 [shell_environment_policy]
 inherit = "core"
-set = { PATH = "/opt/pnpm/bin:/opt/pnpm:/opt/uv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" }
+set = { PATH = "/opt/pnpm/bin:/opt/pnpm:/opt/uv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin", UV_PYTHON_INSTALL_DIR = "/opt/uv/python" }
 
 [tui]
 alternate_screen = "never"

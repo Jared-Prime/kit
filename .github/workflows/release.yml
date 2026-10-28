@@ -43,18 +43,12 @@ jobs:
             file: anomaly.yaml
           - kit: anthropic
             file: anthropic.yaml
-          - kit: codebase
-            file: codebase.yaml
-          - kit: github
-            file: github.yaml
           - kit: openai
             file: openai.yaml
-          - kit: python
-            file: python.yaml
           - kit: skills
             file: skills.yaml
-          - kit: typescript
-            file: typescript.yaml
+          - kit: tools
+            file: tools.yaml
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -93,11 +87,11 @@ jobs:
       matrix:
         include:
           - name: claude
-            kits: [anthropic, codebase, github, python, skills]
+            kits: [anthropic, tools, skills]
           - name: codex
-            kits: [openai, codebase, github, python, skills]
+            kits: [openai, tools, skills]
           - name: opencode
-            kits: [anomaly, codebase, github, python, skills]
+            kits: [anomaly, tools, skills]
     steps:
       - name: Set image namespace
         id: namespace

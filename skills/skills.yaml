@@ -10,9 +10,7 @@ capabilities:
   - type: com.docker.sandbox/agent-skill@1
     config:
       path: /usr/share/kit/skills/guided-review
+
   - type: com.docker.sandbox/agent-skill@1
     config:
       path: /usr/share/kit/skills/commit-message
-  - type: com.docker.sandbox/agent-skill@1
-    config:
-      path: /usr/share/kit/skills/introspection

@@ -16,21 +16,6 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Set up pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
-        with:
-          version: 12.16.1
-          package_json_file: typescript/utility/package.json
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: "26.12"
-          cache: pnpm
-          cache-dependency-path: typescript/utility/pnpm-lock.yaml
-      - name: Install typescript/utility dependencies
-        run: pnpm --dir typescript/utility install --frozen-lockfile
-      - name: Test Codex log collector
-        run: pnpm --dir typescript/utility run codex:test
       - name: prek
         uses: j178/prek-action@44924fe9ef4a6f88253c4b6b1bf11c689d3ce53d # v3.1.0
       - name: Aqua Security Trivy (repository)
@@ -52,12 +37,9 @@ jobs:
         kit:
           - anomaly
           - anthropic
-          - codebase
-          - github
           - openai
-          - python
           - skills
-          - typescript
+          - tools
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

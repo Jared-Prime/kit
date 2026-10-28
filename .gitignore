@@ -2,3 +2,4 @@
 *.tar
 **/node_modules/
 .codebase-memory
+.claude

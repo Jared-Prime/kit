@@ -11,6 +11,18 @@
     { "action": "bash", "resource": "git push*", "effect": "deny" },
     { "action": "bash", "resource": "git * commit*", "effect": "deny"}
   ],
+  "mcp": {
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_PAT_TOKEN}",
+        "X-MCP-Readonly": "true"
+      }
+    }
+  },
   "provider": {
     "lmstudio": {
       "npm": "@ai-sdk/openai-compatible",

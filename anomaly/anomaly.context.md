@@ -17,8 +17,9 @@ Your harness runs in the sandbox under uid/gid 1001.
 The sandbox network policy allows the following:
 
 - opencode.ai allows all methods.
-- localhost:1234 allows all methods. This is LM Studio; the policy matches `localhost:<port>` even though the agent connects via `host.docker.internal:<port>`.
-- registry.npmjs.org allows GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
+- localhost:1234 allows all methods (LM Studio; the agent reaches it as `host.docker.internal:1234`).
+- api.githubcopilot.com allows all methods (GitHub MCP server, read-only via the `X-MCP-Readonly` header; authenticated by the proxy-managed `GITHUB_PAT_TOKEN`).
+- registry.npmjs.org, pypi.org, and files.pythonhosted.org allow GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
 
 Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
 
@@ -28,12 +29,20 @@ Before concluding a tool is unavailable because `which` or `find` comes up empty
 A missing bare binary can be intentional, not absent.
 These subsections give definitive information on available binaries and conventions.
 
-#### node.js
+#### bash
 
-Your sandbox base layer pins to Node.js 26.12.
+The default shell is bash
 
-```bash
-node --version
+```shell
+bash --version
+```
+
+#### opencode
+
+Your sandbox workload pins opencode to 2.0.32.
+
+```shell
+opencode --version
 ```
 
 #### pnpm
@@ -46,10 +55,20 @@ pnpm --version
 
 You **must** use pnpm for Node.js package management.
 
-#### TypeScript
+### mcp
 
-Your sandbox base layer pins to 7.0.2.
+#### github
 
-```bash
-tsc --version
+The workload configures the remote GitHub MCP server (`https://api.githubcopilot.com/mcp/`) as the `github` MCP server, replacing the `gh` CLI.
+It is read-only (`X-MCP-Readonly: true`) and authenticates with the proxy-managed `GITHUB_PAT_TOKEN`.
+Use the MCP tools for GitHub access; do not use `gh` or `git push`.
+
+Check that the server is configured and connected:
+
+```shell
+opencode mcp list
 ```
+
+Verify access with a read-only MCP tool call, such as getting the authenticated user.
+If the server is missing or unauthorized, report the error rather than changing the network policy or config.
+Never print or save `GITHUB_PAT_TOKEN`.

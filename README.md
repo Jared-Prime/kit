@@ -26,11 +26,8 @@ Use the local directory while developing and testing
 
 ```shell
 sbx run './anthropic' \
-  --kit './codebase' \
-  --kit './github' \
-  --kit './python' \
-  --kit './skills' \
-  --kit-arg gh_repo=jared-prime/kit
+  --kit './tools' \
+  --kit './skills'
 ```
 
 ## Skills

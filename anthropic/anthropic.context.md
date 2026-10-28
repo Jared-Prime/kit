@@ -19,7 +19,8 @@ The sandbox network policy allows the following:
 - api.anthropic.com allows all methods.
 - claude.ai allows all methods.
 - platform.claude.com allows all methods.
-- registry.npmjs.org allows GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
+- api.githubcopilot.com allows all methods (GitHub MCP server, read-only via the `X-MCP-Readonly` header; authenticated by the proxy-managed `GITHUB_PAT_TOKEN`).
+- registry.npmjs.org, pypi.org, and files.pythonhosted.org allow GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
 
 Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
 
@@ -28,14 +29,6 @@ Note that some hosts and/or HTTP verbs may be denied by the sandbox network poli
 Before concluding a tool is unavailable because `which` or `find` comes up empty, check whether a mixin's context explains why.
 A missing bare binary can be intentional, not absent.
 These subsections give definitive information on available binaries and conventions.
-
-#### node.js
-
-Your sandbox base layer pins to Node.js 26.12.
-
-```bash
-node --version
-```
 
 #### pnpm
 
@@ -47,10 +40,21 @@ pnpm --version
 
 You **must** use pnpm for Node.js package management.
 
-#### TypeScript
+### mcp
 
-Your sandbox base layer pins to 7.0.2.
+#### github
 
-```bash
-tsc --version
+The workload configures the remote GitHub MCP server (`https://api.githubcopilot.com/mcp/`) as the `github` MCP server, replacing the `gh` CLI.
+It is read-only (`X-MCP-Readonly: true`) and authenticates with the proxy-managed `GITHUB_PAT_TOKEN`.
+Use the MCP tools for GitHub access; do not use `gh` or `git push`.
+
+Check that the server is configured and connected:
+
+```shell
+claude mcp list
+claude mcp get github
 ```
+
+Verify access with a read-only MCP tool call, such as getting the authenticated user.
+If the server is missing or unauthorized, report the error rather than changing the network policy or config.
+Never print or save `GITHUB_PAT_TOKEN`.

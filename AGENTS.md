@@ -8,16 +8,13 @@ Conventions in this repository follow the maintainer's personal preferences.
 
 ## Project Directory
 
-| folder     | kit type | core functionality    |
-| ---------- | -------- | --------------------- |
-| anomaly    | workload | `opencode`            |
-| anthropic  | workload | `claude`              |
-| codebase   | mixin    | `codebase-memory-mcp` |
-| github     | mixin    | `gh`                  |
-| openai     | workload | `codex`               |
-| python     | mixin    | `python`, `uv`        |
-| skills     | mixin    | agent skills          |
-| typescript | mixin    | `node`, `pnpm`        |
+| folder    | kit type | core functionality                                                   |
+| --------- | -------- | -------------------------------------------------------------------- |
+| anomaly   | workload | `opencode`                                                           |
+| anthropic | workload | `claude`                                                             |
+| openai    | workload | `codex`                                                              |
+| skills    | mixin    | agent skills                                                         |
+| tools     | mixin    | `bash`, `git`, `jq`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp` |
 
 ## Development
 
@@ -34,10 +31,9 @@ Before the User performs a commit, the agent should engage the `commit-message` 
 
 ### Language Conventions
 
-Preferred language conventions are represented by the corresponding mixins:
+Preferred language conventions (Python via `uv`, Node.js via `pnpm`) are documented in the tools mixin:
 
-* [Python](python/README.md)
-* [TypeScript](typescript/README.md)
+* [Tools](tools/tools.context.md)
 
 ## Additional Internal References
 
