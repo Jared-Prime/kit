@@ -39,6 +39,25 @@ capabilities:
               - POST
               - PUT
               - DELETE
+          - hosts:
+              - api.github.com
+            methods:
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
+              - github.com
+            methods:
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
+              - github.com
+            methods:
+              - POST
+            paths:
+              - "/**/git-receive-pack"
 
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for the GitHub MCP server
