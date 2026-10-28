@@ -8,11 +8,11 @@ author: Jared Davis
 sourceUrl: https://github.com/anthropics/claude-code
 
 kind: workload
-provides: ["claude-code@2.1.300"]
+provides: ["claude-code@2.1.312"]
 dockerfile: anthropic.dockerfile
 args:
   model:
-    default: "claude-sonnet-5"
+    default: "claude-sonnet-5-5"
     description: Claude model ID or alias, e.g. claude-fable-5-1, sonnet, opus[1m]
     pattern: '^[a-z0-9.-]+(\[1m\])?$'
     env: ANTHROPIC_MODEL
