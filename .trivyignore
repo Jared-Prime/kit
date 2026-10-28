@@ -1,49 +1,44 @@
-# Temporary suppressions for the `security (typescript)` Trivy image scan
-# (typescript/typescript.dockerfile), see PR #108, run 40736408950,
-# job 122986042922.
+# Temporary suppressions for the Trivy image scan of the `tools` kit
+# (tools/tools.dockerfile).
 #
-# All 18 findings below live in vendored/transitive dependencies that ship
-# inside packages which are ALREADY at their latest published version as of
-# 2026-10-28, so there is no newer release to bump to yet:
-#   - undici (3 CVEs): bundled transitively inside npm@12.2.1's own
-#     node_modules, pulled in by npm's internal HTTP client deps. Fixed
-#     upstream in undici 6.29.1, 7.30.1, 8.12.2, but npm has not vendored a
-#     patched undici yet.
-#   - Go stdlib / golang.org/x/net / golang.org/x/text (15 CVEs): baked into
-#     the native tsc binary, @typescript/typescript-linux-x64@7.0.2
-#     (TypeScript 7's Go-compiled native compiler), from the Go toolchain and
-#     modules it was built against.
+# All findings below are in the native `tsc` binary,
+# @typescript/typescript-linux-x64@7.0.2 (TypeScript 7's Go-compiled native
+# compiler), from the Go toolchain (1.26.4) and golang.org/x/net and
+# golang.org/x/text modules it was built against. typescript@7.0.2 is the
+# latest stable release as of 2026-10-28, so there is no newer release to bump
+# to yet (only 7.1.0-beta and nightly builds exist).
 #
-# Revisit when this suppression expires: re-run Trivy against the
-# typescript kit image. If npm and/or @typescript/typescript-linux-x64 have
-# published newer versions that pull in patched undici/Go dependencies,
-# bump them and drop the corresponding entries below. If not, extend the
-# expiry only after a fresh review of the current advisory state -- do not
-# blindly re-up these dates.
+# Revisit when this suppression expires: re-run Trivy against the tools kit
+# image. If a newer typescript has been published with a patched Go toolchain,
+# bump it and drop the entries below. If not, extend the expiry only after a
+# fresh review of the current advisory state -- do not blindly re-up these
+# dates.
 
-# undici, bundled inside npm@12.2.1's node_modules
-#exp:2026-11-12
-CVE-2026-109383
-#exp:2026-11-12
-CVE-2026-109869
-#exp:2026-11-12
-CVE-2026-87018
-
-# Go stdlib / x/net / x/text, baked into @typescript/typescript-linux-x64@7.0.2
+# golang.org/x/text
 #exp:2026-11-12
 CVE-2026-56851
 #exp:2026-11-12
 CVE-2026-56852
+
+# golang.org/x/net
+#exp:2026-11-12
+CVE-2026-39821
+#exp:2026-11-12
+CVE-2026-46600
+#exp:2026-11-12
+CVE-2026-78669
+
+# Go stdlib
+# CVE-2026-56857 only affects Windows (Root.Mkdir following junctions); the
+# image is Alpine Linux.
+#exp:2026-11-12
+CVE-2026-56857
 #exp:2026-11-12
 CVE-2026-111943
 #exp:2026-11-12
 CVE-2026-33818
 #exp:2026-11-12
-CVE-2026-39821
-#exp:2026-11-12
 CVE-2026-39822
-#exp:2026-11-12
-CVE-2026-46600
 #exp:2026-11-12
 CVE-2026-56853
 #exp:2026-11-12
@@ -56,7 +51,5 @@ CVE-2026-56860
 CVE-2026-56862
 #exp:2026-11-12
 CVE-2026-78667
-#exp:2026-11-12
-CVE-2026-78669
 #exp:2026-11-12
 CVE-2026-97031

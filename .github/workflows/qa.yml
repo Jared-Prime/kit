@@ -53,14 +53,14 @@ jobs:
           platforms: linux/amd64
           load: true
           push: false
-          tags: kit-${{ matrix.kit }}:scan
+          tags: ${{ matrix.kit }}-kit:scan
           cache-from: type=gha,scope=scan-${{ matrix.kit }}
           cache-to: type=gha,scope=scan-${{ matrix.kit }},mode=max
       - name: Aqua Security Trivy (image)
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           scan-type: image
-          image-ref: kit-${{ matrix.kit }}:scan
+          image-ref: ${{ matrix.kit }}-kit:scan
           scanners: vuln,secret
           severity: HIGH,CRITICAL
           ignore-unfixed: true

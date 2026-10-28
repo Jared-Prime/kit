@@ -16,14 +16,15 @@ quiet() {
 quiet docker pull -q dhi.io/trivy:0-alpine
 
 function files() {
-  quiet docker run --rm -v "$(pwd)":/workspace dhi.io/trivy:0-alpine fs --format table --quiet --no-progress --exit-code 1 --severity HIGH,CRITICAL /workspace
+  quiet docker run --rm -v "$(pwd)":/workspace dhi.io/trivy:0-alpine fs --format table --quiet --no-progress --exit-code 1 --severity HIGH,CRITICAL --ignorefile /workspace/.trivyignore /workspace
 }
 
 function scan() {
   quiet docker build -q -f ./"$1"/"$1".dockerfile -t "$1"-kit:scan ./"$1"
   quiet docker save "$1"-kit:scan -o .trivy-scan/"$1"-kit.tar
   chmod a+r .trivy-scan/"$1"-kit.tar
-  quiet docker run --rm -v "$(pwd)/.trivy-scan":/scan dhi.io/trivy:0-alpine image --format table --quiet --no-progress --exit-code 1 --input /scan/"$1"-kit.tar --cache-dir /scan/cache --severity HIGH,CRITICAL "$1"-kit:scan
+  cp .trivyignore .trivy-scan/.trivyignore && chmod a+r .trivy-scan/.trivyignore
+  quiet docker run --rm -v "$(pwd)/.trivy-scan":/scan dhi.io/trivy:0-alpine image --format table --quiet --no-progress --exit-code 1 --input /scan/"$1"-kit.tar --cache-dir /scan/cache --ignorefile /scan/.trivyignore --severity HIGH,CRITICAL "$1"-kit:scan
 }
 
 files || exit 1
