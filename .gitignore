@@ -2,3 +2,5 @@
 *.tar
 **/node_modules/
 .codebase-memory
+.claude
+.trivy-scan/

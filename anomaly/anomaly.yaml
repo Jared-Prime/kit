@@ -20,8 +20,11 @@ capabilities:
               # LM Studio — policy matches against localhost:<port> even though
               # the agent connects via host.docker.internal:<port>
               - localhost:1234
+              - api.githubcopilot.com
           - hosts:
               - registry.npmjs.org
+              - pypi.org
+              - files.pythonhosted.org
             methods:
               - GET
               - HEAD
@@ -29,11 +32,27 @@ capabilities:
         deny:
           - hosts:
               - registry.npmjs.org
+              - pypi.org
+              - files.pythonhosted.org
             methods:
               - PATCH
               - POST
               - PUT
               - DELETE
+
+  - type: com.docker.sandbox/credential@1
+    description: Credentials policy for the GitHub MCP server
+    optional: true
+    config:
+      service: github
+      phase: [runtime]
+      apiKey:
+        name: GITHUB_PAT_TOKEN
+        proxyManaged: true
+        inject:
+          - domain: api.githubcopilot.com
+            header: Authorization
+            format: "Bearer %s"
 
   - type: com.docker.sandbox/agent-sessions@1
     config:
