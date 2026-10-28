@@ -39,8 +39,8 @@ RUN npx --yes "get-pnpm@latest" "${PNPM_VERSION}" \
 RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
  && tsc --version | grep -q "Version ${TYPESCRIPT_VERSION}$"
 
-RUN pnpm add -g @anthropic-ai/claude-code@2.1.300 --allow-build=@anthropic-ai/claude-code \
- && test "$(claude --version)" = "2.1.300 (Claude Code)" \
+RUN pnpm add -g @anthropic-ai/claude-code@2.1.312 --allow-build=@anthropic-ai/claude-code \
+ && test "$(claude --version)" = "2.1.312 (Claude Code)" \
  && mkdir -p /home/agent/.claude
 
 COPY --from=config /etc/claude-code/managed-settings.json /etc/claude-code/managed-settings.json
