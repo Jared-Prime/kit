@@ -1,5 +1,22 @@
 # Changelog
 
+## [2.0.0](https://github.com/Jared-Prime/kit/compare/v1.8.0...v2.0.0) (2026-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* consolidate language and tool mixins into a single tools kit ([#116](https://github.com/Jared-Prime/kit/issues/116))
+
+### Features
+
+* consolidate language and tool mixins into a single tools kit ([#116](https://github.com/Jared-Prime/kit/issues/116)) ([0907ff0](https://github.com/Jared-Prime/kit/commit/0907ff0e9b0ef6643928cc7fafd8d2090b212309))
+
+
+### Bug Fixes
+
+* **github:** deny mutating HTTP methods to GitHub hosts ([#107](https://github.com/Jared-Prime/kit/issues/107)) ([605744b](https://github.com/Jared-Prime/kit/commit/605744b3e81abcf5dab5dbbed7af462ed0331f1f))
+* update trivy ignore and script ([#117](https://github.com/Jared-Prime/kit/issues/117)) ([cb10d5e](https://github.com/Jared-Prime/kit/commit/cb10d5e305b27f77fdf817eca3fc6c2a7f2d49f3))
+
 ## [1.8.0](https://github.com/Jared-Prime/kit/compare/v1.7.0...v1.8.0) (2026-10-23)
 
 
