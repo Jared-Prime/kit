@@ -42,8 +42,8 @@ RUN npx --yes "get-pnpm@latest" "${PNPM_VERSION}" \
 RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
  && tsc --version | grep -q "Version ${TYPESCRIPT_VERSION}$"
 
-RUN pnpm add -g @openai/codex@0.163.0 --allow-build=@openai/codex && \
-    test "$(codex --version)" = "codex-cli 0.163.0"
+RUN pnpm add -g @openai/codex@0.165.0 --allow-build=@openai/codex && \
+    test "$(codex --version)" = "codex-cli 0.165.0"
 
 # Codex bundles rg build requiring a glibc loader
 # Replace the Codex bundled rg build with the Alpine package

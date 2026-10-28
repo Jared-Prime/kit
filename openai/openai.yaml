@@ -2,13 +2,13 @@
 
 schemaVersion: "3"
 displayName: Codex (OpenAI)
-description: OpenAI Codex CLI as a sandbox workload preconfigured for GPT-6 Sol
+description: OpenAI Codex CLI as a sandbox workload preconfigured for GPT-6.1 Sol
 author: Jared Davis
 
 sourceUrl: https://github.com/openai/codex
 
 kind: workload
-provides: ["codex@0.163.0"]
+provides: ["codex@0.165.0"]
 dockerfile: openai.dockerfile
 capabilities:
   - type: com.docker.sandbox/sbx@1
