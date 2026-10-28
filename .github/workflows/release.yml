@@ -107,7 +107,7 @@ jobs:
             echo "version: \"${TAG#v}\""
             echo 'kits:'
             for kit in $KITS; do
-              echo "  - ref: ghcr.io/${OWNER}/kit-${kit}:${TAG}"
+              echo "  - ref: ghcr.io/${OWNER}/${kit}-kit:${TAG}"
             done
           } | tee "${NAME}.generated.yaml"
 

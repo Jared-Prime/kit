@@ -52,7 +52,9 @@ ENV PATH="/opt/uv/bin:${PATH}"
 RUN mkdir -p /opt/uv/bin && \
     cp "$(command -v uv)" "$(command -v uvx)" /opt/uv/bin/ && \
     uv python install "${PYTHON_VERSION}" && \
-    uv python list --only-installed | grep -q "cpython-${PYTHON_VERSION}"
+    uv python list --only-installed | grep -q "cpython-${PYTHON_VERSION}" && \
+    uv pip uninstall --python "$(uv python find "${PYTHON_VERSION}")" --break-system-packages pip && \
+    ! "$(uv python find "${PYTHON_VERSION}")" -m pip --version
 
 FROM dhi.io/alpine-base:3.24@sha256:7b06d747fcb428a0699679955e903b13322c92c79d94ce94c108634f13a714f1
 
