@@ -176,10 +176,14 @@ jobs:
       - name: ${{ env.OCI_HOST }}/${{ env.OCI_USER }}/kit:dev
         working-directory: ${{ runner.temp }}/digests
         run: |
+          sources=()
+          for digest in *; do
+            sources+=("${OCI_HOST}/${OCI_USER}/kit@sha256:${digest}")
+          done
           docker buildx imagetools create \
             -t "${OCI_HOST}/${OCI_USER}/kit:dev" \
             -t "${OCI_HOST}/${OCI_USER}/kit:sha-${GITHUB_SHA}" \
-            $(printf "${OCI_HOST}/${OCI_USER}/kit@sha256:%s " *)
+            "${sources[@]}"
           docker buildx imagetools inspect "${OCI_HOST}/${OCI_USER}/kit:dev"
 
   push-kit:
@@ -211,10 +215,14 @@ jobs:
       - name: ${{ env.OCI_HOST }}/${{ env.OCI_USER }}/kit/${{ matrix.kit }}:dev
         working-directory: ${{ runner.temp }}/digests
         run: |
+          sources=()
+          for digest in *; do
+            sources+=("${OCI_HOST}/${OCI_USER}/kit/${{ matrix.kit }}@sha256:${digest}")
+          done
           docker buildx imagetools create \
             -t "${OCI_HOST}/${OCI_USER}/kit/${{ matrix.kit }}:dev" \
             -t "${OCI_HOST}/${OCI_USER}/kit/${{ matrix.kit }}:sha-${GITHUB_SHA}" \
-            $(printf "${OCI_HOST}/${OCI_USER}/kit/${{ matrix.kit }}@sha256:%s " *)
+            "${sources[@]}"
           docker buildx imagetools inspect "${OCI_HOST}/${OCI_USER}/kit/${{ matrix.kit }}:dev"
 
   push-workload:
