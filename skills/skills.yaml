@@ -9,6 +9,14 @@ dockerfile: skills.dockerfile
 capabilities:
   - type: com.docker.sandbox/agent-skill@1
     config:
+      path: /usr/share/kit/skills/introspection
+
+  - type: com.docker.sandbox/agent-skill@1
+    config:
+      path: /usr/share/kit/skills/codebase-memory
+
+  - type: com.docker.sandbox/agent-skill@1
+    config:
       path: /usr/share/kit/skills/guided-review
 
   - type: com.docker.sandbox/agent-skill@1
