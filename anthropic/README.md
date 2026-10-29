@@ -22,12 +22,46 @@ sbx run ./anthropic --name anthropic-gh-test \
   --kit-arg effort=high
 ```
 
+### Shell commands
+
+Start a prompt with `!` to run a shell command in the sandbox from within Claude Code.
+The command and its output land in the conversation.
+
+```claude-code
+! ls -la ~/.claude
+```
+
+From the host, run the same command with `sbx exec`
+
+```shell
+sbx exec anthropic-gh-test sh -c 'ls -la ~/.claude'
+```
+
 ## Claude Account
 
 Run the login command at startup to authenticate with your Claude account
 
 ```claude-code
 /login
+```
+
+The proxy intercepts the token exchange, so the token stays on the host and
+the sandbox only sees sentinels in `~/.claude/.credentials.json`.
+Sandboxes created afterwards start signed in.
+
+Check for the sentinels; only the token prefix is printed, so a real token doesn't land in the conversation
+
+```claude-code
+! jq -r '.claudeAiOauth | .accessToken[0:28], .refreshToken[0:28]' ~/.claude/.credentials.json
+```
+
+Expect `sk-ant-oat01-proxy-managed` and `sk-ant-ort01-proxy-managed`.
+Random characters after the `sk-ant-oat01-` prefix mean the real token reached the sandbox.
+
+Alternatively, bind an API key on the host before creating the sandbox
+
+```shell
+sbx secret set anthropic
 ```
 
 This kit network policy allows the Claude OAuth endpoints.

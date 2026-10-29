@@ -4,7 +4,6 @@ personality = "pragmatic"
 default_permissions = "workdir-net"
 approval_policy = "on-request"
 model_reasoning_effort = "medium"
-forced_login_method = "chatgpt"
 
 [mcp_servers.github]
 url = "https://api.githubcopilot.com/mcp/"

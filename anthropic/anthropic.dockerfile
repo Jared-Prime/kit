@@ -2,6 +2,7 @@
 FROM ghcr.io/jared-prime/kit/claude:dev
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh
 
 COPY managed-settings.json /etc/claude-code/managed-settings.json
 COPY managed-mcp.json /etc/claude-code/managed-mcp.json

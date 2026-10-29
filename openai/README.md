@@ -12,8 +12,21 @@ sbx run ./openai --name openai-gh-test
 
 ## OpenAI Account
 
-Run the login command at startup to authenticate with your ChatGPT account, using
-the device-code flow
+Sign in once on the host with your browser, before creating the sandbox
+
+```shell
+sbx secret set -g openai --oauth
+```
+
+The token stays on the host; the sandbox only sees sentinels, and the proxy
+substitutes the real token for requests to `chatgpt.com`.
+An API key bound with `sbx secret set openai` works the same way.
+The binding is read at create, so recreate an existing sandbox after signing in.
+
+### Device code
+
+Without a host credential, run the login command at startup to authenticate
+with your ChatGPT account, using the device-code flow
 
 ```shell
 codex login --device-auth
