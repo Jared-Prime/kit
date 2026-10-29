@@ -35,7 +35,7 @@ RUN case "${TARGETARCH}" in \
     tar -xzf /tmp/cbm.tar.gz -C /tmp/cbm codebase-memory-mcp LICENSE THIRD_PARTY_NOTICES.md && \
     /tmp/cbm/codebase-memory-mcp --version | grep -q "${CBM_VERSION}"
 
-FROM dhi.io/node:26-alpine-dev@sha256:0614d22bcdfe1f5fbf985e68b455e61aefba8bc697894a6e91a8542a3e5f26b4 AS node
+FROM dhi.io/node:26-alpine-dev@sha256:b1f537fd18d3cab60f2da090b4cd60f5fd8ef7f7ac8a81a3c5514ef1be35b941 AS node
 
 ARG PNPM_VERSION=12.15.0
 ARG TYPESCRIPT_VERSION=7.0.2
