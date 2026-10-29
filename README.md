@@ -66,6 +66,32 @@ Load individual skills to share among agents
 sbx agents add jared-prime/kit --skill guided-review
 ```
 
+## Credentials
+
+The Claude Code and Codex workloads declare an optional host credential.
+When bound, the token stays on the host; the sandbox only sees sentinels, and the proxy substitutes the real token.
+Sandboxes created afterwards start signed in.
+
+| harness     | token on the host                                        | token in the sandbox only                                                            |
+|-------------|----------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Claude Code | `/login` once; the proxy captures it                     | decline the `anthropic` credential prompt, then `/login` per sandbox                 |
+| Codex       | `sbx secret set -g openai --oauth` (browser on the host) | decline the `openai` credential prompt, then `codex login --device-auth` per sandbox |
+| opencode    | not supported                                            | LM Studio takes no login; for OpenCode Zen, sign in per sandbox                      |
+
+To keep a token in the sandbox only, also leave the service unset on the host (`sbx secret ls`).
+If you approved the credential before, remove its entry from `~/.config/sbx/credentials.yaml`.
+Each harness README shows how to check which token the sandbox holds.
+
+OpenCode Zen models (e.g. `opencode/big-pickle`) need a Zen API key.
+`sbx` has no service for it, so the key can only live in the sandbox:
+sign in with opencode's login, choose OpenCode Zen, and paste the key in each new sandbox.
+
+All three workloads read the GitHub MCP server's token from the host
+
+```shell
+sbx secret set github
+```
+
 ## Network Policies
 
 A Docker Sandbox applies network access control at two layers:

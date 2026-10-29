@@ -37,5 +37,16 @@ the sandbox, which the browser on your host can't reach, so sign-in will fail
 with a connection-refused error after you click the link. `--device-auth` avoids
 the local callback server entirely.
 
+### Check the token
+
+From the host, print the start of the token the sandbox holds, so a real token doesn't land in your scrollback
+
+```shell
+sbx exec openai-gh-test sh -c 'jq -r ".OPENAI_API_KEY // .tokens.access_token[0:12]" ~/.codex/auth.json'
+```
+
+Expect `proxy-managed` when the token stays on the host.
+A `eyJ…` prefix means the real token is in the sandbox.
+
 This kit's network policy allows the ChatGPT OAuth endpoints.
 If using the kit in a closed network policy preset, `codex login --device-auth` may fail.
