@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.1](https://github.com/Jared-Prime/kit/compare/v2.0.0...v2.0.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **anthropic:** copy full directory ([#121](https://github.com/Jared-Prime/kit/issues/121)) ([0ece82d](https://github.com/Jared-Prime/kit/commit/0ece82dc0aa791e4f0c801c06be7b2ced1390e77))
+* **anthropic:** enable actions toolset on github mcp server ([#119](https://github.com/Jared-Prime/kit/issues/119)) ([4b45781](https://github.com/Jared-Prime/kit/commit/4b4578174b18cd907eefc1d13d06350f3cdfa6f3))
+
 ## [2.0.0](https://github.com/Jared-Prime/kit/compare/v1.8.0...v2.0.0) (2026-10-28)
 
 
