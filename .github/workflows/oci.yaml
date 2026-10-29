@@ -258,7 +258,7 @@ jobs:
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ./${{ matrix.workload }}
-          file: ./${{ matrix.workload }}/${{ matrix.workload }}.dockerfile
+          file: ./${{ matrix.workload }}/${{ matrix.workload }}.yaml
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.OCI_HOST }}/${{ env.OCI_USER }}/workload/${{ matrix.workload }}:dev
@@ -269,7 +269,7 @@ jobs:
 
   push-sandbox:
     if: github.ref == 'refs/heads/main'
-    needs: [push-workload]
+    needs: [push-workload, skills]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -299,8 +299,11 @@ jobs:
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ./${{ matrix.workload }}
-          file: ./${{ matrix.workload }}/${{ matrix.workload }}.yaml
+          file: ./${{ matrix.workload }}/${{ matrix.workload }}.sandbox.yaml
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            KIT_REGISTRY=${{ env.OCI_HOST }}/${{ env.OCI_USER }}
+            KIT_TAG=sha-${{ github.sha }}
           tags: |
             ${{ env.OCI_HOST }}/${{ env.OCI_USER }}/sandbox/${{ matrix.workload }}:dev
             ${{ env.OCI_HOST }}/${{ env.OCI_USER }}/sandbox/${{ matrix.workload }}:sha-${{ github.sha }}

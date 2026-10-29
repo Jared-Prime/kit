@@ -42,7 +42,7 @@ Each tag exists on every image below, under `ghcr.io/jared-prime/`:
 | image                                       | contents                                      |
 | ------------------------------------------- | --------------------------------------------- |
 | `sandbox/anthropic`, `openai`, `anomaly`    | the ready-to-run harness (use these)          |
-| `workload/anthropic`, `openai`, `anomaly`   | the harness image before the kit descriptor   |
+| `workload/anthropic`, `openai`, `anomaly`   | the workload kit: harness plus kit descriptor |
 | `kit/claude`, `codex`, `opencode`           | the shared tools plus one harness CLI         |
 | `kit`                                       | the shared tools only                         |
 | `skills`                                    | the agent skills mixin (add with `--kit`)     |

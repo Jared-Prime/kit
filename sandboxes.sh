@@ -61,23 +61,33 @@ function kit {
 }
 
 function workload {
-  unpack "$(pwd)/$2.kit.tar" "$(pwd)/.cache/layout/$2"
+  docker load -i "$(pwd)/$2.kit.tar"
   docker buildx build \
     --platform linux/amd64,linux/arm64 \
     --quiet \
-    --build-context "ghcr.io/jared-prime/kit/$2:dev=oci-layout://$(pwd)/.cache/layout/$2" \
     --output "type=oci,dest=$(pwd)/$1.workload.tar" \
     -t "ghcr.io/jared-prime/workload/$1:dev" \
-    -f "./$1/$1.dockerfile" "./$1"
+    -f "./$1/$1.yaml" "./$1"
   inspect "$(pwd)/$1.workload.tar"
 }
 
+function skills {
+  docker buildx build \
+    --platform linux/amd64,linux/arm64 \
+    --quiet \
+    --output "type=oci,dest=$(pwd)/skills.tar" \
+    -t "ghcr.io/jared-prime/skills:dev" \
+    -f "./skills/skills.yaml" "./skills"
+  inspect "$(pwd)/skills.tar"
+}
+
 function sandbox {
-  docker load -i "$(pwd)/$2.kit.tar"
+  docker load -i "$(pwd)/$1.workload.tar"
+  docker load -i "$(pwd)/skills.tar"
   docker buildx build \
     --quiet \
     --platform linux/amd64,linux/arm64 \
-    --file "./$1/$1.yaml" \
+    --file "./$1/$1.sandbox.yaml" \
     --output "type=oci,dest=$(pwd)/$1.sandbox.tar" \
     --tag "ghcr.io/jared-prime/sandbox/$1:dev" \
     "$(pwd)/$1"
@@ -102,6 +112,8 @@ done
 workload "anomaly"   "opencode"
 workload "anthropic" "claude"
 workload "openai"    "codex"
+
+skills
 
 sandbox  "anomaly"   "opencode"
 sandbox  "anthropic" "claude"
