@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.2.0](https://github.com/Jared-Prime/kit/compare/v2.1.0...v2.2.0) (2026-10-29)
+
+
+### Features
+
+* bind host credentials for claude and codex workloads ([#126](https://github.com/Jared-Prime/kit/issues/126)) ([7f6d161](https://github.com/Jared-Prime/kit/commit/7f6d161397027b344bfe6d51155ee1503ef3a9f9))
+* copy workload-specific config into kit images ([6c3cb79](https://github.com/Jared-Prime/kit/commit/6c3cb79de4a6884e2261c95cdcfde865ec1e8aa5))
+
 ## [2.1.0](https://github.com/Jared-Prime/kit/compare/v2.0.1...v2.1.0) (2026-10-29)
 
 
