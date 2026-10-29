@@ -3,4 +3,6 @@
 **/node_modules/
 .codebase-memory
 .claude
-.trivy-scan/
+.trivy/
+.cache
+cache

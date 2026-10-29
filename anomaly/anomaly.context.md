@@ -10,7 +10,7 @@ If neither the context nor the `provides` indicates that the sandbox has a binar
 
 ### filesystem
 
-Your harness runs in the sandbox under uid/gid 1001.
+Your harness runs in the sandbox under uid/gid 1000.
 
 ### network
 
@@ -45,15 +45,85 @@ Your sandbox workload pins opencode to 2.0.32.
 opencode --version
 ```
 
+#### codebase-memory-mcp
+
+Your sandbox workload pins codebase-memory-mcp to 0.12.1.
+
+```shell
+codebase-memory-mcp --version
+```
+
+The sandbox does _not_ prepare an MCP for the tool.
+Use Bash to run the tool on the command line instead.
+
+#### node.js
+
+Your sandbox workload pins Node.js to 26.12.
+
+```bash
+node --version
+```
+
 #### pnpm
 
-Your sandbox base layer pins to pnpm 12.15.0.
+Your sandbox workload pins pnpm to 12.15.0.
 
 ```bash
 pnpm --version
 ```
 
 You **must** use pnpm for Node.js package management.
+
+#### prek
+
+Your sandbox workload pins prek to 0.5.7.
+
+```shell
+prek --version
+```
+
+#### python
+
+Your sandbox workload pins python to 3.14.
+Always use `uv run python` to invoke python in an active project context:
+
+```shell
+uv run python --version
+```
+
+Use `uvx` to invoke python outside of an active project context:
+
+```shell
+uvx python --version
+```
+
+The sandbox doesn't put a `python3` binary on `$PATH`.
+`uv run`/`uvx` resolve explicitly from the managed install (`UV_PYTHON_INSTALL_DIR`).
+Those commands are unambiguous regardless of what else is on `$PATH`.
+
+#### TypeScript
+
+Your sandbox workload pins TypeScript to 7.0.2.
+
+```bash
+tsc --version
+```
+
+#### uv
+
+Your sandbox workload pins uv to 0.13.6.
+
+```shell
+uv --version
+```
+
+### skills
+
+The `skills` mixin provides the following skills when it is composed with this workload.
+
+Use the `introspection` skill to ensure the sandbox has the workload and its mixins configured as expected.
+
+Use the `codebase-memory` skill at least once on the codebase to prepare the semantic graph.
 
 ### mcp
 

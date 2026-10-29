@@ -14,7 +14,9 @@ Conventions in this repository follow the maintainer's personal preferences.
 | anthropic | workload | `claude`                                                             |
 | openai    | workload | `codex`                                                              |
 | skills    | mixin    | agent skills                                                         |
-| tools     | mixin    | `bash`, `git`, `jq`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp` |
+
+The root `Dockerfile` builds the shared tools (`bash`, `git`, `jq`, `rg`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp`) and each harness CLI as the `kit` images.
+Each workload builds on its harness image, so the tools ship inside the workload rather than as a mixin.
 
 ## Development
 
@@ -31,9 +33,11 @@ Before the User performs a commit, the agent should engage the `commit-message` 
 
 ### Language Conventions
 
-Preferred language conventions (Python via `uv`, Node.js via `pnpm`) are documented in the tools mixin:
+Preferred language conventions (Python via `uv`, Node.js via `pnpm`) are documented in each workload's context:
 
-* [Tools](tools/tools.context.md)
+* [Anthropic](anthropic/anthropic.context.md)
+* [OpenAI](openai/openai.context.md)
+* [Anomaly](anomaly/anomaly.context.md)
 
 ## Additional Internal References
 
