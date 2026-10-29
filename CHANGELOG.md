@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Jared-Prime/kit/compare/v2.0.1...v2.1.0) (2026-10-29)
+
+
+### Features
+
+* replace tools kit with unified Dockerfile and OCI workflow ([#123](https://github.com/Jared-Prime/kit/issues/123)) ([dc958f6](https://github.com/Jared-Prime/kit/commit/dc958f6e0b9245904e42becaa1277347795c3d8d))
+
 ## [2.0.1](https://github.com/Jared-Prime/kit/compare/v2.0.0...v2.0.1) (2026-10-29)
 
 
