@@ -20,6 +20,7 @@ env:
 
 jobs:
   latest:
+    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -310,6 +311,7 @@ jobs:
   # The skills mixin is a scratch overlay of markdown and shell scripts.
   # It runs on pull requests too, so the kit frontend validates it before merge.
   skills:
+    if: ${{ !startsWith(github.head_ref, 'release-please--') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
