@@ -73,7 +73,8 @@ COPY --from=extra /usr/bin/jq /usr/bin/jq
 COPY --from=extra --chmod=0755 /tmp/cbm/codebase-memory-mcp /usr/local/bin/codebase-memory-mcp
 COPY --from=extra /tmp/cbm/LICENSE /tmp/cbm/THIRD_PARTY_NOTICES.md /usr/local/share/doc/codebase-memory-mcp/
 COPY --from=extra --chown=1001:1001 /home/agent /home/agent
-COPY skills /usr/share/kit/skills
+COPY skills/introspection /usr/share/kit/skills/introspection
+COPY skills/codebase-memory /usr/share/kit/skills/codebase-memory
 
 ENV SHELL=/bin/bash
 ENV PNPM_HOME=/opt/pnpm
