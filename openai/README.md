@@ -12,8 +12,21 @@ sbx run ./openai --name openai-gh-test
 
 ## OpenAI Account
 
-Run the login command at startup to authenticate with your ChatGPT account, using
-the device-code flow
+Sign in once on the host with your browser, before creating the sandbox
+
+```shell
+sbx secret set -g openai --oauth
+```
+
+The token stays on the host; the sandbox only sees sentinels, and the proxy
+substitutes the real token for requests to `chatgpt.com`.
+An API key bound with `sbx secret set openai` works the same way.
+The binding is read at create, so recreate an existing sandbox after signing in.
+
+### Device code
+
+Without a host credential, run the login command at startup to authenticate
+with your ChatGPT account, using the device-code flow
 
 ```shell
 codex login --device-auth
@@ -23,6 +36,17 @@ Plain `codex login` binds its OAuth callback server to `127.0.0.1:1455` inside
 the sandbox, which the browser on your host can't reach, so sign-in will fail
 with a connection-refused error after you click the link. `--device-auth` avoids
 the local callback server entirely.
+
+### Check the token
+
+From the host, print the start of the token the sandbox holds, so a real token doesn't land in your scrollback
+
+```shell
+sbx exec openai-gh-test sh -c 'jq -r ".OPENAI_API_KEY // .tokens.access_token[0:12]" ~/.codex/auth.json'
+```
+
+Expect `proxy-managed` when the token stays on the host.
+A `eyJ…` prefix means the real token is in the sandbox.
 
 This kit's network policy allows the ChatGPT OAuth endpoints.
 If using the kit in a closed network policy preset, `codex login --device-auth` may fail.

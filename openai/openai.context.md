@@ -51,9 +51,25 @@ codebase-memory-mcp --version
 The sandbox does _not_ prepare an MCP for the tool.
 Use Bash to run the tool on the command line instead.
 
+#### git
+
+Your sandbox workload ships git 2.
+
+```shell
+git --version
+```
+
+#### jq
+
+Your sandbox workload ships jq 1.
+
+```shell
+jq --version
+```
+
 #### node.js
 
-Your sandbox workload pins Node.js to 26.12.
+Your sandbox workload pins Node.js to 26.13.
 
 ```bash
 node --version
@@ -95,6 +111,14 @@ uvx python --version
 The sandbox doesn't put a `python3` binary on `$PATH`.
 `uv run`/`uvx` resolve explicitly from the managed install (`UV_PYTHON_INSTALL_DIR`).
 Those commands are unambiguous regardless of what else is on `$PATH`.
+
+#### ripgrep
+
+Your sandbox workload ships ripgrep 15 as `rg`.
+
+```shell
+rg --version
+```
 
 #### TypeScript
 

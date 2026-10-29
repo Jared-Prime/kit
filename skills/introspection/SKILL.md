@@ -35,7 +35,15 @@ Based on what's loaded in your system context, determine the following about the
 Check each of the determinations above.
 Cross-check claims against the structured manifest `/usr/share/sandbox/kit/<harness>.generated/kit.yaml` (read it once — it covers the workload and all mixins together).
 Test commands using `< command > --version` or similar version check.
+When the context documents how to invoke a command (e.g. `uv run python`), test it that way instead.
 Output the `$PATH` if a command check fails and run `which < command >`.
+
+Test hosts with a request and read the response headers, not just the status.
+A sandbox policy denial is a bare 403 without the site's own headers.
+A 403 carrying the site's headers (e.g. `server: cloudflare`, `cf-mitigated: challenge`) came from the site, so the policy allowed it: mark it ✅ and note the site's response.
+
+Test each configured MCP server with a read-only tool call, following the context's instructions for that server.
+A configured server alone does not verify its host or credential.
 
 ## Output
 

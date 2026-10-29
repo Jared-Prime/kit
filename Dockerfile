@@ -37,12 +37,16 @@ RUN case "${TARGETARCH}" in \
 
 FROM dhi.io/node:26-alpine-dev@sha256:b1f537fd18d3cab60f2da090b4cd60f5fd8ef7f7ac8a81a3c5514ef1be35b941 AS node
 
+ARG NODE_VERSION=26.13
 ARG PNPM_VERSION=12.15.0
 ARG TYPESCRIPT_VERSION=7.0.2
 
 ENV SHELL=/usr/bin/bash
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}/bin:${PATH}"
+
+# The 26-alpine-dev tag floats on minor, so a digest bump fails here until the claims are updated
+RUN node --version | grep -q "^v${NODE_VERSION}\."
 
 RUN npx --yes "get-pnpm@latest" "${PNPM_VERSION}" \
  && pnpm --version | grep -q "^${PNPM_VERSION}$"

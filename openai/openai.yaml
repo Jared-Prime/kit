@@ -14,9 +14,10 @@ provides:
   - codebase-memory-mcp@0.12.1
   - git@2
   - jq@1
-  - node@26.12
+  - node@26.13
   - pnpm@12.15.0
   - prek@0.5.7
+  - ripgrep@15
   - python@3.14
   - typescript@7.0.2
   - uv@0.13.6
@@ -84,6 +85,39 @@ capabilities:
           - domain: api.githubcopilot.com
             header: Authorization
             format: "Bearer %s"
+
+  - type: com.docker.sandbox/credential@1
+    description: OpenAI access (API key or ChatGPT OAuth)
+    optional: true
+    config:
+      service: openai
+      phase: runtime
+      apiKey:
+        name: OPENAI_API_KEY
+        proxyManaged: true
+        inject:
+          - domain: api.openai.com
+            header: Authorization
+            format: "Bearer %s"
+      oauth:
+        tokenEndpoint:
+          host: auth.openai.com
+          path: /oauth/token
+        resourceHosts:
+          - chatgpt.com
+        sentinels:
+          accessToken: oai-oat01-proxy-managed
+          refreshToken: oai-ort01-proxy-managed
+
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        - command:
+            - /usr/local/bin/authorization.sh
+          user: agent
+          env:
+            - SBX_CRED_OPENAI_MODE
+          description: Seed Codex auth mode from the host credential binding
 
   - type: com.docker.sandbox/agent-skills@1
     config:

@@ -9,4 +9,7 @@ WORKDIR /home/agent
 
 USER 1000:1000
 
+# Owned by agent so the skills mount doesn't leave the runtime creating it as root
+RUN mkdir -p /home/agent/.config/opencode
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
