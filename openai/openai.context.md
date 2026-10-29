@@ -53,7 +53,7 @@ Use Bash to run the tool on the command line instead.
 
 #### node.js
 
-Your sandbox workload pins Node.js to 26.12.
+Your sandbox workload pins Node.js to 26.13.
 
 ```bash
 node --version
