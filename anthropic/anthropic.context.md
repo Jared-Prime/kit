@@ -46,6 +46,7 @@ You **must** use pnpm for Node.js package management.
 
 The workload configures the remote GitHub MCP server (`https://api.githubcopilot.com/mcp/`) as the `github` MCP server, replacing the `gh` CLI.
 It is read-only (`X-MCP-Readonly: true`) and authenticates with the proxy-managed `GITHUB_PAT_TOKEN`.
+It enables the default toolsets plus `actions` (`X-MCP-Toolsets: default,actions`), so workflow runs, jobs, and job logs are readable.
 Use the MCP tools for GitHub access; do not use `gh` or `git push`.
 
 Check that the server is configured and connected:

@@ -5,7 +5,8 @@
       "url": "https://api.githubcopilot.com/mcp/",
       "headers": {
         "Authorization": "Bearer ${GITHUB_PAT_TOKEN}",
-        "X-MCP-Readonly": "true"
+        "X-MCP-Readonly": "true",
+        "X-MCP-Toolsets": "default,actions"
       }
     }
   }
