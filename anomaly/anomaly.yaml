@@ -29,7 +29,7 @@ args:
     buildArg: registry
   version:
     default: "2.2.0"
-    pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
     description: base kit version
     buildArg: version
 
