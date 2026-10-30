@@ -9,43 +9,44 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/anthropic:latest'
+sbx run 'ghcr.io/jared-prime/sandbox/claude:latest'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/openai:latest'
+sbx run 'ghcr.io/jared-prime/sandbox/codex:latest'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/anomaly:latest'
+sbx run 'ghcr.io/jared-prime/sandbox/opencode:latest'
 ```
 
-| harness     | image                                   |
-| ----------- | --------------------------------------- |
-| Claude Code | `ghcr.io/jared-prime/sandbox/anthropic` |
-| Codex       | `ghcr.io/jared-prime/sandbox/openai`    |
-| opencode    | `ghcr.io/jared-prime/sandbox/anomaly`   |
+| harness     | image                                  |
+| ----------- | -------------------------------------- |
+| Claude Code | `ghcr.io/jared-prime/sandbox/claude`   |
+| Codex       | `ghcr.io/jared-prime/sandbox/codex`    |
+| opencode    | `ghcr.io/jared-prime/sandbox/opencode` |
 
 ## Images and Tags
 
 Every image is built for `linux/amd64` and `linux/arm64`, scanned with Trivy, and published by the [OCI workflow](.github/workflows/oci.yaml).
 
-| tag          | meaning                                                  |
-| ------------ | -------------------------------------------------------- |
-| `latest`     | the most recent release                                  |
-| `vX.Y.Z`     | a specific release, for example `v2.0.1`                 |
-| `dev`        | the most recent build of `main`                          |
-| `sha-<hash>` | the build of a specific commit on `main`                 |
+| tag                    | meaning                                                         |
+| ---------------------- | --------------------------------------------------------------- |
+| `latest`               | the most recent release                                         |
+| `vX.Y.Z`               | a specific release, for example `v2.0.1`                        |
+| `dev`                  | the most recent build of `main`                                 |
+| `sha-<hash>`           | the build of a specific commit on `main`                        |
+| `vX.Y.Z-sha-<short>`   | the same commit build, as the version the kit chain resolves    |
 
 Each tag exists on every image below, under `ghcr.io/jared-prime/`:
 
-| image                                       | contents                                      |
-| ------------------------------------------- | --------------------------------------------- |
-| `sandbox/anthropic`, `openai`, `anomaly`    | the ready-to-run harness (use these)          |
-| `workload/anthropic`, `openai`, `anomaly`   | the harness image before the kit descriptor   |
-| `kit/claude`, `codex`, `opencode`           | the shared tools plus one harness CLI         |
-| `kit`                                       | the shared tools only                         |
-| `skills`                                    | the agent skills mixin (add with `--kit`)     |
+| image                                          | contents                                         |
+| ---------------------------------------------- | ------------------------------------------------ |
+| `sandbox/claude`, `codex`, `opencode`          | the ready-to-run harness (use these)             |
+| `kit/workload/anthropic`, `openai`, `anomaly`  | the workload kit for each harness                |
+| `kit/mixin/skills`                             | the agent skills mixin (add with `--kit`)        |
+| `kit/claude`, `codex`, `opencode`              | the shared tools plus one harness CLI            |
+| `kit`                                          | the shared tools only                            |
 
 Merging to `main` publishes `dev`. When release-please cuts a release, the release workflow promotes that commit's already-scanned images to `latest` and `vX.Y.Z` without rebuilding them.
 

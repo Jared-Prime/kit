@@ -66,9 +66,9 @@ jobs:
         run: |
           for image in \
             kit kit/claude kit/codex kit/opencode \
-            workload/anomaly workload/anthropic workload/openai \
-            sandbox/anomaly sandbox/anthropic sandbox/openai \
-            skills; do
+            kit/workload/anomaly kit/workload/anthropic kit/workload/openai \
+            kit/mixin/skills \
+            sandbox/opencode sandbox/claude sandbox/codex; do
             repo="${OCI_HOST}/${OCI_USER}/${image}"
             docker buildx imagetools create \
               -t "${repo}:latest" \
