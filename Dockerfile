@@ -6,6 +6,8 @@ RUN addgroup -g 1000 sandbox  && \
 
 FROM dhi.io/bash:5-alpine@sha256:a707212b3cedeb3241971658dba3f152d2d1a1cda5f7c4cc6f9582973b27a414 AS bash
 
+FROM dhi.io/curl:8-alpine@sha256:c1d3243d9061b1ce78d8ce9cbb565186f55c214c2077868153d5706b58ada9d6 AS curl
+
 FROM dhi.io/git:2-alpine@sha256:64816bd7a1f789b165217c834bfb8cfe2977af3c5d732edffd0e33569adb82c5 AS git
 
 FROM ghcr.io/j178/prek:0.5.9-alpine3.24@sha256:d99655cd1d0f739534c60bc00e75e5bcdc49a7fabe41294eb3b6830ca704b135 AS prek
@@ -78,11 +80,22 @@ ENV PATH="/opt/pnpm/bin:/opt/uv/bin:${PATH}"
 COPY --from=bash /usr/lib/libreadline.so* /usr/lib/libncursesw.so* /usr/lib/
 COPY --from=bash /bin/bash /usr/bin/bash
 COPY --from=bash /bin/bash /bin/bash
+COPY --from=curl /usr/lib/libcurl.so* /usr/lib/
+COPY --from=curl /usr/lib/libnghttp2.so* /usr/lib/
+COPY --from=curl /usr/lib/libcares.so* /usr/lib/
+COPY --from=curl /usr/lib/libidn2.so* /usr/lib/
+COPY --from=curl /usr/lib/libpsl.so* /usr/lib/
+COPY --from=curl /usr/lib/libzstd.so* /usr/lib/
+COPY --from=curl /usr/lib/libbrotlidec.so* /usr/lib/
+COPY --from=curl /usr/lib/libbrotlicommon.so* /usr/lib/
+COPY --from=curl /usr/lib/libunistring.so* /usr/lib/
+COPY --from=curl /usr/bin/curl /usr/local/bin/curl
 COPY --from=git /usr/bin/git /usr/local/bin/git
 COPY --from=prek /usr/local/bin/prek /usr/local/bin/prek
 COPY --from=jq /usr/lib/libjq.so* /usr/lib/
 COPY --from=jq /usr/lib/libonig.so* /usr/lib/
 COPY --from=jq /usr/bin/jq /usr/local/bin/jq
+COPY --from=rp /usr/lib/libgcc_s.so* /usr/lib/
 COPY --from=rp /usr/lib/libpcre2-8.so* /usr/lib/
 COPY --from=rp /usr/bin/rg /usr/local/bin/rg
 COPY --from=memory /tmp/cbm/codebase-memory-mcp /usr/local/bin/codebase-memory-mcp
@@ -90,6 +103,24 @@ COPY --from=node /usr/lib/libstdc++.so* /usr/lib/libgcc_s.so* /usr/lib/
 COPY --from=node /usr/bin/node /usr/local/bin/node
 COPY --from=node --chown=1000:1000 /opt/pnpm /opt/pnpm
 COPY --from=uv --chown=1000:1000 /opt/uv /opt/uv
+
+# sanity check copied binaries
+ARG BASH_VERSION=5.3.9
+ARG CURL_VERSION=8.22.0
+ARG JQ_VERSION=1.8.2
+ARG RG_VERSION=15.1.0
+ARG GIT_VERSION=2.55.0
+ARG PREK_VERSION=0.5.9
+ARG CODEBASE_MEMORY_MCP_VERSION=0.12.1
+
+RUN bash --version | grep -q "GNU bash, version ${BASH_VERSION}" && \
+    curl --version | grep -q "curl ${CURL_VERSION}" && \
+    git --version | grep -q "git version ${GIT_VERSION}" && \
+    jq --version | grep -q "jq-${JQ_VERSION}" && \
+    rg --version | grep -q "ripgrep ${RG_VERSION}" && \
+    node --version | grep -q "v${NODE_VERSION}" && \
+    prek --version | grep -q "prek ${PREK_VERSION}" && \
+    codebase-memory-mcp --version | grep -q "codebase-memory-mcp ${CODEBASE_MEMORY_MCP_VERSION}"
 
 FROM tools AS opencode
 

@@ -15,7 +15,7 @@ Conventions in this repository follow the maintainer's personal preferences.
 | openai    | workload | `codex`                                                              |
 | skills    | mixin    | agent skills                                                         |
 
-The root `Dockerfile` builds the shared tools (`bash`, `git`, `jq`, `rg`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp`) and each harness CLI as the `kit` images.
+The root `Dockerfile` builds the shared tools (`bash`, `curl`, `git`, `jq`, `rg`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp`) and each harness CLI as the `kit` images.
 Each workload builds on its harness image, so the tools ship inside the workload rather than as a mixin.
 
 ## Development

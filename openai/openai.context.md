@@ -51,6 +51,16 @@ codebase-memory-mcp --version
 The sandbox does _not_ prepare an MCP for the tool.
 Use Bash to run the tool on the command line instead.
 
+#### curl
+
+Your sandbox workload pins curl to 8.22.0.
+
+```shell
+curl --version
+```
+
+The sandbox network policy still applies to curl.
+
 #### git
 
 Your sandbox workload ships git 2.
