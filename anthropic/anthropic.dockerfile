@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/jared-prime/kit/claude:dev
+ARG registry=ghcr.io/jared-prime
+ARG version=2.2.0
+FROM ${registry}/kit/claude:v${version}
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh

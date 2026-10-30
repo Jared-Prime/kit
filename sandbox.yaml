@@ -1,0 +1,34 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: ${{ kit.args.harness }} sandbox
+description: ${{ kit.args.workload }} ${{ kit.args.harness }} sandbox with the skills mixin, ready to run
+author: Jared Davis
+kind: set
+version: ${{ kit.args.version }}
+
+# A set's kits resolve at build, so args used in kits[].ref need buildArg.
+args:
+  version:
+    default: "2.2.0"
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+    description: release version of the listed kits
+    buildArg: VERSION
+  workload:
+    default: anomaly
+    pattern: '^(anomaly|anthropic|openai)$'
+    description: workload kit
+    buildArg: WORKLOAD
+  harness:
+    default: opencode
+    pattern: '^(opencode|claude|codex)$'
+    description: harness name
+  registry:
+    default: ghcr.io/jared-prime
+    pattern: '^[a-z0-9][a-z0-9._/:-]*$'
+    description: registry namespace
+    buildArg: REGISTRY
+
+kits:
+  - ref: ${{ kit.args.registry }}/kit/workload/${{ kit.args.workload }}:v${{ kit.args.version }}
+  - ref: ${{ kit.args.registry }}/kit/mixin/skills:v${{ kit.args.version }}

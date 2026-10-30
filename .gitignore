@@ -6,3 +6,4 @@
 .trivy/
 .cache
 cache
+*.metadata.json

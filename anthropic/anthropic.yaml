@@ -24,6 +24,16 @@ provides:
   - uv@0.13.6
 dockerfile: anthropic.dockerfile
 args:
+  registry:
+    default: ghcr.io/jared-prime
+    pattern: '^[a-z0-9][a-z0-9._/:-]*$'
+    description: registry namespace for the base kit
+    buildArg: registry
+  version:
+    default: "2.2.0"
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+    description: base kit version
+    buildArg: version
   model:
     default: "claude-sonnet-5-5"
     description: Claude model ID or alias, e.g. claude-fable-5-1, sonnet, opus[1m]
