@@ -12,6 +12,7 @@ provides:
   - codex@0.165.0
   - bash@5
   - codebase-memory-mcp@0.12.1
+  - curl@8
   - git@2
   - jq@1
   - node@26.13
