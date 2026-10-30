@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/Jared-Prime/kit/compare/v2.2.0...v2.3.0) (2026-10-30)
+
+
+### Features
+
+* **curl:** ship curl in the shared tools image ([#130](https://github.com/Jared-Prime/kit/issues/130)) ([9680438](https://github.com/Jared-Prime/kit/commit/9680438b0de3ccf0a46b22bdb713c25d4a3f1071))
+
 ## [2.2.0](https://github.com/Jared-Prime/kit/compare/v2.1.0...v2.2.0) (2026-10-29)
 
 
