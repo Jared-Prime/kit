@@ -23,6 +23,7 @@ args:
     default: opencode
     pattern: '^(opencode|claude|codex)$'
     description: harness name
+    buildArg: HARNESS
   registry:
     default: ghcr.io/jared-prime
     pattern: '^[a-z0-9][a-z0-9._/:-]*$'

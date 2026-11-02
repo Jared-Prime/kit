@@ -1,4 +1,8 @@
-version := `cat version.txt`
+commit := env('COMMIT', `git rev-parse HEAD`)
+registry := env('REGISTRY', 'localhost:5005/jared-prime')
+version := env('VERSION', `cat version.txt`)
+
+default: latest
 
 prune:
     @docker system prune -f
@@ -6,46 +10,32 @@ prune:
 registry:
     @docker run --rm -d -p 5005:5000 --name registry registry:2 || docker inspect registry | jq '.[] | .Id'
 
-image registry:
-    @docker buildx build --quiet --push -t {{registry}}/kit:v{{version}} -f Dockerfile --metadata-file image.metadata.json .
-    @jq '."image.name" + "@" + ."containerimage.digest"' < image.metadata.json
+cleanup:
+    @docker stop registry
+    @docker system prune -f
 
-kit registry harness:
-    @docker buildx build --quiet --push --target {{harness}} -t {{registry}}/kit/{{harness}}:v{{version}} -f Dockerfile --metadata-file {{harness}}.kit.metadata.json .
-    @jq '."image.name" + "@" + ."containerimage.digest"' < {{harness}}.kit.metadata.json
+tools:
+    @docker buildx build --quiet --push -f Dockerfile -t {{ registry }}/kit:{{ commit }} --metadata-file ./.cache/tools.metadata.json .
+    @jq '."image.name" + "@" + ."containerimage.digest"' < .cache/tools.metadata.json
 
-workload registry workload:
-    @docker buildx build --quiet --push -t {{registry}}/kit/workload/{{workload}}:v{{version}} -f {{workload}}/{{workload}}.yaml --metadata-file {{workload}}.workload.metadata.json --build-arg registry={{registry}} --build-arg version={{version}} {{workload}}
-    @jq '."image.name" + "@" + ."containerimage.digest"' < {{workload}}.workload.metadata.json
+skills:
+    @docker buildx build --quiet --push -f skills/skills.yaml -t {{ registry }}/kit/skills:{{ commit }} --metadata-file ./.cache/skills.metadata.json ./skills
+    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/skills.metadata.json
 
-mixin registry mixin:
-    @docker buildx build --quiet --push -t {{registry}}/kit/mixin/{{mixin}}:v{{version}} -f {{mixin}}/{{mixin}}.yaml --metadata-file {{mixin}}.mixin.metadata.json {{mixin}}
-    @jq '."image.name" + "@" + ."containerimage.digest"' < {{mixin}}.mixin.metadata.json
-
-sandbox registry workload harness: (kit registry harness) (workload registry workload)
-    @docker buildx build --quiet --push -t {{registry}}/sandbox/{{harness}}:v{{version}} -f sandbox.yaml --metadata-file {{harness}}.sandbox.metadata.json --build-arg registry={{registry}} --build-arg workload={{workload}} --build-arg harness={{harness}} --build-arg version={{version}} .
-    @jq '."image.name" + "@" + ."containerimage.digest"' < {{harness}}.sandbox.metadata.json
-
-opencode registry: (sandbox registry "anomaly" "opencode")
-claude registry: (sandbox registry "anthropic" "claude")
-codex registry: (sandbox registry "openai" "codex")
+workload name:
+    @docker buildx build --quiet --push -f {{ name }}/{{ name }}.yaml -t {{ registry }}/kit/workload/{{ name }}:{{ commit }} --build-arg tools={{ registry }}/kit:{{ commit }} --metadata-file ./.cache/{{ name }}.workload.metadata.json ./{{ name }}
+    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/{{ name }}.workload.metadata.json
 
 [parallel]
-sandboxes registry: (opencode registry) (claude registry) (codex registry)
+workloads: (workload "anomaly") (workload "anthropic") (workload "openai")
 
-build registry: (image registry)  (mixin registry "skills") (sandboxes registry)
-
-clean: prune
-    @docker rm -f registry
-    @rm *.metadata.json
-
-local: registry (build "localhost:5005/jared-prime") trivy
+sandbox name harness tag:
+    @docker buildx build --quiet --push -f {{ name }}/{{ harness }}.yaml -t {{ registry }}/kit/sandbox/{{ harness }}:{{ commit }} --build-arg registry={{ registry }} --build-arg version={{ version }} --build-arg tag={{ tag }} --metadata-file ./.cache/{{ harness }}.harness.metadata.json ./{{ name }}
 
 [parallel]
-trivy: (scan "localhost:5005/jared-prime" "sandbox/opencode") (scan "localhost:5005/jared-prime" "sandbox/claude") (scan "localhost:5005/jared-prime" "sandbox/codex")
-    @echo "✅"
+sandboxes tag: (sandbox "anomaly" "opencode" tag) (sandbox "anthropic" "claude" tag) (sandbox "openai" "codex" tag)
 
-scan registry image:
-    @docker run --rm -v "$(pwd)/.trivyignore":/scan/.trivyignore:ro -v "$(pwd)/.cache/trivy":/scan/cache dhi.io/trivy:0-alpine@sha256:f04db25a4dbc544a40e7a3e25c6134007fdebdc213dc0ee8e1899e0a8a54390d image --image-src remote --insecure --platform linux/arm64 --format table --quiet --no-progress --exit-code 1 --cache-dir /scan/cache --ignorefile /scan/.trivyignore --severity HIGH,CRITICAL {{replace(registry, "localhost", "host.docker.internal")}}/{{image}}:v{{version}}
+[parallel]
+kit: tools skills
 
-default: clean local
+latest: kit (workloads) (sandboxes commit)

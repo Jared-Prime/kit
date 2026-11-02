@@ -1,7 +1,13 @@
 # syntax=docker/dockerfile:1
-ARG registry=ghcr.io/jared-prime
-ARG version=2.2.0
-FROM ${registry}/kit/opencode:v${version}
+ARG tools=ghcr.io/jared-prime/kit:v2.4.0
+FROM ${tools}
+
+ENV SHELL=/usr/bin/bash
+ENV PNPM_HOME=/opt/pnpm
+ENV PATH="${PNPM_HOME}/bin:${PATH}"
+
+RUN pnpm add -g @opencode/cli@2.0.32 --allow-build=@opencode/cli && \
+    test "$(opencode --version)" = "opencode v2.0.32"
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
