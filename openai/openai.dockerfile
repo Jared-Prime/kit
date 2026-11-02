@@ -1,7 +1,19 @@
 # syntax=docker/dockerfile:1
-ARG registry=ghcr.io/jared-prime
-ARG version=2.2.0
-FROM ${registry}/kit/codex:v${version}
+ARG tools=ghcr.io/jared-prime/kit:v2.4.0
+FROM ${tools}
+
+ENV SHELL=/usr/bin/bash
+ENV PNPM_HOME=/opt/pnpm
+ENV PATH="${PNPM_HOME}/bin:${PATH}"
+
+RUN pnpm add -g @openai/codex@0.165.0 --allow-build=@openai/codex && \
+    test "$(codex --version)" = "codex-cli 0.165.0"
+
+# Codex bundles an rg build requiring a glibc loader
+# Remove it so the Alpine ripgrep package (copied into the final stage) is used
+RUN rg="$(find "${PNPM_HOME}" -path '*/codex-path/rg' -type f -print -quit)" && \
+    test -n "${rg}" && \
+    rm "${rg}"
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh

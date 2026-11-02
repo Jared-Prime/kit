@@ -1,0 +1,27 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: opencode harness
+description: Anomaly opencode harness sandbox with additional skills mixin
+author: Jared Davis
+kind: set
+version: ${{ kit.args.version }}
+
+args:
+  version:
+    default: "2.4.0"
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
+    description: release version of the listed kits
+    buildArg: VERSION
+  tag:
+    description: OCI tag for the listed kits
+    buildArg: TAG
+  registry:
+    default: ghcr.io/jared-prime
+    pattern: '^[a-z0-9][a-z0-9._/:-]*$'
+    description: registry namespace
+    buildArg: REGISTRY
+
+kits:
+  - ref: ${{ kit.args.registry }}/kit/workload/anomaly:${{ kit.args.tag }}
+  - ref: ${{ kit.args.registry }}/kit/skills:${{ kit.args.tag }}
