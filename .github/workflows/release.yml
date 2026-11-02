@@ -76,8 +76,10 @@ jobs:
           push: ${{ needs.release.outputs.release_created == 'true' }}
           tags: |
             ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.harness }}:latest
-            ${{ needs.release.outputs.version && format('{0}/kit/sandbox/{1}:{2}', env.REGISTRY, matrix.harness, needs.release.outputs.version) || '' }}
+            ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.workload }}:latest
+            ${{ needs.release.outputs.version && format('{0}/kit/sandbox/{1}:{2}', env.REGISTRY, matrix.workload, needs.release.outputs.version) || '' }}
             ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.harness }}:${{ env.SHA }}
+            ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.workload }}:${{ env.SHA }}
           build-args: |
             registry=${{ env.REGISTRY }}
             ${{ needs.release.outputs.version && format('version={0}', needs.release.outputs.version) || 'version=0.0.0' }}
