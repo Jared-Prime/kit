@@ -1,5 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM ghcr.io/jared-prime/kit/opencode:dev
+ARG registry=ghcr.io/jared-prime
+ARG version=2.2.0
+FROM ${registry}/kit/opencode:v${version}
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
