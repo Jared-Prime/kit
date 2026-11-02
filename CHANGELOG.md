@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/Jared-Prime/kit/compare/v2.4.0...v3.0.0) (2026-11-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* build the kit chain by commit and publish sandboxes on release ([#134](https://github.com/Jared-Prime/kit/issues/134))
+
+### Features
+
+* build the kit chain by commit and publish sandboxes on release ([#134](https://github.com/Jared-Prime/kit/issues/134)) ([6f5ef99](https://github.com/Jared-Prime/kit/commit/6f5ef99c6a6e0a7257f0708b6b8a90e2ef2d88b3))
+
 ## [2.4.0](https://github.com/Jared-Prime/kit/compare/v2.3.0...v2.4.0) (2026-11-02)
 
 
