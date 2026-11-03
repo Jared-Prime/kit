@@ -13,6 +13,7 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io/jared-prime
+  SHA: ${{ github.sha }}
 
 jobs:
   prek:
@@ -32,6 +33,7 @@ jobs:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - name: Log in to ghcr.io
         uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
@@ -44,14 +46,16 @@ jobs:
           persist-credentials: false
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-      - name: ${{ env.REGISTRY }}/kit:${{ github.sha }}
+      - name: ${{ env.REGISTRY }}/kit:${{ env.SHA }}
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ env.REGISTRY }}/kit:${{ github.sha }}
+          tags: |
+            ${{ env.REGISTRY }}/kit:${{ env.SHA }}
+            ${{ env.REGISTRY }}/kit:latest
           cache-from: type=gha,scope=tools
           cache-to: type=gha,scope=tools,mode=max
 
@@ -62,6 +66,7 @@ jobs:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - name: Log in to ghcr.io
         uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
@@ -74,14 +79,16 @@ jobs:
           persist-credentials: false
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-      - name: ${{ env.REGISTRY }}/kit/skills:${{ github.sha }}
+      - name: ${{ env.REGISTRY }}/kit/skills:${{ env.SHA }}
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ./skills
           file: ./skills/skills.yaml
           platforms: linux/amd64,linux/arm64
           push: ${{ github.ref == 'refs/heads/main' }}
-          tags: ${{ env.REGISTRY }}/kit/skills:${{ github.sha }}
+          tags: |
+            ${{ env.REGISTRY }}/kit/skills:${{ env.SHA }}
+            ${{ env.REGISTRY }}/kit/skills:latest
           cache-from: type=gha,scope=skills
           cache-to: type=gha,scope=skills,mode=max
 
@@ -94,6 +101,7 @@ jobs:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     strategy:
       matrix:
         name:
@@ -112,15 +120,17 @@ jobs:
           persist-credentials: false
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-      - name: ${{ env.REGISTRY }}/kit/workload/${{ matrix.name }}:${{ github.sha }}
+      - name: ${{ env.REGISTRY }}/kit/workload/${{ matrix.name }}:${{ env.SHA }}
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: ./${{ matrix.name }}
           file: ./${{ matrix.name }}/${{ matrix.name }}.yaml
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.REGISTRY }}/kit/workload/${{ matrix.name }}:${{ github.sha }}
+          tags: |
+            ${{ env.REGISTRY }}/kit/workload/${{ matrix.name }}:${{ env.SHA }}
+            ${{ env.REGISTRY }}/kit/workload/${{ matrix.name }}:latest
           build-args: |
-            tools=${{ env.REGISTRY }}/kit:${{ github.sha }}
+            tools=${{ env.REGISTRY }}/kit:${{ env.SHA }}
           cache-from: type=gha,scope=workload-${{ matrix.name }}
           cache-to: type=gha,scope=workload-${{ matrix.name }},mode=max

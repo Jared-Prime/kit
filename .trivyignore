@@ -1,18 +1,21 @@
-# Temporary suppressions for the Trivy image scan of the `tools` kit
-# (tools/tools.dockerfile).
+# Temporary suppressions for the Trivy image scan of the tools image (root
+# `Dockerfile`, ghcr.io/jared-prime/kit) and the sandbox images that include it
+# (ghcr.io/jared-prime/kit/sandbox/{anomaly,anthropic,openai}).
 #
 # All findings below are in the native `tsc` binary,
 # @typescript/typescript-linux-x64@7.0.2 (TypeScript 7's Go-compiled native
 # compiler), from the Go toolchain (1.26.4) and golang.org/x/net and
-# golang.org/x/text modules it was built against. typescript@7.0.2 is the
-# latest stable release as of 2026-10-28, so there is no newer release to bump
-# to yet (only 7.1.0-beta and nightly builds exist).
+# golang.org/x/text modules it was built against. It is installed by the root
+# `Dockerfile` (`pnpm add -g typescript@7.0.2`) and listed in each workload
+# yaml's `provides`. typescript@7.0.2 is the latest stable release as of
+# 2026-10-28, so there is no newer release to bump to yet (only 7.1.0-beta and
+# nightly builds exist).
 #
-# Revisit when this suppression expires: re-run Trivy against the tools kit
-# image. If a newer typescript has been published with a patched Go toolchain,
-# bump it and drop the entries below. If not, extend the expiry only after a
-# fresh review of the current advisory state -- do not blindly re-up these
-# dates.
+# Revisit when this suppression expires: re-run Trivy against the sandbox
+# images (`just trivy`, also run in the release workflow). If a newer
+# typescript has been published with a patched Go toolchain, bump it and drop
+# the entries below. If not, extend the expiry only after a fresh review of the
+# current advisory state -- do not blindly re-up these dates.
 
 # golang.org/x/text
 #exp:2026-11-12

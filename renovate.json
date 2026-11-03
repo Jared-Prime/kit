@@ -2,5 +2,172 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "description": "node: Dockerfile ARG and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG NODE_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)",
+        "- node@(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\b"
+      ],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node-version"
+    },
+    {
+      "description": "pnpm: Dockerfile ARG and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG PNPM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "- pnpm@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "pnpm",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "description": "typescript: Dockerfile ARG and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG TYPESCRIPT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "- typescript@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "typescript",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "description": "python: Dockerfile ARG and provides pin (minor precision)",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG PYTHON_VERSION=(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)",
+        "- python@(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\\b"
+      ],
+      "depNameTemplate": "python",
+      "datasourceTemplate": "python-version"
+    },
+    {
+      "description": "uv: provides pin (the Dockerfile image tag is tracked by the docker manager)",
+      "customType": "regex",
+      "managerFilePatterns": ["/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "- uv@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "uv",
+      "packageNameTemplate": "astral-sh/uv",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "prek: Dockerfile ARG and provides pin (the Dockerfile image tag is tracked by the docker manager)",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG PREK_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "- prek@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "prek",
+      "packageNameTemplate": "j178/prek",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "description": "codebase-memory-mcp: both Dockerfile ARGs and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/", "/^(anomaly|anthropic|openai)\\/[^/]+\\.yaml$/"],
+      "matchStrings": [
+        "ARG CBM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG CODEBASE_MEMORY_MCP_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "- codebase-memory-mcp@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "codebase-memory-mcp",
+      "packageNameTemplate": "DeusData/codebase-memory-mcp",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "description": "ripgrep: Dockerfile ARG sanity check",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/"],
+      "matchStrings": [
+        "ARG RG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "ripgrep",
+      "packageNameTemplate": "BurntSushi/ripgrep",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": "jq: Dockerfile ARG sanity check",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/"],
+      "matchStrings": [
+        "ARG JQ_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "jq",
+      "packageNameTemplate": "jqlang/jq",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^jq-(?<version>.+)$"
+    },
+    {
+      "description": "git: Dockerfile ARG sanity check",
+      "customType": "regex",
+      "managerFilePatterns": ["/^Dockerfile$/"],
+      "matchStrings": [
+        "ARG GIT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "git",
+      "packageNameTemplate": "git/git",
+      "datasourceTemplate": "github-tags",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)$"
+    },
+    {
+      "description": "claude-code: anthropic Dockerfile install, version check, and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^anthropic\\/anthropic\\.(dockerfile|yaml)$/"],
+      "matchStrings": [
+        "@anthropic-ai/claude-code@(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "\"(?<currentValue>\\d+\\.\\d+\\.\\d+) \\(Claude Code\\)\"",
+        "- claude-code@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "@anthropic-ai/claude-code",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "description": "codex: openai Dockerfile install, version check, and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^openai\\/openai\\.(dockerfile|yaml)$/"],
+      "matchStrings": [
+        "@openai/codex@(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "\"codex-cli (?<currentValue>\\d+\\.\\d+\\.\\d+)\"",
+        "- codex@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "@openai/codex",
+      "datasourceTemplate": "npm"
+    },
+    {
+      "description": "opencode: anomaly Dockerfile install, version check, and provides pin",
+      "customType": "regex",
+      "managerFilePatterns": ["/^anomaly\\/anomaly\\.(dockerfile|yaml)$/"],
+      "matchStrings": [
+        "@opencode/cli@(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "\"opencode v(?<currentValue>\\d+\\.\\d+\\.\\d+)\"",
+        "- opencode@(?<currentValue>\\d+\\.\\d+\\.\\d+)\\b"
+      ],
+      "depNameTemplate": "@opencode/cli",
+      "datasourceTemplate": "npm"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Update the uv image tag together with the uv provides pin",
+      "matchDepNames": ["uv", "ghcr.io/astral-sh/uv"],
+      "groupName": "uv"
+    },
+    {
+      "description": "Update the prek image tag together with the prek pins",
+      "matchDepNames": ["prek", "ghcr.io/j178/prek"],
+      "groupName": "prek"
+    }
   ]
 }
