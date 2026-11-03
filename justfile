@@ -43,4 +43,8 @@ scan workload: (sandbox workload)
 
 trivy: (scan "anomaly") (scan "anthropic") (scan "openai")
 
+deploy workload destination: tools skills (workload workload) (sandbox workload)
+    @docker tag {{registry}}/kit/sandbox/{{workload}}:{{commit}} {{destination}}/kit/sandbox/{{workload}}:development
+    @docker push {{destination}}/kit/sandbox/{{workload}}:development
+
 latest: kit (workloads) (sandboxes) (trivy)
