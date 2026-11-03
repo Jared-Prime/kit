@@ -21,7 +21,7 @@ provides:
   - ripgrep@15
   - python@3.14
   - typescript@7.0.2
-  - uv@0.13.6
+  - uv@0.13.7
 dockerfile: openai.dockerfile
 args:
   tools:
