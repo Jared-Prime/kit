@@ -6,8 +6,8 @@ ENV SHELL=/usr/bin/bash
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}/bin:${PATH}"
 
-RUN pnpm add -g @opencode/cli@2.0.32 --allow-build=@opencode/cli && \
-    test "$(opencode --version)" = "opencode v2.0.32"
+RUN pnpm add -g @opencode/cli@2.2.5 --allow-build=@opencode/cli && \
+    test "$(opencode --version)" = "opencode v2.2.5"
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
