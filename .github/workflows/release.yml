@@ -18,7 +18,9 @@ permissions: {}
 
 jobs:
   release:
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    # a build for an older commit can finish after main has moved on (e.g. the release PR merged);
+    # skip it so release-please and the sandbox images always see the same commit
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_sha == github.sha)
     concurrency:
       group: release-please
       cancel-in-progress: false
