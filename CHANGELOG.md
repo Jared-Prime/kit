@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.1.1](https://github.com/Jared-Prime/kit/compare/v3.1.0...v3.1.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* **release:** stop release-please from rewriting sandbox.yaml ([#153](https://github.com/Jared-Prime/kit/issues/153)) ([f246197](https://github.com/Jared-Prime/kit/commit/f24619753e8e47b17a69a9c54750d7dc36fbcdd5))
+* **renovate:** stop bumping git, ripgrep and jq sanity-check ARGs ([#155](https://github.com/Jared-Prime/kit/issues/155)) ([60096ab](https://github.com/Jared-Prime/kit/commit/60096ab2d4a58ec7b6e8b27b9054263f98c5c4a1))
+
 ## [3.1.0](https://github.com/Jared-Prime/kit/compare/v3.0.1...v3.1.0) (2026-11-03)
 
 
