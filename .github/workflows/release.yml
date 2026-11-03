@@ -47,13 +47,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - workload: anomaly
-            harness: opencode
-          - workload: anthropic
-            harness: claude
-          - workload: openai
-            harness: codex
+        workload:
+          - anomaly
+          - anthropic
+          - openai
     steps:
       - name: Log in to ghcr.io
         uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
@@ -67,22 +64,20 @@ jobs:
           persist-credentials: false
       - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1 # v4.4.0
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
-      - name: ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.harness }}:${{ env.SHA }}
+      - name: ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.workload }}:${{ env.SHA }}
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
-          context: ./${{ matrix.workload }}
-          file: ./${{ matrix.workload }}/${{ matrix.harness }}.yaml
+          context: .
+          file: sandbox.yaml
           platforms: linux/amd64,linux/arm64
           push: ${{ needs.release.outputs.release_created == 'true' }}
           tags: |
-            ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.harness }}:latest
             ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.workload }}:latest
             ${{ needs.release.outputs.version && format('{0}/kit/sandbox/{1}:{2}', env.REGISTRY, matrix.workload, needs.release.outputs.version) || '' }}
-            ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.harness }}:${{ env.SHA }}
             ${{ env.REGISTRY }}/kit/sandbox/${{ matrix.workload }}:${{ env.SHA }}
           build-args: |
             registry=${{ env.REGISTRY }}
             ${{ needs.release.outputs.version && format('version={0}', needs.release.outputs.version) || 'version=0.0.0' }}
             tag=${{ env.SHA }}
-          cache-from: type=gha,scope=sandbox-${{ matrix.harness }}
-          cache-to: type=gha,scope=sandbox-${{ matrix.harness }},mode=max
+          cache-from: type=gha,scope=sandbox-${{ matrix.workload }}
+          cache-to: type=gha,scope=sandbox-${{ matrix.workload }},mode=max
