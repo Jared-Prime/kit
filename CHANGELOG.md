@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.1.0](https://github.com/Jared-Prime/kit/compare/v3.0.1...v3.1.0) (2026-11-03)
+
+
+### Features
+
+* **k3d:** create cluster and signoz OTEL collector ([#147](https://github.com/Jared-Prime/kit/issues/147)) ([a60cad1](https://github.com/Jared-Prime/kit/commit/a60cad197d634aed7201b997d6734b593b7f88c0))
+
 ## [3.0.1](https://github.com/Jared-Prime/kit/compare/v3.0.0...v3.0.1) (2026-11-03)
 
 
