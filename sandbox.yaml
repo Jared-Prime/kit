@@ -1,30 +1,28 @@
-# syntax=docker/sandbox-kit:3
-
-schemaVersion: "3"
+schemaVersion: '3'
 displayName: ${{ kit.args.workload }} sandbox
 description: ${{ kit.args.workload }} sandbox with additional skills mixin
 author: Jared Davis
 kind: set
-version: ${{ kit.args.version }}
-
+version: 3.0.1
 args:
   version:
-    default: "3.0.0" # x-release-please-version
-    pattern: '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
+    default: 3.0.0
+    pattern: ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$
     description: release version of the listed kits
     buildArg: VERSION
   workload:
-    pattern: '^(anomaly|anthropic|openai)$'
+    pattern: ^(anomaly|anthropic|openai)$
     buildArg: WORKLOAD
   tag:
     description: OCI tag for the listed kits
     buildArg: TAG
   registry:
     default: ghcr.io/jared-prime
-    pattern: '^[a-z0-9][a-z0-9._/:-]*$'
+    pattern: ^[a-z0-9][a-z0-9._/:-]*$
     description: registry namespace
     buildArg: REGISTRY
-
 kits:
-  - ref: ${{ kit.args.registry }}/kit/workload/${{ kit.args.workload }}:${{ kit.args.tag }}
+  - ref: >-
+      ${{ kit.args.registry }}/kit/workload/${{ kit.args.workload }}:${{
+      kit.args.tag }}
   - ref: ${{ kit.args.registry }}/kit/skills:${{ kit.args.tag }}
