@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/Jared-Prime/kit/compare/v3.0.0...v3.0.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* release workflow ([#138](https://github.com/Jared-Prime/kit/issues/138)) ([1a6572f](https://github.com/Jared-Prime/kit/commit/1a6572f4bd372f12353937440ad83f22d4d84083))
+
 ## [3.0.0](https://github.com/Jared-Prime/kit/compare/v2.4.0...v3.0.0) (2026-11-02)
 
 
