@@ -110,7 +110,7 @@ prek --version
 
 #### python
 
-Your sandbox workload pins python to 3.14.
+Your sandbox workload pins python to 3.15.
 Always use `uv run python` to invoke python in an active project context:
 
 ```shell

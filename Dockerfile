@@ -58,7 +58,7 @@ RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
 
 FROM ghcr.io/astral-sh/uv:0.13.7-alpine@sha256:a788290ce829958f18bcea1dfd9fb5dcf4bfb22f6380b52c9322f9d91e86b117 AS uv
 
-ARG PYTHON_VERSION=3.14
+ARG PYTHON_VERSION=3.15
 
 ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
 ENV PATH="/opt/uv/bin:${PATH}"
