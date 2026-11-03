@@ -87,41 +87,6 @@
       "extractVersionTemplate": "^v?(?<version>.+)$"
     },
     {
-      "description": "ripgrep: Dockerfile ARG sanity check",
-      "customType": "regex",
-      "managerFilePatterns": ["/^Dockerfile$/"],
-      "matchStrings": [
-        "ARG RG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depNameTemplate": "ripgrep",
-      "packageNameTemplate": "BurntSushi/ripgrep",
-      "datasourceTemplate": "github-releases"
-    },
-    {
-      "description": "jq: Dockerfile ARG sanity check",
-      "customType": "regex",
-      "managerFilePatterns": ["/^Dockerfile$/"],
-      "matchStrings": [
-        "ARG JQ_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depNameTemplate": "jq",
-      "packageNameTemplate": "jqlang/jq",
-      "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^jq-(?<version>.+)$"
-    },
-    {
-      "description": "git: Dockerfile ARG sanity check",
-      "customType": "regex",
-      "managerFilePatterns": ["/^Dockerfile$/"],
-      "matchStrings": [
-        "ARG GIT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depNameTemplate": "git",
-      "packageNameTemplate": "git/git",
-      "datasourceTemplate": "github-tags",
-      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)$"
-    },
-    {
       "description": "claude-code: anthropic Dockerfile install, version check, and provides pin",
       "customType": "regex",
       "managerFilePatterns": ["/^anthropic\\/anthropic\\.(dockerfile|yaml)$/"],

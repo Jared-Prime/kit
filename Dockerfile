@@ -105,6 +105,7 @@ COPY --from=node --chown=1000:1000 /opt/pnpm /opt/pnpm
 COPY --from=uv --chown=1000:1000 /opt/uv /opt/uv
 
 # sanity check copied binaries
+ARG NODE_VERSION=26.13
 ARG BASH_VERSION=5.3.9
 ARG CURL_VERSION=8.22.0
 ARG JQ_VERSION=1.8.2
@@ -118,7 +119,7 @@ RUN bash --version | grep -q "GNU bash, version ${BASH_VERSION}" && \
     git --version | grep -q "git version ${GIT_VERSION}" && \
     jq --version | grep -q "jq-${JQ_VERSION}" && \
     rg --version | grep -q "ripgrep ${RG_VERSION}" && \
-    node --version | grep -q "v${NODE_VERSION}" && \
+    node --version | grep -q "^v${NODE_VERSION}\." && \
     prek --version | grep -q "prek ${PREK_VERSION}" && \
     codebase-memory-mcp --version | grep -q "codebase-memory-mcp ${CODEBASE_MEMORY_MCP_VERSION}"
 
