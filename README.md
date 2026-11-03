@@ -1,5 +1,4 @@
-[![QA](https://github.com/Jared-Prime/kit/actions/workflows/qa.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/qa.yml)
-[![OCI](https://github.com/Jared-Prime/kit/actions/workflows/oci.yaml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/oci.yaml)
+[![Build](https://github.com/Jared-Prime/kit/actions/workflows/build.yaml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/build.yaml)
 [![release](https://github.com/Jared-Prime/kit/actions/workflows/release.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/release.yml)
 
 A collection of Docker Sandbox Kit (v3) workflows and mixins.
@@ -9,46 +8,38 @@ A collection of Docker Sandbox Kit (v3) workflows and mixins.
 Each harness — Claude Code, Codex, and opencode — publishes as a single, ready-to-run OCI image, so you don't need to compose kits by hand to get started:
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/claude:latest'
+sbx run 'ghcr.io/jared-prime/kit/sandbox/anthropic:latest'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/codex:latest'
+sbx run 'ghcr.io/jared-prime/kit/sandbox/openai:latest'
 ```
 
 ```shell
-sbx run 'ghcr.io/jared-prime/sandbox/opencode:latest'
+sbx run 'ghcr.io/jared-prime/kit/sandbox/anomaly:latest'
 ```
 
 | harness     | image                                  |
 | ----------- | -------------------------------------- |
-| Claude Code | `ghcr.io/jared-prime/sandbox/claude`   |
-| Codex       | `ghcr.io/jared-prime/sandbox/codex`    |
-| opencode    | `ghcr.io/jared-prime/sandbox/opencode` |
+| Claude Code | `ghcr.io/jared-prime/kit/sandbox/anthropic` |
+| Codex       | `ghcr.io/jared-prime/kit/sandbox/openai`    |
+| opencode    | `ghcr.io/jared-prime/kit/sandbox/anomaly`   |
 
 ## Images and Tags
 
-Every image is built for `linux/amd64` and `linux/arm64`, scanned with Trivy, and published by the [OCI workflow](.github/workflows/oci.yaml).
+Every image is built for `linux/amd64` and `linux/arm64`, scanned with Trivy, and published by the [build](.github/workflows/build.yaml) and [release](.github/workflows/release.yml) workflows.
 
-| tag                    | meaning                                                         |
-| ---------------------- | --------------------------------------------------------------- |
-| `latest`               | the most recent release                                         |
-| `vX.Y.Z`               | a specific release, for example `v2.0.1`                        |
-| `dev`                  | the most recent build of `main`                                 |
-| `sha-<hash>`           | the build of a specific commit on `main`                        |
-| `vX.Y.Z-sha-<short>`   | the same commit build, as the version the kit chain resolves    |
+Images are published under `ghcr.io/jared-prime/` with these tags:
 
-Each tag exists on every image below, under `ghcr.io/jared-prime/`:
+| image                                         | contents                                  | tags                              | published          |
+| --------------------------------------------- | ----------------------------------------- | --------------------------------- | ------------------ |
+| `kit/sandbox/anthropic`, `openai`, `anomaly`  | the ready-to-run harness (use these)      | `<sha>`, `<version>` and `latest` | on release         |
+| `kit/workload/anthropic`, `openai`, `anomaly` | the workload kit for each harness         | `<sha>` and `latest`              | every `main` build |
+| `kit/skills`                                  | the agent skills mixin (add with `--kit`) | `<sha>` and `latest`              | every `main` build |
+| `kit`                                         | the shared tools only                     | `<sha>` and `latest`              | every `main` build |
 
-| image                                          | contents                                         |
-| ---------------------------------------------- | ------------------------------------------------ |
-| `sandbox/claude`, `codex`, `opencode`          | the ready-to-run harness (use these)             |
-| `kit/workload/anthropic`, `openai`, `anomaly`  | the workload kit for each harness                |
-| `kit/mixin/skills`                             | the agent skills mixin (add with `--kit`)        |
-| `kit/claude`, `codex`, `opencode`              | the shared tools plus one harness CLI            |
-| `kit`                                          | the shared tools only                            |
-
-Merging to `main` publishes `dev`. When release-please cuts a release, the release workflow promotes that commit's already-scanned images to `latest` and `vX.Y.Z` without rebuilding them.
+`<sha>` is the full commit SHA and `<version>` is the release version without a `v` prefix, for example `3.0.0`.
+Merging to `main` publishes the intermediate images (`kit`, `kit/skills`, `kit/workload/*`). When release-please cuts a release, the release workflow builds the sandbox images from that commit's intermediate images and tags them `<sha>`, `<version>` and `latest`.
 
 ## Development
 
@@ -57,6 +48,18 @@ Use the local directory while developing and testing
 ```shell
 sbx run './anthropic' \
   --kit './skills'
+```
+
+### The `tools` build arg
+
+Each workload kit builds on the shared tools image through a `tools` build arg, which defaults to `ghcr.io/jared-prime/kit:latest`.
+CI always passes `tools=<registry>/kit:<sha>`, and the release sandbox references the workload images built for that same SHA, so a release is pinned to its matching tools build.
+A manual build that omits `--build-arg tools=...` resolves `kit:latest`, the most recent `main` build, which can differ from what CI would build (and only exists once `main` has pushed it).
+To reproduce a specific build, pass the commit explicitly; the `just workload` recipe does this with the current commit:
+
+```shell
+docker buildx build -f anthropic/anthropic.yaml \
+  --build-arg tools=ghcr.io/jared-prime/kit:<commit> ./anthropic
 ```
 
 ## Skills

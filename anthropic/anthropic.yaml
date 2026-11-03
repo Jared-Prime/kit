@@ -17,7 +17,7 @@ provides:
   - jq@1
   - node@26.13
   - pnpm@12.15.0
-  - prek@0.5.7
+  - prek@0.5.9
   - ripgrep@15
   - python@3.14
   - typescript@7.0.2
@@ -25,7 +25,7 @@ provides:
 dockerfile: anthropic.dockerfile
 args:
   tools:
-    default: ghcr.io/jared-prime/kit:v2.4.0
+    default: ghcr.io/jared-prime/kit:latest
     pattern: '^[a-z0-9][a-z0-9._/:-]*$'
     description: registry namespace for the base kit
     buildArg: tools

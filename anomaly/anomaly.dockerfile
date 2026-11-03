@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-ARG tools=ghcr.io/jared-prime/kit:v2.4.0
+ARG tools=ghcr.io/jared-prime/kit:latest
 FROM ${tools}
 
 ENV SHELL=/usr/bin/bash

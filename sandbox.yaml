@@ -9,13 +9,12 @@ version: ${{ kit.args.version }}
 
 args:
   version:
-    default: "2.4.0"
+    default: "3.0.0" # x-release-please-version
     pattern: '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'
     description: release version of the listed kits
     buildArg: VERSION
   workload:
-    default: 'anthropic'
-    pattern: '^(anomaly|anthropic|openai)'
+    pattern: '^(anomaly|anthropic|openai)$'
     buildArg: WORKLOAD
   tag:
     description: OCI tag for the listed kits

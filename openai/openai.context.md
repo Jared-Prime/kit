@@ -97,7 +97,7 @@ You **must** use pnpm for Node.js package management.
 
 #### prek
 
-Your sandbox workload pins prek to 0.5.7.
+Your sandbox workload pins prek to 0.5.9.
 
 ```shell
 prek --version
