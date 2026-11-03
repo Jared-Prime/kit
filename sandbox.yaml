@@ -1,3 +1,4 @@
+# syntax=docker/sandbox-kit:3
 schemaVersion: '3'
 displayName: ${{ kit.args.workload }} sandbox
 description: ${{ kit.args.workload }} sandbox with additional skills mixin

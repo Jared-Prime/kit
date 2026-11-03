@@ -1,0 +1,13 @@
+repositories:
+  - name: signoz
+    url: https://charts.signoz.io
+
+releases:
+  - name: signoz
+    namespace: signoz
+    createNamespace: true
+    chart: signoz/signoz
+    wait: true
+    timeout: 300
+    values:
+      - signoz.values.yaml

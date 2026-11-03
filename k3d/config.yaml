@@ -1,0 +1,11 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: kit
+ports:
+  - port: 8080:8080
+    nodeFilters:
+      - loadbalancer
+registries:
+  use:
+    - k3d-registry:5005
