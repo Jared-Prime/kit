@@ -9,7 +9,7 @@ sourceUrl: https://github.com/anthropics/claude-code
 
 kind: workload
 provides:
-  - claude-code@2.1.317
+  - claude-code@2.1.318
   - bash@5
   - codebase-memory-mcp@0.12.1
   - curl@8
@@ -17,7 +17,7 @@ provides:
   - jq@1
   - node@26.13
   - pnpm@12.16.1
-  - prek@0.5.9
+  - prek@0.5.10
   - ripgrep@15
   - python@3.15
   - typescript@7.0.2

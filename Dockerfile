@@ -4,13 +4,13 @@ FROM dhi.io/alpine-base:3.24-alpine3.24-dev@sha256:7182e0bc2f186386bb23bc0718508
 RUN addgroup -g 1000 sandbox  && \
     adduser -D -u 1000 -G sandbox -h /home/agent -s /usr/bin/bash agent
 
-FROM dhi.io/bash:5-alpine@sha256:a707212b3cedeb3241971658dba3f152d2d1a1cda5f7c4cc6f9582973b27a414 AS bash
+FROM dhi.io/bash:5-alpine@sha256:280d2be0aeba1d9f7d83d69db9478be55c1c9d42b416ce2128ff2684c2bedf5e AS bash
 
 FROM dhi.io/curl:8-alpine@sha256:2b777e00eb8e321cb1814f01ddc1bad3b1d33499e61293f37990d7dbfd35be60 AS curl
 
 FROM dhi.io/git:2-alpine@sha256:64816bd7a1f789b165217c834bfb8cfe2977af3c5d732edffd0e33569adb82c5 AS git
 
-FROM ghcr.io/j178/prek:0.5.9-alpine3.24@sha256:d99655cd1d0f739534c60bc00e75e5bcdc49a7fabe41294eb3b6830ca704b135 AS prek
+FROM ghcr.io/j178/prek:0.5.10-alpine3.24@sha256:b091dc85bf6179ba59e83f7d6a8c58105e36b30307cf71ae1d4138251b0f1783 AS prek
 
 FROM sandbox AS jq
 
@@ -37,7 +37,7 @@ RUN case "${TARGETARCH}" in \
     tar -xzf /tmp/cbm.tar.gz -C /tmp/cbm codebase-memory-mcp LICENSE THIRD_PARTY_NOTICES.md && \
     /tmp/cbm/codebase-memory-mcp --version | grep -q "${CBM_VERSION}"
 
-FROM dhi.io/node:26-alpine-dev@sha256:4f971dcdc1fdf59f9d3e84dbd529690c2d15f75ae898fb310acad9c12d7bbdf9 AS node
+FROM dhi.io/node:26-alpine-dev@sha256:d2c9453c702b59b3080b1990d41675b3e00effabc599c27a79c207428864af95 AS node
 
 ARG NODE_VERSION=26.13
 ARG PNPM_VERSION=12.16.1
@@ -111,7 +111,7 @@ ARG CURL_VERSION=8.22.0
 ARG JQ_VERSION=1.8.2
 ARG RG_VERSION=15.1.0
 ARG GIT_VERSION=2.55.0
-ARG PREK_VERSION=0.5.9
+ARG PREK_VERSION=0.5.10
 ARG CODEBASE_MEMORY_MCP_VERSION=0.12.1
 
 RUN bash --version | grep -q "GNU bash, version ${BASH_VERSION}" && \
