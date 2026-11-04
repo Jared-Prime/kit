@@ -33,53 +33,6 @@ args:
 capabilities:
   - type: com.docker.sandbox/sbx@1
 
-  - type: com.docker.sandbox/network-policy@2
-    config:
-      runtime:
-        allow:
-          - hosts:
-              - api.openai.com
-              - auth.openai.com
-              - chatgpt.com
-              - api.githubcopilot.com
-          - hosts:
-              - registry.npmjs.org
-              - pypi.org
-              - files.pythonhosted.org
-            methods:
-              - GET
-              - HEAD
-
-        deny:
-          - hosts:
-              - registry.npmjs.org
-              - pypi.org
-              - files.pythonhosted.org
-            methods:
-              - PATCH
-              - POST
-              - PUT
-              - DELETE
-          - hosts:
-              - api.github.com
-            methods:
-              - POST
-              - PATCH
-              - PUT
-              - DELETE
-          - hosts:
-              - github.com
-            methods:
-              - PATCH
-              - PUT
-              - DELETE
-          - hosts:
-              - github.com
-            methods:
-              - POST
-            paths:
-              - "/**/git-receive-pack"
-
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for the GitHub MCP server
     optional: true
@@ -126,10 +79,6 @@ capabilities:
           env:
             - SBX_CRED_OPENAI_MODE
           description: Seed Codex auth mode from the host credential binding
-
-  - type: com.docker.sandbox/agent-skills@1
-    config:
-      path: /home/agent/.agents/skills
 
   - type: com.docker.sandbox/agent-context@1
     config:
