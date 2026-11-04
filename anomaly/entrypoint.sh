@@ -6,6 +6,10 @@
 # kits declare agent-context@1.
 set -e
 
+# Runtimes may launch this non-root user with HOME unset or pointing at an
+# unwritable directory (e.g. /root); fall back to the agent home.
+[ -w "${HOME:-/nonexistent}" ] || export HOME=/home/agent
+
 # Trusts the egress proxy's MITM CA so TLS clients (npm, MCP connections,
 # curl, etc.) don't fail with SELF_SIGNED_CERT_IN_CHAIN. The proxy injects
 # its CA cert as a base64 env var. The sandbox only grants this user write

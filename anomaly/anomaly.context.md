@@ -14,13 +14,6 @@ Your harness runs in the sandbox under uid/gid 1000.
 
 ### network
 
-The sandbox network policy allows the following:
-
-- opencode.ai allows all methods.
-- localhost:1234 allows all methods (LM Studio; the agent reaches it as `host.docker.internal:1234`).
-- api.githubcopilot.com allows all methods (GitHub MCP server, read-only via the `X-MCP-Readonly` header; authenticated by the proxy-managed `GITHUB_PAT_TOKEN`).
-- registry.npmjs.org, pypi.org, and files.pythonhosted.org allow GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
-
 Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
 
 ### binaries
