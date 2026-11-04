@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.2.0](https://github.com/Jared-Prime/kit/compare/v3.1.1...v3.2.0) (2026-11-04)
+
+
+### Features
+
+* **cloud:** separate network policies to allow a cloud specific OCI build ([#164](https://github.com/Jared-Prime/kit/issues/164)) ([a33f480](https://github.com/Jared-Prime/kit/commit/a33f480b690c36f0305ceb5f289e1b373da8b608))
+
+
+### Bug Fixes
+
+* **release:** skip release runs triggered by stale builds ([#156](https://github.com/Jared-Prime/kit/issues/156)) ([3284fa1](https://github.com/Jared-Prime/kit/commit/3284fa160e2b80fe2e49ebd5f87b329164d6d515))
+
 ## [3.1.1](https://github.com/Jared-Prime/kit/compare/v3.1.0...v3.1.1) (2026-11-03)
 
 
