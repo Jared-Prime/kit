@@ -6,7 +6,7 @@ RUN addgroup -g 1000 sandbox  && \
 
 FROM dhi.io/bash:5-alpine@sha256:280d2be0aeba1d9f7d83d69db9478be55c1c9d42b416ce2128ff2684c2bedf5e AS bash
 
-FROM dhi.io/curl:8-alpine@sha256:c1d3243d9061b1ce78d8ce9cbb565186f55c214c2077868153d5706b58ada9d6 AS curl
+FROM dhi.io/curl:8-alpine@sha256:2b777e00eb8e321cb1814f01ddc1bad3b1d33499e61293f37990d7dbfd35be60 AS curl
 
 FROM dhi.io/git:2-alpine@sha256:64816bd7a1f789b165217c834bfb8cfe2977af3c5d732edffd0e33569adb82c5 AS git
 
@@ -107,7 +107,7 @@ COPY --from=uv --chown=1000:1000 /opt/uv /opt/uv
 # sanity check copied binaries
 ARG NODE_VERSION=26.13
 ARG BASH_VERSION=5.3.9
-ARG CURL_VERSION=8.22.0
+ARG CURL_VERSION=8.23.0
 ARG JQ_VERSION=1.8.2
 ARG RG_VERSION=15.1.0
 ARG GIT_VERSION=2.55.0
