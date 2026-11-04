@@ -3,7 +3,10 @@
   "packages": {
     ".": {
       "release-type": "simple",
-      "extra-files": [{ "type": "generic", "path": "sandbox.yaml" }]
+      "extra-files": [
+        { "type": "generic", "path": "cloud.yaml" },
+        { "type": "generic", "path": "sandbox.yaml" }
+      ]
     }
   }
 }

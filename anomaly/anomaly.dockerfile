@@ -13,6 +13,8 @@ COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 
 COPY anomaly.jsonc /etc/opencode/opencode.jsonc
 
+ENV HOME=/home/agent
+
 WORKDIR /home/agent
 
 USER 1000:1000

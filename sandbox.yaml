@@ -27,4 +27,5 @@ args:
 
 kits:
   - ref: ${{ kit.args.registry }}/kit/workload/${{ kit.args.workload }}:${{ kit.args.tag }}
+  - ref: ${{ kit.args.registry }}/kit/policies:${{ kit.args.tag }}
   - ref: ${{ kit.args.registry }}/kit/skills:${{ kit.args.tag }}
