@@ -4,5 +4,12 @@ schemaVersion: "3"
 displayName: DevOps
 description: DevOps tooling from this kit packaged as a complete mixin
 author: Jared Davis
+
 kind: mixin
+provides:
+  - docker@29.9.2
 dockerfile: devops.dockerfile
+capabilities:
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: devops.context.md
