@@ -57,7 +57,7 @@ trivy: (scan "anomaly") (scan "anthropic") (scan "openai")
 
 [group('trivy')]
 scan workload:
-    @docker run --rm --network host -v .cache/trivy/cache:/root/.cache/ -v .cache/trivy/report:/out aquasec/trivy image --ignore-unfixed --no-progress --format sarif --output /out/trivy.sarif {{registry}}/kit/sandbox/{{workload}}:{{commit}}
+    @docker run --rm --network host -v .cache/trivy/cache:/root/.cache/ -v .cache/trivy/report:/out aquasec/trivy image --ignore-unfixed --no-progress --format sarif --output /out/trivy.sarif {{registry}}/kit/workload/{{workload}}:{{commit}}
 
 k3d: registry create helmfile
 

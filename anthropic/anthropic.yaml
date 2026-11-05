@@ -33,6 +33,15 @@ args:
 capabilities:
   - type: com.docker.sandbox/sbx@1
 
+  - type: com.docker.sandbox/network-policy@2
+    optional: false
+    config:
+      runtime:
+        allow:
+          - hosts:
+              - api.githubcopilot.com
+              - api.anthropic.com
+
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for the GitHub MCP server
     optional: true
@@ -47,11 +56,6 @@ capabilities:
             header: Authorization
             format: "Bearer %s"
 
-  # Declaring both apiKey and oauth means "whichever the host has bound".
-  # No proxyManaged: it would plant ANTHROPIC_API_KEY even when nothing is
-  # bound, falsely signalling key auth. The proxy intercepts the token
-  # exchange from /login, so the real token stays on the host and later
-  # sandboxes start signed in.
   - type: com.docker.sandbox/credential@1
     description: Anthropic access (API key or claude.ai OAuth)
     optional: true

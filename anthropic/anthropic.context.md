@@ -138,7 +138,7 @@ uv --version
 
 ### skills
 
-The `skills` mixin provides the following skills when it is composed with this workload.
+The `skills` mixin provides the following skills when it is composed with this workload. Cloud sandboxes skip them.
 
 Use the `introspection` skill to ensure the sandbox has the workload and its mixins configured as expected.
 
