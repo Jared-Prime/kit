@@ -21,8 +21,6 @@ COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh
 COPY openai.toml /etc/codex/config.toml
 COPY rules /etc/codex/rules
 
-ENV HOME=/home/agent
-
 WORKDIR /home/agent
 
 USER 1000:1000

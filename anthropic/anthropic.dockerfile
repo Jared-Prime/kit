@@ -15,8 +15,6 @@ COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh
 COPY managed-settings.json /etc/claude-code/managed-settings.json
 COPY managed-mcp.json /etc/claude-code/managed-mcp.json
 
-ENV HOME=/home/agent
-
 WORKDIR /home/agent
 
 USER 1000:1000

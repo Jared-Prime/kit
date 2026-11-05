@@ -14,6 +14,13 @@ Your harness runs in the sandbox under uid/gid 1000.
 
 ### network
 
+The sandbox network policy allows the following:
+
+- opencode.ai allows all methods.
+- localhost:1234 allows all methods (LM Studio; the agent reaches it as `host.docker.internal:1234`).
+- api.githubcopilot.com allows all methods (GitHub MCP server, read-only via the `X-MCP-Readonly` header; authenticated by the proxy-managed `GITHUB_PAT_TOKEN`).
+- registry.npmjs.org, pypi.org, and files.pythonhosted.org allow GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
+
 Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
 
 ### binaries
@@ -51,7 +58,7 @@ Use Bash to run the tool on the command line instead.
 
 #### curl
 
-Your sandbox workload pins curl to 8.22.0.
+Your sandbox workload pins curl to 8.23.0.
 
 ```shell
 curl --version
@@ -85,7 +92,7 @@ node --version
 
 #### pnpm
 
-Your sandbox workload pins pnpm to 12.15.0.
+Your sandbox workload pins pnpm to 12.16.1.
 
 ```bash
 pnpm --version
@@ -95,7 +102,7 @@ You **must** use pnpm for Node.js package management.
 
 #### prek
 
-Your sandbox workload pins prek to 0.5.9.
+Your sandbox workload pins prek to 0.5.10.
 
 ```shell
 prek --version
@@ -138,7 +145,7 @@ tsc --version
 
 #### uv
 
-Your sandbox workload pins uv to 0.13.6.
+Your sandbox workload pins uv to 0.13.7.
 
 ```shell
 uv --version
@@ -146,7 +153,7 @@ uv --version
 
 ### skills
 
-The `skills` mixin provides the following skills when it is composed with this workload. Cloud sandboxes skip them.
+The `skills` mixin provides the following skills when it is composed with this workload.
 
 Use the `introspection` skill to ensure the sandbox has the workload and its mixins configured as expected.
 

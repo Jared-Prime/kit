@@ -6,24 +6,19 @@ description: Skills from this kit packaged as a complete mixin
 author: Jared Davis
 kind: mixin
 dockerfile: skills.dockerfile
-# Optional: cloud sandboxes reject agent-skill@1, so they skip these instead of refusing the kit.
 capabilities:
   - type: com.docker.sandbox/agent-skill@1
-    optional: true
     config:
       path: /usr/share/kit/skills/introspection
 
   - type: com.docker.sandbox/agent-skill@1
-    optional: true
     config:
       path: /usr/share/kit/skills/codebase-memory
 
   - type: com.docker.sandbox/agent-skill@1
-    optional: true
     config:
       path: /usr/share/kit/skills/guided-review
 
   - type: com.docker.sandbox/agent-skill@1
-    optional: true
     config:
       path: /usr/share/kit/skills/commit-message
