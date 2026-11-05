@@ -58,7 +58,7 @@ Use Bash to run the tool on the command line instead.
 
 #### curl
 
-Your sandbox workload pins curl to 8.22.0.
+Your sandbox workload pins curl to 8.23.0.
 
 ```shell
 curl --version
@@ -92,7 +92,7 @@ node --version
 
 #### pnpm
 
-Your sandbox workload pins pnpm to 12.15.0.
+Your sandbox workload pins pnpm to 12.16.1.
 
 ```bash
 pnpm --version
@@ -102,7 +102,7 @@ You **must** use pnpm for Node.js package management.
 
 #### prek
 
-Your sandbox workload pins prek to 0.5.9.
+Your sandbox workload pins prek to 0.5.10.
 
 ```shell
 prek --version
