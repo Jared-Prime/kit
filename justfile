@@ -2,7 +2,7 @@ commit := env('COMMIT', `git rev-parse HEAD`)
 registry := env('REGISTRY', 'localhost:5005/jared-prime')
 version := env('VERSION', `cat version.txt`)
 
-default: registry buildx prune
+default: prune registry buildx prune
 
 prune:
     @docker system prune -f
@@ -18,6 +18,11 @@ tools:
 skills:
     @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f skills/skills.yaml -t {{ registry }}/kit/skills:{{ commit }} --metadata-file ./.cache/skills.metadata.json ./skills
     @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/skills.metadata.json
+
+[group('buildx')]
+devops:
+    @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f devops/devops.yaml -t {{ registry }}/kit/devops:{{ commit }} --metadata-file ./.cache/devops.metadata.json ./skills
+    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/devops.metadata.json
 
 [group('buildx')]
 workload workload:
@@ -38,7 +43,7 @@ sandboxes: (sandbox "anomaly") (sandbox "anthropic") (sandbox "openai")
 
 [parallel]
 [group('buildx')]
-kit: tools skills
+kit: tools devops skills
 
 trivy: (scan "anomaly") (scan "anthropic") (scan "openai")
 
@@ -58,8 +63,8 @@ delete: prune
 
 [group('k3d')]
 create:
-    @k3d cluster create kit --config k3d/config.yaml
+    @k3d cluster create kit --config devops/k3d/config.yaml
 
 [group('k3d')]
 helmfile:
-    @helmfile sync -f k3d/helmfile.yaml
+    @helmfile sync -f devops/k3d/helmfile.yaml

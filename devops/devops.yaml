@@ -1,0 +1,8 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: DevOps
+description: DevOps tooling from this kit packaged as a complete mixin
+author: Jared Davis
+kind: mixin
+dockerfile: devops.dockerfile
