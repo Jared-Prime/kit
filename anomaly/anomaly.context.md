@@ -145,7 +145,7 @@ tsc --version
 
 #### uv
 
-Your sandbox workload pins uv to 0.13.6.
+Your sandbox workload pins uv to 0.13.7.
 
 ```shell
 uv --version

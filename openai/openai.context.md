@@ -112,7 +112,7 @@ Always use `uv run python` to invoke python in an active project context:
 uv run python --version
 ```
 
-Use `uvx` to invoke python outside of an active project context:
+Use `uvx` to invoke python outside an active project context:
 
 ```shell
 uvx python --version
@@ -140,7 +140,7 @@ tsc --version
 
 #### uv
 
-Your sandbox workload pins uv to 0.13.6.
+Your sandbox workload pins uv to 0.13.7.
 
 ```shell
 uv --version
