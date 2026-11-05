@@ -70,6 +70,9 @@ Load individual skills to share among agents
 sbx agents add jared-prime/kit --skill guided-review
 ```
 
+The `skills` mixin marks its `agent-skill@1` capabilities optional.
+Cloud sandboxes (`sbx run --cloud`) do not support that capability, so they skip the skills instead of refusing the kit.
+
 ## Credentials
 
 The Claude Code and Codex workloads declare an optional host credential.

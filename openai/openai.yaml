@@ -33,6 +33,15 @@ args:
 capabilities:
   - type: com.docker.sandbox/sbx@1
 
+  - type: com.docker.sandbox/network-policy@2
+    optional: false
+    config:
+      runtime:
+        allow:
+          - hosts:
+              - api.githubcopilot.com
+              - api.openai.com
+
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for the GitHub MCP server
     optional: true
