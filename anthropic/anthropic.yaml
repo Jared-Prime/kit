@@ -34,13 +34,51 @@ capabilities:
   - type: com.docker.sandbox/sbx@1
 
   - type: com.docker.sandbox/network-policy@2
-    optional: false
     config:
       runtime:
         allow:
           - hosts:
-              - api.githubcopilot.com
               - api.anthropic.com
+              - claude.ai
+              - platform.claude.com
+              - api.githubcopilot.com
+          - hosts:
+              - registry.npmjs.org
+              - pypi.org
+              - files.pythonhosted.org
+            methods:
+              - GET
+              - HEAD
+
+        deny:
+          - hosts:
+              - registry.npmjs.org
+              - pypi.org
+              - files.pythonhosted.org
+            methods:
+              - PATCH
+              - POST
+              - PUT
+              - DELETE
+          - hosts:
+              - api.github.com
+            methods:
+              - POST
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
+              - github.com
+            methods:
+              - PATCH
+              - PUT
+              - DELETE
+          - hosts:
+              - github.com
+            methods:
+              - POST
+            paths:
+              - "/**/git-receive-pack"
 
   - type: com.docker.sandbox/credential@1
     description: Credentials policy for the GitHub MCP server
@@ -56,6 +94,11 @@ capabilities:
             header: Authorization
             format: "Bearer %s"
 
+  # Declaring both apiKey and oauth means "whichever the host has bound".
+  # No proxyManaged: it would plant ANTHROPIC_API_KEY even when nothing is
+  # bound, falsely signalling key auth. The proxy intercepts the token
+  # exchange from /login, so the real token stays on the host and later
+  # sandboxes start signed in.
   - type: com.docker.sandbox/credential@1
     description: Anthropic access (API key or claude.ai OAuth)
     optional: true
@@ -96,6 +139,10 @@ capabilities:
           env:
             - SBX_CRED_ANTHROPIC_MODE
           description: Seed Claude Code auth mode from the host credential binding
+
+  - type: com.docker.sandbox/agent-skills@1
+    config:
+      path: /home/agent/.claude/skills
 
   - type: com.docker.sandbox/agent-context@1
     config:

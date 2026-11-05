@@ -15,11 +15,6 @@ tools:
     @jq '."image.name" + "@" + ."containerimage.digest"' < .cache/tools.metadata.json
 
 [group('buildx')]
-policies:
-    @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f policies/policies.yaml -t {{ registry }}/kit/policies:{{ commit }} --metadata-file ./.cache/policies.metadata.json ./policies
-    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/policies.metadata.json
-
-[group('buildx')]
 skills:
     @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f skills/skills.yaml -t {{ registry }}/kit/skills:{{ commit }} --metadata-file ./.cache/skills.metadata.json ./skills
     @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/skills.metadata.json
@@ -41,23 +36,15 @@ sandbox workload:
 [group('buildx')]
 sandboxes: (sandbox "anomaly") (sandbox "anthropic") (sandbox "openai")
 
-[group('buildx')]
-cloud workload:
-    @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f cloud.yaml -t {{registry}}/kit/cloud/{{workload}}:{{commit}} --build-arg registry={{registry}} --build-arg workload={{workload}} --build-arg version={{version}} --build-arg tag={{commit}} --metadata-file ./.cache/{{workload}}.cloud.metadata.json .
-
 [parallel]
 [group('buildx')]
-clouds: (cloud "anomaly") (cloud "anthropic") (cloud "openai")
-
-[parallel]
-[group('buildx')]
-kit: tools policies skills
+kit: tools skills
 
 trivy: (scan "anomaly") (scan "anthropic") (scan "openai")
 
 [group('trivy')]
 scan workload:
-    @docker run --rm --network host -v .cache/trivy/cache:/root/.cache/ -v .cache/trivy/report:/out aquasec/trivy image --ignore-unfixed --no-progress --format sarif --output /out/trivy.sarif {{registry}}/kit/workload/{{workload}}:{{commit}}
+    @docker run --rm --network host -v .cache/trivy/cache:/root/.cache/ -v .cache/trivy/report:/out aquasec/trivy image --ignore-unfixed --no-progress --format sarif --output /out/trivy.sarif {{registry}}/kit/sandbox/{{workload}}:{{commit}}
 
 k3d: registry create helmfile
 

@@ -14,7 +14,17 @@ Your harness runs in the sandbox under uid/gid 1000.
 
 ### network
 
+The sandbox network policy allows the following:
+
+- api.openai.com allows all methods.
+- auth.openai.com allows all methods.
+- chatgpt.com allows all methods.
+- api.githubcopilot.com allows all methods (GitHub MCP server, read-only via the `X-MCP-Readonly` header; authenticated by the proxy-managed `GITHUB_PAT_TOKEN`).
+- registry.npmjs.org, pypi.org, and files.pythonhosted.org allow GET and HEAD. PATCH, POST, PUT, and DELETE are denied.
+
 Note that some hosts and/or HTTP verbs may be denied by the sandbox network policy or by mixins.
+
+Your codex network permissions defaults to read-only.
 
 ### binaries
 
@@ -138,7 +148,7 @@ uv --version
 
 ### skills
 
-The `skills` mixin provides the following skills when it is composed with this workload. Cloud sandboxes skip them.
+The `skills` mixin provides the following skills when it is composed with this workload.
 
 Use the `introspection` skill to ensure the sandbox has the workload and its mixins configured as expected.
 
