@@ -14,7 +14,7 @@ provides:
   - git@2
   - jq@1
   - node@26.13
-  - pnpm@12.16.1
+  - pnpm@12.18.0
   - prek@0.5.10
   - ripgrep@15
   - python@3.15
