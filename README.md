@@ -1,4 +1,4 @@
-[![Build](https://github.com/Jared-Prime/kit/actions/workflows/build.yaml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/build.yaml)
+[![Build](https://github.com/Jared-Prime/kit/actions/workflows/buildx.yaml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/buildx.yaml)
 [![release](https://github.com/Jared-Prime/kit/actions/workflows/release.yml/badge.svg)](https://github.com/Jared-Prime/kit/actions/workflows/release.yml)
 
 A collection of Docker Sandbox Kit (v3) workflows and mixins.
@@ -19,8 +19,8 @@ sbx run 'ghcr.io/jared-prime/kit/sandbox/openai:latest'
 sbx run 'ghcr.io/jared-prime/kit/sandbox/anomaly:latest'
 ```
 
-| harness     | image                                  |
-| ----------- | -------------------------------------- |
+| harness     | image                                       |
+|-------------|---------------------------------------------|
 | Claude Code | `ghcr.io/jared-prime/kit/sandbox/anthropic` |
 | Codex       | `ghcr.io/jared-prime/kit/sandbox/openai`    |
 | opencode    | `ghcr.io/jared-prime/kit/sandbox/anomaly`   |
@@ -36,10 +36,12 @@ Images are published under `ghcr.io/jared-prime/` with these tags:
 | `kit/sandbox/anthropic`, `openai`, `anomaly`  | the ready-to-run harness (use these)      | `<sha>`, `<version>` and `latest` | on release         |
 | `kit/workload/anthropic`, `openai`, `anomaly` | the workload kit for each harness         | `<sha>` and `latest`              | every `main` build |
 | `kit/skills`                                  | the agent skills mixin (add with `--kit`) | `<sha>` and `latest`              | every `main` build |
+| `kit/playwright`                              | the Playwright mixin (add with `--kit`)   | `<sha>` and `latest`              | every `main` build |
 | `kit`                                         | the shared tools only                     | `<sha>` and `latest`              | every `main` build |
 
 `<sha>` is the full commit SHA and `<version>` is the release version without a `v` prefix, for example `3.0.0`.
-Merging to `main` publishes the intermediate images (`kit`, `kit/skills`, `kit/workload/*`). When release-please cuts a release, the release workflow builds the sandbox images from that commit's intermediate images and tags them `<sha>`, `<version>` and `latest`.
+The ready-to-run `kit/sandbox/*` images compose a workload with the `kit/skills` and `kit/playwright` mixins.
+Merging to `main` publishes the intermediate images (`kit`, `kit/skills`, `kit/playwright`, `kit/workload/*`). When release-please cuts a release, the release workflow builds the sandbox images from that commit's intermediate images and tags them `<sha>`, `<version>` and `latest`.
 
 ## Development
 
@@ -47,12 +49,13 @@ Use the local directory while developing and testing
 
 ```shell
 sbx run './anthropic' \
-  --kit './skills'
+  --kit './skills' \
+  --kit './playwright'
 ```
 
 ### The `tools` build arg
 
-Each workload kit builds on the shared tools image through a `tools` build arg, which defaults to `ghcr.io/jared-prime/kit:latest`.
+Each workload kit and the `playwright` mixin build on the shared tools image through a `tools` build arg, which defaults to `ghcr.io/jared-prime/kit:latest`.
 CI always passes `tools=<registry>/kit:<sha>`, and the release sandbox references the workload images built for that same SHA, so a release is pinned to its matching tools build.
 A manual build that omits `--build-arg tools=...` resolves `kit:latest`, the most recent `main` build, which can differ from what CI would build (and only exists once `main` has pushed it).
 To reproduce a specific build, pass the commit explicitly; the `just workload` recipe does this with the current commit:
@@ -69,6 +72,21 @@ Load individual skills to share among agents
 ```shell
 sbx agents add jared-prime/kit --skill guided-review
 ```
+
+## Playwright
+
+The `playwright` mixin adds `playwright-cli` and a headless Chromium so agents can browse and test web pages:
+
+```shell
+sbx run './anthropic' --kit './playwright'
+```
+
+- The browser is Alpine's system Chromium (from the upstream Alpine `community` repository), preconfigured through `PLAYWRIGHT_MCP_*` environment variables.
+  Playwright's bundled browsers are glibc builds and do not run on this Alpine image, so do not run `playwright-cli install` to download browsers.
+- The browser only loads hosts the sandbox network policy allows.
+  A blocked host answers `403 Forbidden` with an `Approval required for <host>:443` message; review pending requests on the host with `sbx policy approval ls`.
+- The sandbox proxy intercepts TLS. At agent start, an entrypoint hook imports the proxy CA into Chromium's NSS database (`~/.pki/nssdb`), because Chromium ignores `SSL_CERT_FILE`.
+- The mixin also installs the `playwright-cli` agent skill.
 
 ## Credentials
 

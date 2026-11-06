@@ -56,17 +56,23 @@ jobs:
           cache-from: type=gha,scope=tools
           cache-to: type=gha,scope=tools,mode=max
 
-  skills:
+  mixins:
+    needs: tools
     permissions:
       contents: read
       packages: write
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mixin:
+          - skills
+          - playwright
     steps:
       - id: meta
         name: prepare image tags
         uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
         with:
-          images: ${{ env.REGISTRY }}/kit/skills
+          images: ${{ env.REGISTRY }}/kit/${{ matrix.mixin }}
           tags: |
             type=schedule
             type=ref,event=branch
@@ -90,13 +96,14 @@ jobs:
       - name: build skills image
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
-          context: skills
-          file: skills/skills.yaml
+          context: ${{ matrix.mixin }}
+          file: ${{ matrix.mixin }}/${{ matrix.mixin }}.yaml
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha,scope=skills
-          cache-to: type=gha,scope=skills,mode=max
+          build-args: tools=${{ env.REGISTRY }}/kit:${{ needs.tools.outputs.version }}
+          cache-from: type=gha,scope=mixin-${{ matrix.mixin }}
+          cache-to: type=gha,scope=mixin-${{ matrix.mixin }},mode=max
 
   workloads:
     needs: tools
@@ -161,7 +168,7 @@ jobs:
     needs:
       - tools
       - workloads
-      - skills
+      - mixins
     permissions:
       contents: read
       packages: write

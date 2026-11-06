@@ -8,15 +8,17 @@ Conventions in this repository follow the maintainer's personal preferences.
 
 ## Project Directory
 
-| folder    | kit type | core functionality                                                   |
-| --------- | -------- | -------------------------------------------------------------------- |
-| anomaly   | workload | `opencode`                                                           |
-| anthropic | workload | `claude`                                                             |
-| openai    | workload | `codex`                                                              |
-| skills    | mixin    | agent skills                                                         |
+| folder     | kit type | core functionality                                                   |
+| ---------- | -------- | -------------------------------------------------------------------- |
+| anomaly    | workload | `opencode`                                                           |
+| anthropic  | workload | `claude`                                                             |
+| openai     | workload | `codex`                                                              |
+| playwright | mixin    | `playwright-cli` and headless Chromium                               |
+| skills     | mixin    | agent skills                                                         |
 
 The root `Dockerfile` builds the shared tools (`bash`, `curl`, `git`, `jq`, `rg`, `node`, `pnpm`, `uv`, `prek`, `codebase-memory-mcp`) and each harness CLI as the `kit` images.
-Each workload builds on its harness image, so the tools ship inside the workload rather than as a mixin.
+Each workload builds on its harness image, so the shared tools ship inside the workload.
+The `playwright` mixin is the exception: it adds `playwright-cli` and Chromium on top of the tools image through the `tools` build arg.
 
 ## Development
 
@@ -53,3 +55,4 @@ Fetch these references via built-in tools only when additional information neede
 * 1Password: Sign Git commits with SSH https://www.1password.dev/ssh/git-commit-signing
 * Docker Sandbox Kit (v3) Specification https://github.com/docker/sandbox-kit-spec
 * Git Tools: Signing Your Work https://git-scm.com/book/ms/v2/Git-Tools-Signing-Your-Work
+* Playwright: Best Practices https://github.com/microsoft/playwright/blob/main/docs/src/best-practices-js.md

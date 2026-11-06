@@ -3,7 +3,11 @@
   "permissions": {
     "defaultMode": "default",
     "disableBypassPermissionsMode": "disable",
-    "allow": ["WebSearch"],
+    "allow": [
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "WebSearch"
+    ],
     "deny": [
       "Bash(git commit:*)",
       "Bash(git push:*)",
