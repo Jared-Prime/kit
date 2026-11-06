@@ -7,3 +7,6 @@
 .cache
 cache
 *.metadata.json
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
+.playwright

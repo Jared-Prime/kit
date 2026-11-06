@@ -1,0 +1,27 @@
+# syntax=docker/sandbox-kit:3
+
+schemaVersion: "3"
+displayName: Playwright
+description: Playwright CLI as a sandbox mixin
+author: Jared Davis
+
+kind: mixin
+provides:
+  - chromium@156
+  - playwright@0.1.23
+dockerfile: playwright.dockerfile
+args:
+  tools:
+    default: ghcr.io/jared-prime/kit:latest
+    pattern: '^[a-z0-9][a-z0-9._/:-]*$'
+    description: registry namespace for the base kit
+    buildArg: tools
+
+capabilities:
+  - type: com.docker.sandbox/agent-skill@1
+    config:
+      path: /usr/share/kit/skills/playwright-cli
+
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      contentFile: playwright.context.md

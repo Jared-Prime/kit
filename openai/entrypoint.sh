@@ -22,6 +22,12 @@ if [ -n "$PROXY_CA_CERT_B64" ]; then
   export CURL_CA_BUNDLE="$ca_dir/ca-bundle.crt"
 fi
 
+# Run entrypoint hooks shipped by mixins. A failing hook must not block the agent.
+for hook in /usr/share/kit/entrypoint.d/*; do
+  [ -x "$hook" ] || continue
+  "$hook" || echo "warning: entrypoint hook $hook failed" >&2
+done
+
 context_file="/usr/share/sandbox/kit/codex.generated/context.md"
 codex_home="${CODEX_HOME:-$HOME/.codex}"
 

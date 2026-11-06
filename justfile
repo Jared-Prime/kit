@@ -15,9 +15,13 @@ tools:
     @jq '."image.name" + "@" + ."containerimage.digest"' < .cache/tools.metadata.json
 
 [group('buildx')]
-skills:
-    @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f skills/skills.yaml -t {{ registry }}/kit/skills:{{ commit }} --metadata-file ./.cache/skills.metadata.json ./skills
-    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/skills.metadata.json
+mixin mixin:
+    @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f {{mixin}}/{{mixin}}.yaml -t {{ registry }}/kit/{{mixin}}:{{ commit }} --metadata-file ./.cache/{{mixin}}.metadata.json ./{{mixin}}
+    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/{{mixin}}.metadata.json
+
+[parallel]
+[group('buildx')]
+mixins: (mixin "skills") (mixin "playwright")
 
 [group('buildx')]
 workload workload:
@@ -31,6 +35,7 @@ workloads: (workload "anomaly") (workload "anthropic") (workload "openai")
 [group('buildx')]
 sandbox workload:
     @docker buildx build --quiet --push --platform linux/amd64,linux/arm64 -f sandbox.yaml -t {{registry}}/kit/sandbox/{{workload}}:{{commit}} --build-arg registry={{registry}} --build-arg workload={{workload}} --build-arg version={{version}} --build-arg tag={{commit}} --metadata-file ./.cache/{{workload}}.sandbox.metadata.json .
+    @jq '."image.name" + "@" + ."containerimage.digest"' < ./.cache/{{ workload }}.sandbox.metadata.json
 
 [parallel]
 [group('buildx')]
@@ -38,7 +43,7 @@ sandboxes: (sandbox "anomaly") (sandbox "anthropic") (sandbox "openai")
 
 [parallel]
 [group('buildx')]
-kit: tools skills
+kit: tools mixins
 
 trivy: (scan "anomaly") (scan "anthropic") (scan "openai")
 
