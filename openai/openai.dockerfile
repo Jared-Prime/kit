@@ -6,8 +6,8 @@ ENV SHELL=/usr/bin/bash
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}/bin:${PATH}"
 
-RUN pnpm add -g @openai/codex@0.166.0 --allow-build=@openai/codex && \
-    test "$(codex --version)" = "codex-cli 0.166.0"
+RUN pnpm add -g @openai/codex@0.167.0 --allow-build=@openai/codex && \
+    test "$(codex --version)" = "codex-cli 0.167.0"
 
 # Codex bundles an rg build requiring a glibc loader
 # Remove it so the Alpine ripgrep package (copied into the final stage) is used

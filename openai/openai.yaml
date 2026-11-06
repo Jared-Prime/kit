@@ -9,7 +9,7 @@ sourceUrl: https://github.com/openai/codex
 
 kind: workload
 provides:
-  - codex@0.166.0
+  - codex@0.167.0
   - bash@5
   - codebase-memory-mcp@0.12.1
   - curl@8
