@@ -6,8 +6,8 @@ ENV SHELL=/usr/bin/bash
 ENV PNPM_HOME=/opt/pnpm
 ENV PATH="${PNPM_HOME}/bin:${PATH}"
 
-RUN pnpm add -g @anthropic-ai/claude-code@2.1.318 --allow-build=@anthropic-ai/claude-code && \
-    test "$(claude --version)" = "2.1.318 (Claude Code)"
+RUN pnpm add -g @anthropic-ai/claude-code@2.1.319 --allow-build=@anthropic-ai/claude-code && \
+    test "$(claude --version)" = "2.1.319 (Claude Code)"
 
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=755 authorization.sh /usr/local/bin/authorization.sh
