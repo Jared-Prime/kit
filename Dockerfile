@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM dhi.io/alpine-base:3.24-alpine3.24-dev@sha256:52a1dd05ab0348e71cf244d595d9ce59268c68ac3fdd6338c18997fe035b36a7 AS sandbox
+FROM dhi.io/alpine-base:3.24-alpine3.24-dev@sha256:6930a2280f6e5dbbb5f8a0b62897114fc28ee883e3786832c2a9cda8e73e0ca2 AS sandbox
 
 RUN addgroup -g 1000 sandbox  && \
     adduser -D -u 1000 -G sandbox -h /home/agent -s /usr/bin/bash agent
