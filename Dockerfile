@@ -4,7 +4,7 @@ FROM dhi.io/alpine-base:3.24-alpine3.24-dev@sha256:6930a2280f6e5dbbb5f8a0b628971
 RUN addgroup -g 1000 sandbox  && \
     adduser -D -u 1000 -G sandbox -h /home/agent -s /usr/bin/bash agent
 
-FROM dhi.io/bash:5-alpine@sha256:862a9794c3ced58c67a10d1ca3917bfeb0a48ef433bfb0a71c9c315b353dfef5 AS bash
+FROM dhi.io/bash:5-alpine@sha256:9c278b9250ebe76d0ba044dff15c51764d0d35b21f20a9fdead6f49748129ebf AS bash
 
 FROM dhi.io/curl:8-alpine@sha256:2b777e00eb8e321cb1814f01ddc1bad3b1d33499e61293f37990d7dbfd35be60 AS curl
 
