@@ -6,7 +6,7 @@ RUN addgroup -g 1000 sandbox  && \
 
 FROM dhi.io/bash:5-alpine@sha256:9c278b9250ebe76d0ba044dff15c51764d0d35b21f20a9fdead6f49748129ebf AS bash
 
-FROM dhi.io/curl:8-alpine@sha256:2b777e00eb8e321cb1814f01ddc1bad3b1d33499e61293f37990d7dbfd35be60 AS curl
+FROM dhi.io/curl:8-alpine@sha256:427c57759e266af3f4bdc88e64cdb160cd9ee66ff99c927ec8ef7a2b3d24f517 AS curl
 
 FROM dhi.io/git:2-alpine@sha256:6c6e2567c482d6769bc199431d1b3d8570de4e34d77feaf9e9888e80cbf38feb AS git
 
