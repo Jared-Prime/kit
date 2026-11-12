@@ -56,7 +56,7 @@ RUN npx --yes "get-pnpm@latest" "${PNPM_VERSION}" \
 RUN pnpm add -g "typescript@${TYPESCRIPT_VERSION}" \
  && tsc --version | grep -q "Version ${TYPESCRIPT_VERSION}$"
 
-FROM ghcr.io/astral-sh/uv:0.13.7-alpine@sha256:a788290ce829958f18bcea1dfd9fb5dcf4bfb22f6380b52c9322f9d91e86b117 AS uv
+FROM ghcr.io/astral-sh/uv:0.13.8-alpine@sha256:d436fa324e71ef7c8accd7902e893d18a19a0e3afb3ecf57626d696d982137e5 AS uv
 
 ARG PYTHON_VERSION=3.15
 
