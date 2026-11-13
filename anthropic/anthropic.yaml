@@ -9,7 +9,7 @@ sourceUrl: https://github.com/anthropics/claude-code
 
 kind: workload
 provides:
-  - claude-code@2.1.318
+  - claude-code@2.1.325
   - bash@5
   - codebase-memory-mcp@0.12.1
   - curl@8
