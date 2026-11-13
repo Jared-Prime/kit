@@ -8,7 +8,7 @@ FROM dhi.io/bash:5-alpine@sha256:9c278b9250ebe76d0ba044dff15c51764d0d35b21f20a9f
 
 FROM dhi.io/curl:8-alpine@sha256:427c57759e266af3f4bdc88e64cdb160cd9ee66ff99c927ec8ef7a2b3d24f517 AS curl
 
-FROM dhi.io/git:2-alpine@sha256:f6c972a5995ee1bbd7c3d5a31111c1a5e54f58596f03e3dd0e00520660e16599 AS git
+FROM dhi.io/git:2-alpine@sha256:4b8028d5a4dbd0e6ae5208c10f262f06223da4dd6775565ab573da129c34a7dc AS git
 
 FROM ghcr.io/j178/prek:0.5.10-alpine3.24@sha256:b091dc85bf6179ba59e83f7d6a8c58105e36b30307cf71ae1d4138251b0f1783 AS prek
 
