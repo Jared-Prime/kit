@@ -33,7 +33,8 @@ Based on what's loaded in your system context, determine the following about the
 ## Testing
 
 Check each of the determinations above.
-Cross-check claims against the structured manifest `/usr/share/sandbox/kit/<harness>.generated/kit.yaml` (read it once — it covers the workload and all mixins together).
+Cross-check claims against the structured manifest `/usr/share/sandbox/kit/sandbox/kit.yaml` (read it once — it covers the workload and all mixins together).
+If that file does not exist (a workload composed without the sandbox set), read `/usr/share/sandbox/kit/<workload>/kit.yaml` and each `/usr/share/sandbox/kit/<mixin>/kit.yaml` instead.
 Test commands using `< command > --version` or similar version check.
 When the context documents how to invoke a command (e.g. `uv run python`), test it that way instead.
 Output the `$PATH` if a command check fails and run `which < command >`.
