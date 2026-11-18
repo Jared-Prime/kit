@@ -45,5 +45,6 @@ ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 COPY --from=playwright /rootfs/ /
 COPY --from=playwright /home/agent/.claude/skills/playwright-cli /usr/share/kit/skills/playwright-cli
 COPY --chmod=755 chromium-ca.sh /usr/share/kit/entrypoint.d/10-chromium-ca.sh
+COPY skills/cucumber /usr/share/kit/skills/cucumber
 
 USER 1000:1000
