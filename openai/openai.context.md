@@ -85,7 +85,7 @@ jq --version
 
 ```bash
 node --version
-# v26.13.0
+# v26.13.x
 ```
 
 #### pnpm
@@ -94,7 +94,7 @@ You **must** use pnpm for Node.js package management.
 
 ```bash
 pnpm --version
-# 12.16.1
+# 12.18.0
 ```
 
 #### prek
