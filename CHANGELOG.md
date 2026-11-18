@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.3.0](https://github.com/Jared-Prime/kit/compare/v3.2.0...v3.3.0) (2026-11-10)
+
+
+### Features
+
+* **playwright:** add playwright mixin with chromium and CA trust ([#176](https://github.com/Jared-Prime/kit/issues/176)) ([87532e8](https://github.com/Jared-Prime/kit/commit/87532e83478d1d39e905631cafe5c77c82428b2d))
+
+
+### Bug Fixes
+
+* **release:** restore buildx workflow name so release-please triggers ([#186](https://github.com/Jared-Prime/kit/issues/186)) ([b8ac724](https://github.com/Jared-Prime/kit/commit/b8ac7246fb5b98edb339ca2289b5de68d15ea87a))
+
+
+### Reverts
+
+* **policies:** halt attempts at cloud sandbox suppport ([#169](https://github.com/Jared-Prime/kit/issues/169)) ([b44d4c2](https://github.com/Jared-Prime/kit/commit/b44d4c22a1e1cae68265a78618b92d1b2d207e7e))
+
 ## [3.2.0](https://github.com/Jared-Prime/kit/compare/v3.1.1...v3.2.0) (2026-11-04)
 
 
