@@ -7,7 +7,7 @@ author: Jared Davis
 
 kind: workload
 provides:
-  - opencode@2.3.2
+  - opencode@2.4.2
   - bash@5
   - codebase-memory-mcp@0.12.1
   - curl@8
